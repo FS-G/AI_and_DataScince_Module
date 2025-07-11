@@ -22,6 +22,8 @@
 
 ### The Data Science Process
 #### Systematic Approach to Data Analysis
+
+![Systematic DS Approach](https://miro.medium.com/v2/resize:fit:1400/0*glzQqJ7XrwRS3p2w)
 - **Problem Definition**: Clearly articulate the business question or research objective
 - **Data Collection**: Gather relevant data from multiple sources (databases, APIs, files)
 - **Data Exploration**: Understand data structure, quality, and initial patterns
@@ -72,6 +74,9 @@
 - **Machine Learning:** A subset of AI focused on learning algorithms from data
 
 **The Hierarchy:**
+
+![Data Science, and and ML](https://www.deviq.io/hubfs/DevIQ%20website%20active%20images/ai-ml-dl-ds-venn-diagram-deviq.png)
+
 - **Data Science** encompasses the entire process of working with data
 - **AI** provides the intelligence paradigm and goal-oriented behavior
 - **Machine Learning** provides the specific algorithms and learning mechanisms
@@ -114,6 +119,9 @@
 
 ### Machine Learning Fundamentals
 #### Teaching Machines to Learn from Data
+
+![Types of ML](https://www.researchgate.net/publication/373535780/figure/fig1/AS:11431281184926528@1693489593190/Types-of-machine-learning-Machine-learning-encompasses-three-main-types-supervised.png)
+
 - **Supervised Learning:** Learning from **labeled examples** to make predictions
 - **Unsupervised Learning:** Finding **hidden patterns** in unlabeled data
 - **Reinforcement Learning:** Learning through **trial and error** with rewards
