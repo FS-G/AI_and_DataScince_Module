@@ -120,7 +120,7 @@
 ### Machine Learning Fundamentals
 #### Teaching Machines to Learn from Data
 
-![Types of ML](https://www.researchgate.net/publication/373535780/figure/fig1/AS:11431281184926528@1693489593190/Types-of-machine-learning-Machine-learning-encompasses-three-main-types-supervised.png)
+![Types of ML](https://datasciencedojo.com/wp-content/uploads/ml-ds-algos.jpg)
 
 - **Supervised Learning:** Learning from **labeled examples** to make predictions
 - **Unsupervised Learning:** Finding **hidden patterns** in unlabeled data
@@ -145,6 +145,8 @@
 **Libraries:** **scikit-learn**, **TensorFlow**, **PyTorch**, **Keras**, **XGBoost**, **LightGBM**
 
 ### Natural Language Processing (NLP)
+
+![NLP](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpXnGwIzsXGPdR8TQtoitv8mSQffUsK7-4Xw&s)
 #### Understanding and Generating Human Language
 - **Definition:** AI field focused on interaction between computers and **human language**
 - **Core Tasks:** **Text processing**, **language understanding**, and **generation**
@@ -175,6 +177,8 @@
 **Tools:** **NLTK**, **spaCy**, **Hugging Face Transformers**, **OpenAI API**, **Google Cloud NLP**
 
 ### Computer Vision
+
+![CV](https://www.algotive.ai/hubfs/00%20Blog/Qu%C3%A9%20es%20la%20visi%C3%B3n%20artificial%20y%20c%C3%B3mo%20funciona%20con%20la%20inteligencia%20artificial/Computervision_banner.jpg)
 #### Teaching Machines to See and Understand Visual Data
 - **Definition:** AI field enabling machines to **interpret and understand** visual information
 - **Core Capabilities:** **Image processing**, **object detection**, **scene understanding**
@@ -213,6 +217,7 @@
 **Libraries:** **OpenCV**, **TensorFlow**, **PyTorch**, **Keras**, **PIL/Pillow**, **scikit-image**
 
 ### Time Series Analysis
+![TS](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCVYi6jVf14M4192jhPiQN2FlBxDXv8RRK3A&s)
 #### Understanding Data Patterns Over Time
 - **Definition:** Statistical and ML techniques for analyzing **time-ordered data**
 - **Core Concepts:** **Trends**, **seasonality**, **cycles**, and **irregularities** in temporal data
@@ -250,6 +255,7 @@
 **Tools:** **pandas**, **NumPy**, **statsmodels**, **Prophet**, **TensorFlow**, **PyTorch**, **R forecast package**
 
 ### Generative AI Revolution
+![](https://www.neurond.com/static/ee21649db716ea19134f604796a6b3e7/56731/types-of-generative-ai-models-1.jpg)
 #### Creating New Content from Data
 - **Definition:** AI systems that can generate **new, original content** across various media
 - **Core Principle:** Learning patterns from existing data to create **novel outputs**
@@ -290,6 +296,7 @@
 **Platforms:** **OpenAI API**, **Hugging Face**, **Anthropic Claude**, **Google Gemini**, **Stability AI**
 
 ### Large Language Models (LLMs)
+![LLM](https://dataaspirant.com/wp-content/uploads/2025/04/1-2.png)
 #### The Foundation of Modern AI
 - **Definition:** **Neural networks** with billions of parameters trained on massive text datasets
 - **Architecture:** Based on **transformer models** with attention mechanisms
@@ -328,6 +335,7 @@
 **APIs and Platforms:** **OpenAI API**, **Anthropic API**, **Hugging Face**, **Azure OpenAI**, **Google AI**
 
 ### Conversational AI
+![](https://images-cdn.openxcell.com/wp-content/uploads/2024/11/26123116/What-is-an-AI-Chatbot_-1024x639.webp)
 #### Natural Dialogue Systems
 - **Definition:** AI systems enabling **natural, human-like conversations** through text or voice
 - **Evolution:** From **rule-based chatbots** to **context-aware dialogue systems**
@@ -367,6 +375,7 @@
 **Technologies:** **Langchain**, **Dialogflow**, **Rasa**, **OpenAI API**, etc
 
 ### Agentic AI
+![](https://images.prismic.io/intuzwebsite/ZrYZ2kaF0TcGI0t6_AIAgent%26AIAgenticWorkflowsAcrossIndustries.png?auto=format,compress)
 #### Autonomous AI Systems That Take Action
 - **Definition:** AI systems that can **independently take actions** to achieve specific goals
 - **Key Characteristics:** **Goal-oriented**, **autonomous**, **adaptive**, and **proactive**
@@ -405,6 +414,7 @@
 **Frameworks:** **LangChain**, **AutoGPT**, **Microsoft Semantic Kernel**, **CrewAI**, **OpenAI Assistants**
 
 ### Voice AI Agents
+![](https://landen.imgix.net/blog_pjUIGQgQQxNjuleV/assets/vOgSoCqRLAWSzjPi.jpg?w=880)
 #### Conversational Intelligence Through Speech
 - **Definition:** AI systems combining **speech recognition**, **NLU**, and **speech synthesis**
 - **Components:** **Speech-to-text**, **natural language processing**, **text-to-speech**
@@ -452,6 +462,7 @@
 **Technologies:** **Google Speech-to-Text**, **Amazon Polly**, **Microsoft Speech SDK**, **OpenAI Whisper**
 
 ### Model Context Protocol (MCP)
+![](https://www.descope.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fxqb1f63q68s1%2F2x3R1j8peZzdnweb5m1RK3%2Fa8628561358334a605e7f291560fc7cc%2FMCP_learning_center_image_1-min__1_.png&w=1920&q=75)
 #### Standardizing AI Model Interactions
 - **Definition:** Emerging standard for AI models to interact with **external systems**
 - **Purpose:** Enable models to access **real-time data** and perform **actions**
