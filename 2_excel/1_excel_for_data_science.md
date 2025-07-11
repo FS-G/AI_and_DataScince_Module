@@ -1,15 +1,15 @@
 # Excel for Data Science - Complete Lecture Notes
 
-## Module 1: Excel Fundamentals for Data Science (2-3 hours)
+## Module 1: Excel Fundamentals for Data Science 
 
-### Session 1A: Setup and Data Types (60-90 minutes)
+### Session 1A: Setup and Data Types 
 
 #### Learning Objectives
 - Navigate Excel interface efficiently for data work
 - Identify and work with different data types
 - Apply proper formatting and validation to datasets
 
-#### 1. Excel Interface Tour and Customization (20 minutes)
+#### 1. Excel Interface Tour and Customization
 
 **Key Interface Elements for Data Science:**
 - **Ribbon Tabs**: Focus on Data, Formulas, and Insert tabs
@@ -29,7 +29,7 @@
 - `F2`: Edit cell
 - `Ctrl+;`: Insert current date
 
-#### 2. Understanding Data Types (25 minutes)
+#### 2. Understanding Data Types
 
 **Numeric Data:**
 - **Integers**: Whole numbers (1, 2, 100, -5)
@@ -51,7 +51,7 @@
 - **Boolean**: TRUE/FALSE values
 - **Binary**: 1/0 representations
 
-#### 3. Cell Formatting and Data Validation (15 minutes)
+#### 3. Cell Formatting and Data Validation
 
 **Formatting Best Practices:**
 - Use consistent date formats (YYYY-MM-DD for sorting)
@@ -68,14 +68,19 @@ Data > Data Validation > Settings
 - Text Length: Control input length
 ```
 
-#### Hands-on Exercise 1A: Dataset Import and Formatting (30 minutes)
+#### Hands-on Exercise 1A: Dataset Import and Formatting
 
 **Sample Dataset: Customer Information**
 ```
-CustomerID | Name | Email | Registration_Date | Age | Status
-001 | John Smith | john@email.com | 2024-01-15 | 25 | Active
-002 | Jane Doe | jane@email.com | 2024-02-20 | 30 | Inactive
-003 | Bob Johnson | bob@email.com | 2024-03-10 | 28 | Active
+CustomerID | Name | Email | Registration_Date | Age | Status | City | Annual_Spend | Last_Purchase
+001 | John Smith | john.smith@techcorp.com | 2024-01-15 | 25 | Active | New York | 2500 | 2024-03-15
+002 | Jane Doe | jane.doe@techcorp.com | 2024-02-20 | 30 | Inactive | Los Angeles | 1800 | 2024-02-28
+003 | Bob Johnson | bob.johnson@techcorp.com | 2024-03-10 | 28 | Active | Chicago | 3200 | 2024-03-20
+004 | Alice Brown | alice.brown@techcorp.com | 2024-01-25 | 35 | Active | Houston | 2100 | 2024-03-18
+005 | Charlie Wilson | charlie.wilson@techcorp.com | 2024-02-05 | 42 | Active | Miami | 4500 | 2024-03-22
+006 | Diana Garcia | diana.garcia@techcorp.com | 2024-03-01 | 29 | Inactive | Phoenix | 1200 | 2024-02-15
+007 | Edward Lee | edward.lee@techcorp.com | 2024-01-30 | 38 | Active | Seattle | 3800 | 2024-03-25
+008 | Fiona Chen | fiona.chen@techcorp.com | 2024-02-12 | 26 | Active | Denver | 2900 | 2024-03-19
 ```
 
 **Tasks:**
@@ -87,14 +92,14 @@ CustomerID | Name | Email | Registration_Date | Age | Status
 
 ---
 
-### Session 1B: Essential Functions (60-90 minutes)
+### Session 1B: Essential Functions
 
 #### Learning Objectives
 - Master fundamental Excel functions for data analysis
 - Combine functions to create complex formulas
 - Clean and prepare data using text and logical functions
 
-#### 1. Mathematical Functions (20 minutes)
+#### 1. Mathematical Functions
 
 **Basic Statistical Functions:**
 ```excel
@@ -123,7 +128,7 @@ Average Order: =AVERAGE(D2:D100)
 Order Count: =COUNT(D2:D100)
 ```
 
-#### 2. Logical Functions (20 minutes)
+#### 2. Logical Functions
 
 **IF Function Syntax:**
 ```excel
@@ -149,7 +154,7 @@ Order Count: =COUNT(D2:D100)
 =IF(NOT(A1=""),"Data Present","No Data")
 ```
 
-#### 3. Text Functions (15 minutes)
+#### 3. Text Functions
 
 **String Manipulation:**
 ```excel
@@ -174,7 +179,7 @@ Order Count: =COUNT(D2:D100)
 =SUBSTITUTE(A1,"old","new") # Replace text
 ```
 
-#### 4. Date/Time Functions (15 minutes)
+#### 4. Date/Time Functions
 
 **Current Date/Time:**
 ```excel
@@ -197,14 +202,17 @@ Order Count: =COUNT(D2:D100)
 =WEEKDAY(A1)           # Day of week (1-7)
 ```
 
-#### Hands-on Exercise 1B: Customer Dataset Cleaning (30 minutes)
+#### Hands-on Exercise 1B: Customer Dataset Cleaning
 
 **Sample Messy Dataset:**
 ```
-Customer_Name | email_address | phone | registration_date | status
-john smith | JOHN@EMAIL.COM | 555-1234 | 1/15/2024 | active
-JANE DOE | jane@email.com | (555) 567-8901 | 2024-02-20 | INACTIVE
-Bob Johnson | bob@email.com | 555.234.5678 | 3/10/24 | Active
+Customer_Name | email_address | phone | registration_date | status | city | annual_spend
+john smith | JOHN.SMITH@TECHCORP.COM | 555-1234 | 1/15/2024 | active | new york | $2,500
+JANE DOE | jane.doe@techcorp.com | (555) 567-8901 | 2024-02-20 | INACTIVE | los angeles | 1800
+Bob Johnson | bob.johnson@techcorp.com | 555.234.5678 | 3/10/24 | Active | chicago | $3,200
+alice brown | ALICE.BROWN@TECHCORP.COM | (555) 789-0123 | 1/25/2024 | ACTIVE | houston | 2100
+CHARLIE WILSON | charlie.wilson@techcorp.com | 555.456.7890 | 2/5/24 | active | miami | $4,500
+diana garcia | DIANA.GARCIA@TECHCORP.COM | (555) 321-6540 | 3/1/2024 | inactive | phoenix | 1200
 ```
 
 **Cleaning Tasks:**
@@ -227,16 +235,16 @@ Segment: =IF(DATEDIF(D2,TODAY(),"D")<=90,"New","Existing")
 
 ---
 
-## Module 2: Data Import and Cleaning (3-4 hours)
+## Module 2: Data Import and Cleaning
 
-### Session 2A: Data Import Techniques (90-120 minutes)
+### Session 2A: Data Import Techniques
 
 #### Learning Objectives
 - Import data from various file formats
 - Use Power Query for advanced data import
 - Handle encoding and formatting issues
 
-#### 1. Basic Data Import Methods (30 minutes)
+#### 1. Basic Data Import Methods
 
 **CSV File Import:**
 1. Data > Get Data > From File > From Text/CSV
@@ -257,7 +265,7 @@ Segment: =IF(DATEDIF(D2,TODAY(),"D")<=90,"New","Existing")
 3. Set column breaks for fixed-width
 4. Preview and adjust data types
 
-#### 2. Power Query Basics (45 minutes)
+#### 2. Power Query Basics
 
 **Power Query Interface:**
 - **Query Editor**: Transform data before loading
@@ -286,7 +294,7 @@ Table.TransformColumns(Source, {"Name", Text.Proper})
 Table.SelectRows(Source, each [Date] >= Date.AddDays(Date.From(DateTime.LocalNow()), -30))
 ```
 
-#### 3. Handling Different File Formats (30 minutes)
+#### 3. Handling Different File Formats
 
 **JSON Data Import:**
 1. Data > Get Data > From File > From JSON
@@ -315,7 +323,7 @@ Data > Get Data > From Database
 3. Select tables from web page
 4. Handle authentication if required
 
-#### 4. Encoding and Special Characters (15 minutes)
+#### 4. Encoding and Special Characters
 
 **Common Encoding Issues:**
 - UTF-8 vs ANSI encoding
@@ -329,30 +337,48 @@ Data > Get Data > From Database
 - Transform characters using SUBSTITUTE
 - Set regional settings in Excel
 
-#### Hands-on Exercise 2A: Multi-Source Data Import (45 minutes)
+#### Hands-on Exercise 2A: Multi-Source Data Import
 
 **Scenario: Sales Data from Multiple Sources**
 
 **Source 1: CSV - Online Sales**
 ```
-OrderID,CustomerID,Product,Quantity,Price,Date
-1001,C001,Laptop,1,999.99,2024-01-15
-1002,C002,Mouse,2,25.50,2024-01-16
+OrderID,CustomerID,Product,Quantity,Price,Date,Channel,Region
+1001,C001,Laptop,1,999.99,2024-01-15,Online,North
+1002,C002,Mouse,2,25.50,2024-01-16,Online,South
+1003,C003,Tablet,1,299.99,2024-01-17,Online,East
+1004,C004,Keyboard,3,45.00,2024-01-18,Online,West
+1005,C005,Monitor,2,199.99,2024-01-19,Online,North
+1006,C006,Headphones,1,89.99,2024-01-20,Online,South
+1007,C007,Webcam,1,59.99,2024-01-21,Online,East
+1008,C008,Speaker,2,129.99,2024-01-22,Online,West
 ```
 
 **Source 2: Excel - Store Sales**
 ```
-Order_ID | Customer_ID | Product_Name | Qty | Unit_Price | Sale_Date
-2001 | C003 | Tablet | 1 | 299.99 | 15-Jan-2024
-2002 | C004 | Keyboard | 3 | 45.00 | 16-Jan-2024
+Order_ID | Customer_ID | Product_Name | Qty | Unit_Price | Sale_Date | Store_Location | Sales_Rep
+2001 | C003 | Tablet | 1 | 299.99 | 15-Jan-2024 | Downtown | Sarah
+2002 | C004 | Keyboard | 3 | 45.00 | 16-Jan-2024 | Mall | Mike
+2003 | C005 | Monitor | 2 | 199.99 | 17-Jan-2024 | Downtown | Lisa
+2004 | C006 | Headphones | 1 | 89.99 | 18-Jan-2024 | Mall | John
+2005 | C007 | Webcam | 1 | 59.99 | 19-Jan-2024 | Downtown | Sarah
+2006 | C008 | Speaker | 2 | 129.99 | 20-Jan-2024 | Mall | Mike
+2007 | C009 | Mouse | 5 | 25.50 | 21-Jan-2024 | Downtown | Lisa
+2008 | C010 | Laptop | 1 | 999.99 | 22-Jan-2024 | Mall | John
 ```
 
 **Source 3: JSON - Customer Data**
 ```json
 {
   "customers": [
-    {"id": "C001", "name": "John Smith", "email": "john@email.com"},
-    {"id": "C002", "name": "Jane Doe", "email": "jane@email.com"}
+    {"id": "C001", "name": "John Smith", "email": "john.smith@techcorp.com", "city": "New York", "membership_level": "Premium"},
+    {"id": "C002", "name": "Jane Doe", "email": "jane.doe@techcorp.com", "city": "Los Angeles", "membership_level": "Standard"},
+    {"id": "C003", "name": "Bob Johnson", "email": "bob.johnson@techcorp.com", "city": "Chicago", "membership_level": "Premium"},
+    {"id": "C004", "name": "Alice Brown", "email": "alice.brown@techcorp.com", "city": "Houston", "membership_level": "Standard"},
+    {"id": "C005", "name": "Charlie Wilson", "email": "charlie.wilson@techcorp.com", "city": "Miami", "membership_level": "Premium"},
+    {"id": "C006", "name": "Diana Garcia", "email": "diana.garcia@techcorp.com", "city": "Phoenix", "membership_level": "Basic"},
+    {"id": "C007", "name": "Edward Lee", "email": "edward.lee@techcorp.com", "city": "Seattle", "membership_level": "Premium"},
+    {"id": "C008", "name": "Fiona Chen", "email": "fiona.chen@techcorp.com", "city": "Denver", "membership_level": "Standard"}
   ]
 }
 ```
@@ -366,14 +392,14 @@ Order_ID | Customer_ID | Product_Name | Qty | Unit_Price | Sale_Date
 
 ---
 
-### Session 2B: Data Cleaning and Transformation (90-120 minutes)
+### Session 2B: Data Cleaning and Transformation
 
 #### Learning Objectives
 - Identify and resolve data quality issues
 - Handle missing values appropriately
 - Transform data for analysis readiness
 
-#### 1. Identifying Data Quality Issues (30 minutes)
+#### 1. Identifying Data Quality Issues
 
 **Common Data Quality Problems:**
 - Missing values (blanks, nulls, "N/A")
@@ -403,7 +429,7 @@ Order_ID | Customer_ID | Product_Name | Qty | Unit_Price | Sale_Date
 - [ ] Validate date ranges
 - [ ] Examine categorical variable distributions
 
-#### 2. Handling Missing Values (25 minutes)
+#### 2. Handling Missing Values
 
 **Strategies for Missing Data:**
 
@@ -437,7 +463,7 @@ Go To Special > Blanks > Delete Rows
 =IF(ISBLANK(A1),"Missing","Present")
 ```
 
-#### 3. Removing Duplicates and Inconsistencies (25 minutes)
+#### 3. Removing Duplicates and Inconsistencies
 
 **Duplicate Detection:**
 ```excel
@@ -466,7 +492,7 @@ Go To Special > Blanks > Delete Rows
 =SUBSTITUTE(SUBSTITUTE(A1,"USA","United States"),"US","United States")
 ```
 
-#### 4. Text-to-Columns and Data Parsing (20 minutes)
+#### 4. Text-to-Columns and Data Parsing
 
 **Split Delimited Text:**
 1. Select column with delimited data
@@ -490,7 +516,7 @@ Go To Special > Blanks > Delete Rows
 =TRIM(MID(SUBSTITUTE(A1,",",REPT(" ",100)),100,100))
 ```
 
-#### 5. Find and Replace with Patterns (10 minutes)
+#### 5. Find and Replace with Patterns
 
 **Basic Find and Replace:**
 - Ctrl+H to open Find & Replace
@@ -508,17 +534,22 @@ Find: [()-. ]
 Replace: (nothing)
 ```
 
-#### Hands-on Exercise 2B: Real-World Survey Data Cleaning (45 minutes)
+#### Hands-on Exercise 2B: Real-World Survey Data Cleaning
 
 **Sample Messy Survey Dataset:**
 ```
-respondent_id | age | gender | income | education | satisfaction | comments
-1 | 25 | M | $50,000 | bachelor's | 4 | "good service"
-2 | | F | 60000 | Bachelor | 5 | Very satisfied!!!
-3 | 35 | male | $75,000 | Masters | 3 | 
-4 | 28 | F | 45,000 | bachelor's degree | 4 | "could be better"
-5 | 45 | M | $90,000 | PhD | 5 | excellent
-2 | 30 | F | $60,000 | Bachelor | 5 | Very satisfied!!!
+respondent_id | age | gender | income | education | satisfaction | comments | purchase_frequency | preferred_channel
+1 | 25 | M | $50,000 | bachelor's | 4 | "good service" | monthly | online
+2 | | F | 60000 | Bachelor | 5 | Very satisfied!!! | weekly | store
+3 | 35 | male | $75,000 | Masters | 3 | | bi-weekly | online
+4 | 28 | F | 45,000 | bachelor's degree | 4 | "could be better" | monthly | store
+5 | 45 | M | $90,000 | PhD | 5 | excellent | weekly | online
+2 | 30 | F | $60,000 | Bachelor | 5 | Very satisfied!!! | monthly | store
+6 | 32 | Female | $65,000 | Master's | 4 | "decent experience" | bi-weekly | online
+7 | 29 | m | $55,000 | bachelor | 3 | needs improvement | monthly | store
+8 | 41 | F | $85,000 | MBA | 5 | outstanding service | weekly | online
+9 | 26 | Male | $48,000 | college | 4 | "pretty good" | monthly | store
+10 | 38 | f | $72,000 | master's degree | 5 | excellent experience | weekly | online
 ```
 
 **Data Quality Issues to Address:**
@@ -560,16 +591,16 @@ respondent_id | age | gender | income | education | satisfaction | comments
 
 ---
 
-## Module 3: Data Analysis and Exploration (4-5 hours)
+## Module 3: Data Analysis and Exploration
 
-### Session 3A: Descriptive Statistics (90-120 minutes)
+### Session 3A: Descriptive Statistics
 
 #### Learning Objectives
 - Calculate comprehensive descriptive statistics
 - Understand data distributions and variability
 - Perform correlation analysis
 
-#### 1. Measures of Central Tendency (30 minutes)
+#### 1. Measures of Central Tendency
 
 **Mean, Median, Mode:**
 ```excel
@@ -599,7 +630,7 @@ respondent_id | age | gender | income | education | satisfaction | comments
 =HARMEAN(A1:A100)
 ```
 
-#### 2. Measures of Variability (25 minutes)
+#### 2. Measures of Variability
 
 **Range and Interquartile Range:**
 ```excel
@@ -631,7 +662,7 @@ respondent_id | age | gender | income | education | satisfaction | comments
 =STDEV.S(A1:A100)/AVERAGE(A1:A100)
 ```
 
-#### 3. Percentiles and Quartiles (20 minutes)
+#### 3. Percentiles and Quartiles
 
 **Percentile Functions:**
 ```excel
@@ -669,7 +700,7 @@ respondent_id | age | gender | income | education | satisfaction | comments
 =PERCENTRANK(A1:A100,75)
 ```
 
-#### 4. Distribution Shape Analysis (15 minutes)
+#### 4. Distribution Shape Analysis
 
 **Skewness:**
 ```excel
@@ -689,7 +720,7 @@ respondent_id | age | gender | income | education | satisfaction | comments
 // ~0: Normal-like tails
 ```
 
-#### 5. Correlation Analysis (20 minutes)
+#### 5. Correlation Analysis
 
 **Pearson Correlation:**
 ```excel
@@ -718,15 +749,19 @@ C  =CORREL(C:C,A:A)  =CORREL(C:C,B:B)  1
 =COVARIANCE.P(A1:A100,B1:B100)  // Population covariance
 ```
 
-#### Hands-on Exercise 3A: Sales Performance Analysis (45 minutes)
+#### Hands-on Exercise 3A: Sales Performance Analysis
 
 **Sample Sales Dataset:**
 ```
-SalesRep | Region | Q1_Sales | Q2_Sales | Q3_Sales | Q4_Sales | Years_Experience
-John | North | 125000 | 130000 | 145000 | 150000 | 5
-Sarah | South | 110000 | 120000 | 135000 | 140000 | 3
-Mike | East | 135000 | 140000 | 155000 | 160000 | 7
-Lisa | West | 105000 | 115000 | 125000 | 130000 | 2
+SalesRep | Region | Q1_Sales | Q2_Sales | Q3_Sales | Q4_Sales | Years_Experience | Territory_Size | Customer_Count
+John | North | 125000 | 130000 | 145000 | 150000 | 5 | Large | 150
+Sarah | South | 110000 | 120000 | 135000 | 140000 | 3 | Medium | 120
+Mike | East | 135000 | 140000 | 155000 | 160000 | 7 | Large | 180
+Lisa | West | 105000 | 115000 | 125000 | 130000 | 2 | Small | 80
+David | North | 140000 | 145000 | 160000 | 165000 | 8 | Large | 200
+Emma | South | 100000 | 110000 | 125000 | 130000 | 4 | Medium | 100
+Alex | East | 120000 | 125000 | 140000 | 145000 | 6 | Medium | 140
+Sophia | West | 95000 | 105000 | 115000 | 120000 | 1 | Small | 60
 ```
 
 **Analysis Tasks:**
@@ -768,14 +803,14 @@ Lisa | West | 105000 | 115000 | 125000 | 130000 | 2
 
 ---
 
-### Session 3B: Data Aggregation and Grouping (90-120 minutes)
+### Session 3B: Data Aggregation and Grouping
 
 #### Learning Objectives
 - Use conditional functions for data aggregation
 - Create complex criteria for data analysis
 - Master array formulas for advanced calculations
 
-#### 1. SUMIF, COUNTIF, AVERAGEIF Functions (30 minutes)
+#### 1. SUMIF, COUNTIF, AVERAGEIF Functions
 
 **Basic Conditional Functions:**
 ```excel
@@ -802,7 +837,7 @@ Lisa | West | 105000 | 115000 | 125000 | 130000 | 2
 =AVERAGEIF(A1:A100,D1,B1:B100)
 ```
 
-#### 2. Advanced Multi-Criteria Functions (35 minutes)
+#### 2. Advanced Multi-Criteria Functions
 
 **SUMIFS, COUNTIFS, AVERAGEIFS:**
 ```excel
@@ -824,7 +859,7 @@ Lisa | West | 105000 | 115000 | 125000 | 130000 | 2
 =SUMIFS(Revenue,Product,"*Phone*",Status,"<>Cancelled")
 ```
 
-#### 3. Array Formulas and Their Applications (25 minutes)
+#### 3. Array Formulas and Their Applications
 
 **Basic Array Formula Concept:**
 Array formulas perform calculations on multiple values simultaneously.
@@ -859,7 +894,7 @@ Array formulas perform calculations on multiple values simultaneously.
 =SEQUENCE(10,1,1,1)                     // Numbers 1-10
 ```
 
-#### 4. Advanced Aggregation Techniques (20 minutes)
+#### 4. Advanced Aggregation Techniques
 
 **Conditional Aggregation with Multiple Conditions:**
 ```excel
@@ -885,15 +920,21 @@ Array formulas perform calculations on multiple values simultaneously.
 =SUM($A$1:A1)/SUM($A$1:$A$100)
 ```
 
-#### Hands-on Exercise 3B: Customer Segmentation Analysis (45 minutes)
+#### Hands-on Exercise 3B: Customer Segmentation Analysis
 
 **Sample Customer Dataset:**
 ```
-CustomerID | Name | Age | Gender | City | Annual_Spend | Frequency | Last_Purchase
-C001 | John Smith | 35 | M | New York | 2500 | 12 | 2024-01-15
-C002 | Jane Doe | 28 | F | Los Angeles | 1800 | 8 | 2024-02-20
-C003 | Bob Johnson | 42 | M | Chicago | 3200 | 15 | 2024-01-10
-C004 | Alice Brown | 31 | F | Houston | 2100 | 10 | 2024-03-05
+CustomerID | Name | Age | Gender | City | Annual_Spend | Frequency | Last_Purchase | Membership_Level | Preferred_Channel
+C001 | John Smith | 35 | M | New York | 2500 | 12 | 2024-01-15 | Premium | Online
+C002 | Jane Doe | 28 | F | Los Angeles | 1800 | 8 | 2024-02-20 | Standard | Store
+C003 | Bob Johnson | 42 | M | Chicago | 3200 | 15 | 2024-01-10 | Premium | Online
+C004 | Alice Brown | 31 | F | Houston | 2100 | 10 | 2024-03-05 | Standard | Store
+C005 | Charlie Wilson | 45 | M | Miami | 4500 | 20 | 2024-01-05 | Premium | Online
+C006 | Diana Garcia | 29 | F | Phoenix | 1200 | 6 | 2024-02-15 | Basic | Store
+C007 | Edward Lee | 38 | M | Seattle | 3800 | 18 | 2024-01-20 | Premium | Online
+C008 | Fiona Chen | 26 | F | Denver | 2900 | 14 | 2024-03-10 | Standard | Online
+C009 | George Martinez | 33 | M | Austin | 2200 | 11 | 2024-02-25 | Standard | Store
+C010 | Helen Taylor | 41 | F | Portland | 3600 | 16 | 2024-01-30 | Premium | Online
 ```
 
 **Segmentation Tasks:**
@@ -976,14 +1017,14 @@ C004 | Alice Brown | 31 | F | Houston | 2100 | 10 | 2024-03-05
 
 ---
 
-### Session 3C: Pivot Tables Mastery (120-150 minutes)
+### Session 3C: Pivot Tables Mastery
 
 #### Learning Objectives
 - Create and customize comprehensive pivot tables
 - Master grouping and calculated fields
 - Build dynamic analysis dashboards
 
-#### 1. Creating and Customizing Pivot Tables (35 minutes)
+#### 1. Creating and Customizing Pivot Tables
 
 **Basic Pivot Table Creation:**
 1. Select data range (Ctrl+T to create table first)
@@ -1010,7 +1051,7 @@ Right-click pivot table > PivotTable Options
 - Data: Refresh data automatically
 ```
 
-#### 2. Advanced Pivot Table Features (40 minutes)
+#### 2. Advanced Pivot Table Features
 
 **Multiple Value Fields:**
 ```
@@ -1046,7 +1087,7 @@ Examples:
 - Regional consolidation: North+South = "Domestic", East+West = "Coastal"
 ```
 
-#### 3. Grouping Data in Pivot Tables (25 minutes)
+#### 3. Grouping Data in Pivot Tables
 
 **Date Grouping:**
 ```
@@ -1080,7 +1121,7 @@ Income Brackets: <30K, 30-50K, 50-75K, 75-100K, 100K+
 Sales Regions: North+South = "Domestic", East+West = "Coastal"
 ```
 
-#### 4. Pivot Table Formatting and Styling (20 minutes)
+#### 4. Pivot Table Formatting and Styling
 
 **Design and Layout:**
 ```
@@ -1109,7 +1150,7 @@ Right-click values > Value Field Settings > Number Format
 - Custom: #,##0.0"K" for thousands
 ```
 
-#### 5. Dynamic Pivot Tables with Slicers and Timelines (25 minutes)
+#### 5. Dynamic Pivot Tables with Slicers and Timelines
 
 **Slicers for Interactive Filtering:**
 ```
@@ -1136,15 +1177,23 @@ Right-click slicer > Slicer Settings
 - Hide items with no data
 ```
 
-#### Hands-on Exercise 3C: E-commerce Multi-Dimensional Analysis (45 minutes)
+#### Hands-on Exercise 3C: E-commerce Multi-Dimensional Analysis
 
 **Sample E-commerce Dataset:**
 ```
-OrderID | Date | Customer | Product | Category | Region | Channel | Quantity | Price | Cost
-1001 | 2024-01-15 | John Smith | Laptop | Electronics | North | Online | 1 | 999 | 600
-1002 | 2024-01-16 | Jane Doe | Mouse | Electronics | South | Store | 2 | 25 | 15
-1003 | 2024-01-17 | Bob Johnson | Shirt | Clothing | East | Online | 3 | 30 | 18
-1004 | 2024-01-18 | Alice Brown | Tablet | Electronics | West | Online | 1 | 299 | 200
+OrderID | Date | Customer | Product | Category | Region | Channel | Quantity | Price | Cost | Sales_Rep
+1001 | 2024-01-15 | John Smith | Laptop | Electronics | North | Online | 1 | 999 | 600 | Sarah
+1002 | 2024-01-16 | Jane Doe | Mouse | Electronics | South | Store | 2 | 25 | 15 | Mike
+1003 | 2024-01-17 | Bob Johnson | Shirt | Clothing | East | Online | 3 | 30 | 18 | Lisa
+1004 | 2024-01-18 | Alice Brown | Tablet | Electronics | West | Online | 1 | 299 | 200 | John
+1005 | 2024-01-19 | Charlie Wilson | Monitor | Electronics | North | Store | 2 | 199 | 120 | Sarah
+1006 | 2024-01-20 | Diana Garcia | Headphones | Electronics | South | Online | 1 | 89 | 45 | Mike
+1007 | 2024-01-21 | Edward Lee | Keyboard | Electronics | East | Store | 3 | 45 | 25 | Lisa
+1008 | 2024-01-22 | Fiona Chen | Speaker | Electronics | West | Online | 2 | 129 | 80 | John
+1009 | 2024-01-23 | George Martinez | Jeans | Clothing | North | Store | 2 | 75 | 40 | Sarah
+1010 | 2024-01-24 | Helen Taylor | Webcam | Electronics | South | Online | 1 | 59 | 35 | Mike
+1011 | 2024-01-25 | Ian Anderson | T-shirt | Clothing | East | Store | 5 | 20 | 12 | Lisa
+1012 | 2024-01-26 | Julia Rodriguez | Printer | Electronics | West | Online | 1 | 199 | 120 | John
 ```
 
 **Analysis Tasks:**
@@ -1211,16 +1260,16 @@ OrderID | Date | Customer | Product | Category | Region | Channel | Quantity | P
 
 ---
 
-## Module 4: Data Visualization (3-4 hours)
+## Module 4: Data Visualization
 
-### Session 4A: Chart Fundamentals (90-120 minutes)
+### Session 4A: Chart Fundamentals
 
 #### Learning Objectives
 - Select appropriate chart types for different data scenarios
 - Create and customize professional-looking charts
 - Master chart formatting and design principles
 
-#### 1. Choosing Appropriate Chart Types (30 minutes)
+#### 1. Choosing Appropriate Chart Types
 
 **Chart Selection Guidelines:**
 
@@ -1265,7 +1314,7 @@ OrderID | Date | Customer | Product | Category | Region | Channel | Quantity | P
   - Use when: Showing median, quartiles, outliers
   - Example: Performance distribution by team
 
-#### 2. Creating Basic Charts (25 minutes)
+#### 2. Creating Basic Charts
 
 **Chart Creation Steps:**
 1. Select data range (include headers)
@@ -1288,7 +1337,7 @@ Keyboard Shortcuts:
 - Ctrl+1: Format selected chart element
 ```
 
-#### 3. Chart Formatting and Customization (35 minutes)
+#### 3. Chart Formatting and Customization
 
 **Chart Design Tab:**
 ```
@@ -1331,7 +1380,7 @@ Axis Formatting:
 - Axis Position: On tick marks or between
 ```
 
-#### 4. Professional Chart Design Principles (20 minutes)
+#### 4. Professional Chart Design Principles
 
 **Design Best Practices:**
 
@@ -1361,17 +1410,23 @@ Axis Formatting:
 - Don't manipulate to mislead
 - Include context and source information
 
-#### Hands-on Exercise 4A: Business Metrics Dashboard (45 minutes)
+#### Hands-on Exercise 4A: Business Metrics Dashboard
 
 **Sample Business Data:**
 ```
-Month | Revenue | Expenses | Profit | Units_Sold | Marketing_Spend | New_Customers
-Jan | 125000 | 85000 | 40000 | 1250 | 8000 | 150
-Feb | 135000 | 92000 | 43000 | 1350 | 8500 | 165
-Mar | 145000 | 98000 | 47000 | 1450 | 9000 | 180
-Apr | 155000 | 105000 | 50000 | 1550 | 9500 | 195
-May | 165000 | 112000 | 53000 | 1650 | 10000 | 210
-Jun | 175000 | 118000 | 57000 | 1750 | 10500 | 225
+Month | Revenue | Expenses | Profit | Units_Sold | Marketing_Spend | New_Customers | Conversion_Rate | Customer_Satisfaction
+Jan | 125000 | 85000 | 40000 | 1250 | 8000 | 150 | 2.8% | 4.2
+Feb | 135000 | 92000 | 43000 | 1350 | 8500 | 165 | 3.1% | 4.3
+Mar | 145000 | 98000 | 47000 | 1450 | 9000 | 180 | 3.4% | 4.4
+Apr | 155000 | 105000 | 50000 | 1550 | 9500 | 195 | 3.7% | 4.5
+May | 165000 | 112000 | 53000 | 1650 | 10000 | 210 | 4.0% | 4.6
+Jun | 175000 | 118000 | 57000 | 1750 | 10500 | 225 | 4.3% | 4.7
+Jul | 185000 | 125000 | 60000 | 1850 | 11000 | 240 | 4.6% | 4.8
+Aug | 195000 | 132000 | 63000 | 1950 | 11500 | 255 | 4.9% | 4.9
+Sep | 205000 | 140000 | 65000 | 2050 | 12000 | 270 | 5.2% | 4.9
+Oct | 215000 | 148000 | 67000 | 2150 | 12500 | 285 | 5.5% | 4.8
+Nov | 225000 | 156000 | 69000 | 2250 | 13000 | 300 | 5.8% | 4.7
+Dec | 235000 | 164000 | 71000 | 2350 | 13500 | 315 | 6.1% | 4.6
 ```
 
 **Chart Creation Tasks:**
@@ -1426,14 +1481,14 @@ Jun | 175000 | 118000 | 57000 | 1750 | 10500 | 225
 
 ---
 
-### Session 4B: Advanced Visualization (90-120 minutes)
+### Session 4B: Advanced Visualization
 
 #### Learning Objectives
 - Create complex combination charts
 - Master conditional formatting for data visualization
 - Build interactive dashboards with dynamic elements
 
-#### 1. Combination Charts and Secondary Axes (30 minutes)
+#### 1. Combination Charts and Secondary Axes
 
 **When to Use Combination Charts:**
 - Different data types (values vs. percentages)
@@ -1471,7 +1526,7 @@ Trend Analysis:
 - Line: Monthly growth rate (Secondary axis)
 ```
 
-#### 2. Sparklines for Trend Analysis (25 minutes)
+#### 2. Sparklines for Trend Analysis
 
 **Sparkline Types:**
 - **Line**: Shows trends over time
@@ -1504,7 +1559,7 @@ Mouse   | 50 | 45 | 55 | 60 | [sparkline]
 Keyboard| 75 | 80 | 70 | 85 | [sparkline]
 ```
 
-#### 3. Conditional Formatting for Data Visualization (35 minutes)
+#### 3. Conditional Formatting for Data Visualization
 
 **Data Bars:**
 ```
@@ -1546,7 +1601,7 @@ Examples:
 - Format entire rows based on cell values
 ```
 
-#### 4. Creating Heat Maps and Data Visualizations (20 minutes)
+#### 4. Creating Heat Maps and Data Visualizations
 
 **Heat Map Creation:**
 ```
@@ -1578,7 +1633,7 @@ Performance Dashboard Heat Map:
 - Color coding: Red (below target), Green (above target)
 ```
 
-#### 5. Interactive Dashboard Elements (20 minutes)
+#### 5. Interactive Dashboard Elements
 
 **Form Controls:**
 ```
@@ -1609,15 +1664,23 @@ Link chart to dynamic named range
 Chart updates based on control selection
 ```
 
-#### Hands-on Exercise 4B: Interactive Sales Dashboard (45 minutes)
+#### Hands-on Exercise 4B: Interactive Sales Dashboard
 
 **Sample Extended Dataset:**
 ```
-Date | Region | Product | Category | Sales | Profit | Units | Manager
-2024-01-01 | North | Laptop | Electronics | 2500 | 500 | 5 | John
-2024-01-02 | South | Mouse | Electronics | 150 | 50 | 10 | Sarah
-2024-01-03 | East | Shirt | Clothing | 200 | 80 | 8 | Mike
-2024-01-04 | West | Tablet | Electronics | 1200 | 300 | 4 | Lisa
+Date | Region | Product | Category | Sales | Profit | Units | Manager | Channel | Customer_Segment
+2024-01-01 | North | Laptop | Electronics | 2500 | 500 | 5 | John | Online | Premium
+2024-01-02 | South | Mouse | Electronics | 150 | 50 | 10 | Sarah | Store | Standard
+2024-01-03 | East | Shirt | Clothing | 200 | 80 | 8 | Mike | Online | Basic
+2024-01-04 | West | Tablet | Electronics | 1200 | 300 | 4 | Lisa | Store | Premium
+2024-01-05 | North | Monitor | Electronics | 800 | 200 | 4 | John | Online | Standard
+2024-01-06 | South | Keyboard | Electronics | 135 | 45 | 3 | Sarah | Store | Basic
+2024-01-07 | East | Jeans | Clothing | 300 | 120 | 6 | Mike | Online | Premium
+2024-01-08 | West | Headphones | Electronics | 180 | 60 | 2 | Lisa | Store | Standard
+2024-01-09 | North | Webcam | Electronics | 120 | 40 | 2 | John | Online | Basic
+2024-01-10 | South | Speaker | Electronics | 260 | 80 | 2 | Sarah | Store | Premium
+2024-01-11 | East | T-shirt | Clothing | 100 | 40 | 5 | Mike | Online | Standard
+2024-01-12 | West | Printer | Electronics | 400 | 120 | 2 | Lisa | Store | Premium
 ```
 
 **Dashboard Creation Tasks:**
@@ -1682,212 +1745,3 @@ Date | Region | Product | Category | Sales | Profit | Units | Manager
    ```
 
 ---
-
-## Module 5: Advanced Analytics (3-4 hours)
-
-### Session 5A: Statistical Analysis (90-120 minutes)
-
-#### Learning Objectives
-- Perform regression analysis using Excel's built-in tools
-- Calculate and interpret moving averages
-- Create forecasting models with exponential smoothing
-
-#### 1. Regression Analysis Fundamentals (35 minutes)
-
-**Linear Regression Concepts:**
-- **Dependent Variable (Y)**: What you're trying to predict
-- **Independent Variable (X)**: What you're using to predict
-- **Regression Equation**: Y = a + bX
-  - a = Y-intercept
-  - b = Slope (change in Y per unit change in X)
-- **R-squared**: Percentage of variance explained by the model
-
-**Simple Linear Regression in Excel:**
-
-**Method 1: Scatter Plot with Trendline**
-```
-1. Create scatter plot with X and Y data
-2. Right-click data points > Add Trendline
-3. Select Linear
-4. Check "Display Equation on chart"
-5. Check "Display R-squared value on chart"
-```
-
-**Method 2: Using Functions**
-```
-Slope: =SLOPE(Y_range, X_range)
-Intercept: =INTERCEPT(Y_range, X_range)
-R-squared: =RSQ(Y_range, X_range)
-Standard Error: =STEYX(Y_range, X_range)
-```
-
-**Method 3: Data Analysis ToolPak**
-```
-Data > Data Analysis > Regression
-Input Y Range: Dependent variable
-Input X Range: Independent variable
-Output Options: New worksheet
-Residuals: Check for diagnostics
-```
-
-**Interpreting Regression Results:**
-```
-Regression Statistics:
-- R-squared: Goodness of fit (0-1, higher is better)
-- Standard Error: Average prediction error
-- F-statistic: Overall model significance
-
-Coefficients:
-- Intercept: Y-value when X=0
-- Slope: Change in Y for 1-unit change in X
-- P-value: Statistical significance (<0.05 is significant)
-```
-
-#### 2. Multiple Regression Analysis (25 minutes)
-
-**Multiple Regression Equation:**
-Y = a + b₁X₁ + b₂X₂ + b₃X₃ + ... + bₙXₙ
-
-**Setting Up Multiple Regression:**
-```
-Data > Data Analysis > Regression
-Input Y Range: Single column (dependent variable)
-Input X Range: Multiple columns (independent variables)
-Labels: Check if first row contains headers
-Confidence Level: Usually 95%
-```
-
-**Key Multiple Regression Outputs:**
-```
-R-squared: Proportion of variance explained
-Adjusted R-squared: Adjusted for number of variables
-F-statistic: Overall model significance
-Coefficients: Impact of each variable
-P-values: Significance of each variable
-```
-
-**Practical Example - Sales Prediction:**
-```
-Dependent Variable: Monthly Sales
-Independent Variables:
-- Marketing Spend (X₁)
-- Number of Salespeople (X₂)
-- Economic Index (X₃)
-- Seasonality Factor (X₄)
-
-Equation: Sales = a + b₁(Marketing) + b₂(Salespeople) + b₃(Economic) + b₄(Seasonality)
-```
-
-#### 3. Moving Averages and Trend Analysis (30 minutes)
-
-**Simple Moving Average:**
-```
-3-Period Moving Average: =AVERAGE(B1:B3)
-Copy formula down, adjusting range
-
-Formula for any period:
-=AVERAGE(OFFSET(B1,ROW()-ROW($B$1)-periods+1,0,periods,1))
-```
-
-**Weighted Moving Average:**
-```
-Gives more weight to recent values
-3-Period Weighted (weights: 1,2,3):
-=(B1*1+B2*2+B3*3)/(1+2+3)
-
-Generic formula:
-=SUMPRODUCT(values,weights)/SUM(weights)
-```
-
-**Exponential Moving Average:**
-```
-EMA = (Current Value × α) + (Previous EMA × (1-α))
-Where α = smoothing constant (0-1)
-
-Formula: =B2*$alpha+(1-$alpha)*C1
-First EMA = Simple average of first few periods
-```
-
-**Seasonal Adjustments:**
-```
-Calculate seasonal factors:
-1. Calculate 12-month moving average
-2. Divide actual by moving average
-3. Average seasonal factors by month
-4. Apply factors to deseasonalize data
-
-Seasonal Factor = Actual / Moving Average
-Deseasonalized = Actual / Seasonal Factor
-```
-
-#### 4. Forecasting with Exponential Smoothing (30 minutes)
-
-**Simple Exponential Smoothing:**
-```
-Best for data with no trend or seasonality
-Formula: Forecast = α × Latest Actual + (1-α) × Latest Forecast
-α (alpha) = smoothing constant (0.1 to 0.9)
-
-Excel Implementation:
-=alpha*B2+(1-alpha)*C1
-```
-
-**Double Exponential Smoothing (Holt's Method):**
-```
-For data with trend but no seasonality
-Level: Lt = α × Actual + (1-α) × (Lt-1 + Tt-1)
-Trend: Tt = β × (Lt - Lt-1) + (1-β) × Tt-1
-Forecast: Ft+1 = Lt + Tt
-```
-
-**Triple Exponential Smoothing (Holt-Winters):**
-```
-For data with trend and seasonality
-Includes level, trend, and seasonal components
-More complex but handles seasonal patterns
-```
-
-**Using Excel's Built-in Exponential Smoothing:**
-```
-Data > Data Analysis > Exponential Smoothing
-Input Range: Historical data
-Damping Factor: 1-α (if α=0.3, damping factor=0.7)
-Output Range: Where to place forecasts
-Chart Output: Visual representation
-```
-
-#### Hands-on Exercise 5A: Sales Forecasting Model (45 minutes)
-
-**Sample Sales Data with Multiple Variables:**
-```
-Month | Sales | Marketing | Salespeople | Economic_Index | Temperature | Seasonality
-1 | 125000 | 8000 | 5 | 102 | 45 | 0.9
-2 | 135000 | 8500 | 5 | 104 | 48 | 0.95
-3 | 145000 | 9000 | 6 | 106 | 55 | 1.1
-4 | 155000 | 9500 | 6 | 108 | 65 | 1.2
-5 | 165000 | 10000 | 6 | 110 | 75 | 1.3
-6 | 175000 | 10500 | 7 | 112 | 85 | 1.4
-```
-
-**Analysis Tasks:**
-
-1. **Simple Linear Regression:**
-   ```
-   Sales vs. Marketing Spend:
-   - Create scatter plot
-   - Add trendline with equation and R²
-   - Interpret slope and intercept
-   
-   Formula verification:
-   Slope: =SLOPE(Sales,Marketing)
-   Intercept: =INTERCEPT(Sales,Marketing)
-   R-squared: =RSQ(Sales,Marketing)
-   ```
-
-2. **Multiple Regression Analysis:**
-   ```
-   Use Data Analysis ToolPak:
-   - Y Range: Sales
-   - X Range: Marketing, Salespeople, Economic_Index
-   - Include seasonality if significant
-   
