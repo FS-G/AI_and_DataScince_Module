@@ -23,11 +23,50 @@
 - Set default number format: File > Options > Advanced > Use system separators
 
 **Essential Keyboard Shortcuts:**
-- `Ctrl+Shift+End`: Select to end of data
-- `Ctrl+T`: Create table
-- `Alt+=`: AutoSum
-- `F2`: Edit cell
-- `Ctrl+;`: Insert current date
+
+- `Ctrl+C`: Copy  
+- `Ctrl+X`: Cut  
+- `Ctrl+V`: Paste  
+- `Ctrl+Z`: Undo  
+- `Ctrl+Y`: Redo  
+- `Ctrl+B`: Bold  
+- `Ctrl+U`: Underline  
+- `Ctrl+I`: Italic  
+
+
+- `Ctrl+Arrow Key`: Move to edge of data region  
+- `Ctrl+Shift+Arrow Key`: Select to edge of data region  
+- `Ctrl+Home`: Go to A1  
+- `Ctrl+End`: Go to last used cell  
+- `Ctrl+Shift+End`: Select to end of data  
+
+
+- `Ctrl+T`: Create table  
+- `Ctrl+1`: Format cells dialog  
+- `Alt+=`: AutoSum  
+- `Ctrl+Shift+L`: Toggle filters  
+
+
+- `Ctrl+F`: Find  
+- `Ctrl+H`: Replace  
+- `F4`: Repeat last action  
+
+
+- `Ctrl+Space`: Select entire column  
+- `Shift+Space`: Select entire row  
+- `Ctrl+-`: Delete row/column  
+- `Ctrl+Shift++`: Insert row/column  
+- `Ctrl+9`: Hide row  
+- `Ctrl+0`: Hide column  
+
+
+- `Alt+Enter`: New line within cell  
+- `Ctrl+D`: Fill down  
+- `Ctrl+R`: Fill right  
+- `Ctrl+;`: Insert current date  
+
+
+
 
 #### 2. Understanding Data Types
 
