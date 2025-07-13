@@ -449,14 +449,10 @@ Order_ID | Customer_ID | Product_Name | Qty | Unit_Price | Sale_Date | Store_Loc
 
 **Detection Techniques:**
 ```excel
-// Count missing values
-=COUNTA(A:A)-COUNTA(A:A)
 
 // Find duplicates
 =COUNTIF(A:A,A1)>1
 
-// Detect outliers using IQR method
-=OR(A1<(QUARTILE(A:A,1)-1.5*IQR), A1>(QUARTILE(A:A,3)+1.5*IQR))
 ```
 
 **Data Profiling Checklist:**
