@@ -473,8 +473,6 @@ Order_ID | Customer_ID | Product_Name | Qty | Unit_Price | Sale_Date | Store_Loc
 // Filter out blanks
 Data > Filter > Uncheck (Blanks)
 
-// Remove entire rows with missing critical data
-Go To Special > Blanks > Delete Rows
 ```
 
 **2. Impute Missing Values:**
@@ -545,8 +543,6 @@ Go To Special > Blanks > Delete Rows
 // Extract domain from email
 =RIGHT(A1,LEN(A1)-FIND("@",A1))
 
-// Parse address components
-=TRIM(MID(SUBSTITUTE(A1,",",REPT(" ",100)),100,100))
 ```
 
 #### 5. Find and Replace with Patterns
