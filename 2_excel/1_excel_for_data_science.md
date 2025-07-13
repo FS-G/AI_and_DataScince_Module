@@ -509,8 +509,6 @@ Go To Special > Blanks > Delete Rows
 // Mark duplicates
 =IF(COUNTIF(A:A,A1)>1,"Duplicate","Unique")
 
-// Find exact duplicates across multiple columns
-=IF(COUNTIFS(A:A,A1,B:B,B1,C:C,C1)>1,"Duplicate","Unique")
 ```
 
 **Remove Duplicates:**
