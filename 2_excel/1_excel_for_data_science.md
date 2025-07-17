@@ -519,8 +519,7 @@ Data > Filter > Uncheck (Blanks)
 // Remove extra spaces
 =TRIM(A1)
 
-// Standardize categories
-=SUBSTITUTE(SUBSTITUTE(A1,"USA","United States"),"US","United States")
+
 ```
 
 #### 4. Text-to-Columns and Data Parsing
