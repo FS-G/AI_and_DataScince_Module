@@ -425,18 +425,7 @@ flattened = [item for sublist in nested for item in sublist]
 print(flattened)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
 
-**Complex expressions:**
-```python
-# Create a list of tuples (index, value)
-fruits = ["apple", "banana", "cherry"]
-indexed_fruits = [(i, fruit) for i, fruit in enumerate(fruits)]
-print(indexed_fruits)  # [(0, 'apple'), (1, 'banana'), (2, 'cherry')]
 
-# Create a list of dictionaries
-students = ["Alice", "Bob", "Charlie"]
-student_dicts = [{"name": name, "id": i} for i, name in enumerate(students)]
-print(student_dicts)  # [{'name': 'Alice', 'id': 0}, {'name': 'Bob', 'id': 1}, {'name': 'Charlie', 'id': 2}]
-```
 
 ### Real-World Applications
 
@@ -525,9 +514,7 @@ evens = [num for num in numbers if num % 2 == 0]
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 even_squares = [num ** 2 for num in numbers if num % 2 == 0]
 
-# Pattern 4: Nested comprehension
-matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-flattened = [item for row in matrix for item in row]
+
 ```
 
 ### Practice Examples
