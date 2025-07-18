@@ -544,23 +544,6 @@ Data > Filter > Uncheck (Blanks)
 
 ```
 
-#### 5. Find and Replace with Patterns
-
-**Basic Find and Replace:**
-- Ctrl+H to open Find & Replace
-- Use wildcards: * (multiple characters), ? (single character)
-- Match case and whole words options
-
-**Advanced Pattern Matching:**
-```excel
-// Replace multiple variations
-Find: "USA|US|United States"
-Replace: "United States"
-
-// Clean phone numbers
-Find: [()-. ]
-Replace: (nothing)
-```
 
 #### Hands-on Exercise 2B: Real-World Survey Data Cleaning
 
@@ -722,11 +705,7 @@ respondent_id | age | gender | income | education | satisfaction | comments | pu
 =QUARTILE(A1:A100,3)
 ```
 
-**Percentile Rank:**
-```excel
-// What percentile is a specific value?
-=PERCENTRANK(A1:A100,75)
-```
+
 
 #### 4. Distribution Shape Analysis
 
