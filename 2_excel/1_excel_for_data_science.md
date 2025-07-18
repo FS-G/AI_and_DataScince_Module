@@ -938,31 +938,6 @@ C010 | Helen Taylor | 41 | F | Portland | 3600 | 16 | 2024-01-30 | Premium | Onl
    =COUNTIFS(Recency_Segment,"Recent",Spend_Category,"High Spender")
    ```
 
-5. **RFM Analysis (Recency, Frequency, Monetary):**
-   ```excel
-   // RFM Scores (1-5 scale)
-   R_Score: =IF(Days_Since<=PERCENTILE(Days_Since,0.2),5,
-            IF(Days_Since<=PERCENTILE(Days_Since,0.4),4,
-            IF(Days_Since<=PERCENTILE(Days_Since,0.6),3,
-            IF(Days_Since<=PERCENTILE(Days_Since,0.8),2,1))))
-   
-   F_Score: =IF(Frequency>=PERCENTILE(Frequency,0.8),5,
-            IF(Frequency>=PERCENTILE(Frequency,0.6),4,
-            IF(Frequency>=PERCENTILE(Frequency,0.4),3,
-            IF(Frequency>=PERCENTILE(Frequency,0.2),2,1))))
-   
-   M_Score: =IF(Annual_Spend>=PERCENTILE(Annual_Spend,0.8),5,
-            IF(Annual_Spend>=PERCENTILE(Annual_Spend,0.6),4,
-            IF(Annual_Spend>=PERCENTILE(Annual_Spend,0.4),3,
-            IF(Annual_Spend>=PERCENTILE(Annual_Spend,0.2),2,1))))
-   
-   // Combined RFM segment
-   =IF(AND(R_Score>=4,F_Score>=4,M_Score>=4),"Champions",
-      IF(AND(R_Score>=3,F_Score>=3,M_Score>=3),"Loyal Customers",
-         IF(AND(R_Score<=2,F_Score<=2),"At Risk","Potential Loyalists")))
-   ```
-
----
 
 ### Session 3C: Pivot Tables Mastery
 
