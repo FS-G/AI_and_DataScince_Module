@@ -859,73 +859,13 @@ Sophia | West | 95000 | 105000 | 115000 | 120000 | 1 | Small | 60
 // Date range criteria
 =SUMIFS(Amount,Date,">="&EOMONTH(TODAY(),-1)+1,Date,"<="&EOMONTH(TODAY(),0))
 
-// Multiple value criteria (OR logic using array)
-=SUMPRODUCT(SUMIFS(Sales,Region,{"North","South","East"}))
+
 
 // Text pattern matching
 =SUMIFS(Revenue,Product,"*Phone*",Status,"<>Cancelled")
+// Sum revenue where the product name contains "Phone" and the status is not "Cancelled"
 ```
 
-#### 3. Array Formulas and Their Applications
-
-**Basic Array Formula Concept:**
-Array formulas perform calculations on multiple values simultaneously.
-
-**Array Formula Examples:**
-```excel
-// Sum of products (multiply arrays then sum)
-=SUM(A1:A10*B1:B10)                    // Ctrl+Shift+Enter
-
-// Count cells meeting multiple criteria
-=SUM((A1:A100="North")*(B1:B100>50000))
-
-// Maximum value meeting criteria
-=MAX(IF(A1:A100="North",B1:B100))
-
-// Average of top 3 values
-=AVERAGE(LARGE(A1:A100,{1,2,3}))
-```
-
-**Dynamic Array Functions (Excel 365):**
-```excel
-// Filter data based on criteria
-=FILTER(A1:C100,B1:B100="North")
-
-// Sort data
-=SORT(A1:C100,2,-1)                    // Sort by column 2, descending
-
-// Unique values
-=UNIQUE(A1:A100)
-
-// Sequence of numbers
-=SEQUENCE(10,1,1,1)                     // Numbers 1-10
-```
-
-#### 4. Advanced Aggregation Techniques
-
-**Conditional Aggregation with Multiple Conditions:**
-```excel
-// Weighted average with conditions
-=SUMPRODUCT((Region="North")*Sales*Weight)/SUMPRODUCT((Region="North")*Weight)
-
-// Standard deviation with conditions
-=SQRT(SUMPRODUCT((Region="North")*((Sales-AvgSales)^2))/SUMPRODUCT((Region="North")*1))
-
-// Median with conditions (array formula)
-=MEDIAN(IF(Region="North",Sales))
-```
-
-**Running Totals and Cumulative Calculations:**
-```excel
-// Running total
-=SUM($A$1:A1)                          // Copy down
-
-// Running average
-=AVERAGE($A$1:A1)                      // Copy down
-
-// Cumulative percentage
-=SUM($A$1:A1)/SUM($A$1:$A$100)
-```
 
 #### Hands-on Exercise 3B: Customer Segmentation Analysis
 
