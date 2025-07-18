@@ -1009,41 +1009,7 @@ Examples:
 - Regional consolidation: North+South = "Domestic", East+West = "Coastal"
 ```
 
-#### 3. Grouping Data in Pivot Tables
-
-**Date Grouping:**
-```
-Right-click date field > Group
-Options:
-- Years, Quarters, Months, Days
-- Custom date ranges
-- Multiple grouping levels simultaneously
-```
-
-**Numeric Grouping:**
-```
-Right-click numeric field > Group
-- Starting at: Minimum value
-- Ending at: Maximum value
-- By: Interval size (e.g., 1000 for income brackets)
-```
-
-**Manual Grouping:**
-```
-Select multiple items > Right-click > Group
-- Create custom categories
-- Combine related items
-- Simplify complex categorizations
-```
-
-**Grouping Examples:**
-```
-Age Groups: 18-25, 26-35, 36-45, 46-55, 56+
-Income Brackets: <30K, 30-50K, 50-75K, 75-100K, 100K+
-Sales Regions: North+South = "Domestic", East+West = "Coastal"
-```
-
-#### 4. Pivot Table Formatting and Styling
+#### 3. Pivot Table Formatting and Styling
 
 **Design and Layout:**
 ```
@@ -1072,7 +1038,7 @@ Right-click values > Value Field Settings > Number Format
 - Custom: #,##0.0"K" for thousands
 ```
 
-#### 5. Dynamic Pivot Tables with Slicers and Timelines
+#### 4. Dynamic Pivot Tables with Slicers and Timelines
 
 **Slicers for Interactive Filtering:**
 ```
