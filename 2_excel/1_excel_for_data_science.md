@@ -566,10 +566,9 @@ respondent_id | age | gender | income | education | satisfaction | comments | pu
 **Data Quality Issues to Address:**
 1. Missing age values
 2. Inconsistent gender coding (M/male, F/female)
-3. Income format inconsistencies ($50,000 vs 60000)
-4. Education level variations
-5. Duplicate respondent (ID 2)
-6. Inconsistent comment formatting
+3. Education level variations
+4. Duplicate respondent (ID 2)
+5. Inconsistent comment formatting
 
 **Cleaning Steps:**
 1. **Handle Missing Ages:**
