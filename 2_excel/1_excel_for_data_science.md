@@ -582,20 +582,17 @@ respondent_id | age | gender | income | education | satisfaction | comments | pu
    =IF(OR(C2="M",C2="male"),"Male",IF(OR(C2="F",C2="female"),"Female",C2))
    ```
 
-3. **Clean Income Data:**
-   ```excel
-   =VALUE(SUBSTITUTE(SUBSTITUTE(D2,"$",""),",",""))
-   ```
 
-4. **Standardize Education:**
+
+3. **Standardize Education:**
    ```excel
    =PROPER(SUBSTITUTE(SUBSTITUTE(E2,"'s",""),""," degree",""))
    ```
 
-5. **Remove Duplicates:**
+4. **Remove Duplicates:**
    - Use Remove Duplicates feature based on respondent_id
 
-6. **Clean Comments:**
+5. **Clean Comments:**
    ```excel
    =PROPER(TRIM(SUBSTITUTE(F2,"!","")))
    ```
