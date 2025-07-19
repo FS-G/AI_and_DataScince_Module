@@ -593,7 +593,7 @@ respondent_id | age | gender | income | education | satisfaction | comments | pu
 
 5. **Clean Comments:**
    ```excel
-   =PROPER(TRIM(SUBSTITUTE(F2,"!","")))
+   =PROPER(TRIM(SUBSTITUTE(G2,"!","")))
    ```
 
 ---
