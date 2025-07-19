@@ -585,7 +585,7 @@ respondent_id | age | gender | income | education | satisfaction | comments | pu
 
 3. **Standardize Education:**
    ```excel
-=PROPER(SUBSTITUTE(E2,"'s",""))
+   =PROPER(SUBSTITUTE(E2,"'s",""))
    ```
 
 4. **Remove Duplicates:**
