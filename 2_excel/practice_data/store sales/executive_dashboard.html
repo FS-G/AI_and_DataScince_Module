@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Sales Dashboard - C-Level Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .header .last-updated {
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #3498db;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .kpi-card.revenue { border-left-color: #27ae60; }
+        .kpi-card.profit { border-left-color: #e74c3c; }
+        .kpi-card.margin { border-left-color: #f39c12; }
+        .kpi-card.transactions { border-left-color: #9b59b6; }
+
+        .kpi-title {
+            font-size: 1rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .kpi-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .kpi-change {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .positive { color: #27ae60; }
+        .negative { color: #e74c3c; }
+        .neutral { color: #f39c12; }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insight-icon {
+            width: 24px;
+            height: 24px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .insight-content {
+            color: #555;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .table-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .filters {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+        .filter-item label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        .filter-item select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-item select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .metric-highlight {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 5px 5px 5px 0;
+        }
+
+        .alert {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: rgba(39, 174, 96, 0.1);
+            border-left-color: #27ae60;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Executive Sales Dashboard</h1>
+            <p>Comprehensive Business Intelligence for C-Level Decision Making</p>
+            <div class="last-updated">Last Updated: <span id="lastUpdated"></span></div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label for="marketFilter">Market</label>
+                    <select id="marketFilter">
+                        <option value="all">All Markets</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="productFilter">Product Type</label>
+                    <select id="productFilter">
+                        <option value="all">All Products</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="yearFilter">Year</label>
+                    <select id="yearFilter">
+                        <option value="all">All Years</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="marketSizeFilter">Market Size</label>
+                    <select id="marketSizeFilter">
+                        <option value="all">All Sizes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card revenue">
+                <div class="kpi-title">Total Revenue</div>
+                <div class="kpi-value" id="totalRevenue">$0</div>
+                <div class="kpi-change" id="revenueChange">
+                    <span class="neutral">Loading...</span>
+                </div>
+            </div>
+            <div class="kpi-card profit">
+                <div class="kpi-title">Total Profit</div>
+                <div class="kpi-value" id="totalProfit">$0</div>
+                <div class="kpi-change" id="profitChange">
+                    <span class="neutral">Loading...</span>
+                </div>
+            </div>
+            <div class="kpi-card margin">
+                <div class="kpi-title">Profit Margin</div>
+                <div class="kpi-value" id="profitMargin">0%</div>
+                <div class="kpi-change" id="marginChange">
+                    <span class="neutral">Loading...</span>
+                </div>
+            </div>
+            <div class="kpi-card transactions">
+                <div class="kpi-title">Total Transactions</div>
+                <div class="kpi-value" id="totalTransactions">0</div>
+                <div class="kpi-change" id="transactionsChange">
+                    <span class="neutral">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-title">Revenue & Profit Trends</div>
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">Product Performance</div>
+                <canvas id="productChart"></canvas>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-title">Market Performance</div>
+                <canvas id="marketChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">Budget vs Actual</div>
+                <canvas id="budgetChart"></canvas>
+            </div>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="insight-title">
+                    <div class="insight-icon">📊</div>
+                    Top Performing Products
+                </div>
+                <div class="insight-content" id="topProducts">
+                    <div class="loading">Loading...</div>
+                </div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-title">
+                    <div class="insight-icon">🌍</div>
+                    Market Insights
+                </div>
+                <div class="insight-content" id="marketInsights">
+                    <div class="loading">Loading...</div>
+                </div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-title">
+                    <div class="insight-icon">💰</div>
+                    Financial Health
+                </div>
+                <div class="insight-content" id="financialHealth">
+                    <div class="loading">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-title">
+                <div class="insight-icon">📈</div>
+                Top 15 Revenue Generating Products
+            </div>
+            <table id="topProductsTable">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Type</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                        <th>Margin</th>
+                        <th>Sales Volume</th>
+                        <th>Market</th>
+                    </tr>
+                </thead>
+                <tbody id="topProductsTableBody">
+                    <tr><td colspan="7">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let salesData = [];
+        let filteredData = [];
+        let charts = {};
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSalesData();
+        });
+
+        async function loadSalesData() {
+            try {
+                const response = await fetch('sales.csv');
+                const csvText = await response.text();
+                
+                Papa.parse(csvText, {
+                    header: true,
+                    complete: function(results) {
+                        salesData = results.data.map(row => ({
+                            ...row,
+                            Sales: parseFloat(row.Sales) || 0,
+                            Profit: parseFloat(row.Profit) || 0,
+                            COGS: parseFloat(row.COGS) || 0,
+                            'Total Expenses': parseFloat(row['Total Expenses']) || 0,
+                            Marketing: parseFloat(row.Marketing) || 0,
+                            Inventory: parseFloat(row.Inventory) || 0,
+                            'Budget Profit': parseFloat(row['Budget Profit']) || 0,
+                            'Budget Sales': parseFloat(row['Budget Sales']) || 0,
+                            Date: new Date(row.Date)
+                        }));
+                        
+                        filteredData = [...salesData];
+                        initializeDashboard();
+                    },
+                    error: function(error) {
+                        console.error('Error loading CSV:', error);
+                        document.body.innerHTML = '<div class="loading">Error loading data. Please check the file path.</div>';
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching CSV:', error);
+                document.body.innerHTML = '<div class="loading">Error loading data. Please check the file path.</div>';
+            }
+        }
+
+        function initializeDashboard() {
+            updateLastUpdated();
+            updateFilters();
+            updateKPIs();
+            createCharts();
+            updateInsights();
+            updateTables();
+        }
+
+        function updateLastUpdated() {
+            const now = new Date();
+            document.getElementById('lastUpdated').textContent = now.toLocaleString();
+        }
+
+        function updateFilters() {
+            const markets = [...new Set(salesData.map(item => item.Market))];
+            const products = [...new Set(salesData.map(item => item['Product Type']))];
+            const years = [...new Set(salesData.map(item => item.Date.getFullYear()))];
+            const marketSizes = [...new Set(salesData.map(item => item['Market Size']))];
+
+            populateSelect('marketFilter', markets);
+            populateSelect('productFilter', products);
+            populateSelect('yearFilter', years);
+            populateSelect('marketSizeFilter', marketSizes);
+
+            // Add event listeners
+            document.getElementById('marketFilter').addEventListener('change', applyFilters);
+            document.getElementById('productFilter').addEventListener('change', applyFilters);
+            document.getElementById('yearFilter').addEventListener('change', applyFilters);
+            document.getElementById('marketSizeFilter').addEventListener('change', applyFilters);
+        }
+
+        function populateSelect(selectId, options) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="all">All</option>';
+            options.sort().forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                select.appendChild(opt);
+            });
+        }
+
+        function applyFilters() {
+            const marketFilter = document.getElementById('marketFilter').value;
+            const productFilter = document.getElementById('productFilter').value;
+            const yearFilter = document.getElementById('yearFilter').value;
+            const marketSizeFilter = document.getElementById('marketSizeFilter').value;
+
+            filteredData = salesData.filter(item => {
+                const marketMatch = marketFilter === 'all' || item.Market === marketFilter;
+                const productMatch = productFilter === 'all' || item['Product Type'] === productFilter;
+                const yearMatch = yearFilter === 'all' || item.Date.getFullYear().toString() === yearFilter;
+                const marketSizeMatch = marketSizeFilter === 'all' || item['Market Size'] === marketSizeFilter;
+
+                return marketMatch && productMatch && yearMatch && marketSizeMatch;
+            });
+
+            updateKPIs();
+            updateCharts();
+            updateInsights();
+            updateTables();
+        }
+
+        function updateKPIs() {
+            const totalRevenue = filteredData.reduce((sum, item) => sum + item.Sales, 0);
+            const totalProfit = filteredData.reduce((sum, item) => sum + item.Profit, 0);
+            const totalCOGS = filteredData.reduce((sum, item) => sum + item.COGS, 0);
+            const profitMargin = totalRevenue > 0 ? (totalProfit / totalRevenue * 100) : 0;
+            const totalTransactions = filteredData.length;
+
+            // Calculate budget variance
+            const totalBudgetProfit = filteredData.reduce((sum, item) => sum + item['Budget Profit'], 0);
+            const totalBudgetSales = filteredData.reduce((sum, item) => sum + item['Budget Sales'], 0);
+            const profitVariance = totalProfit - totalBudgetProfit;
+            const salesVariance = totalRevenue - totalBudgetSales;
+
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue.toLocaleString()}`;
+            document.getElementById('totalProfit').textContent = `$${totalProfit.toLocaleString()}`;
+            document.getElementById('profitMargin').textContent = `${profitMargin.toFixed(1)}%`;
+            document.getElementById('totalTransactions').textContent = totalTransactions.toLocaleString();
+
+            // Update change indicators
+            updateChangeIndicator('revenueChange', salesVariance, totalBudgetSales);
+            updateChangeIndicator('profitChange', profitVariance, totalBudgetProfit);
+            updateChangeIndicator('marginChange', profitMargin - (totalBudgetProfit / totalBudgetSales * 100), totalBudgetProfit / totalBudgetSales * 100);
+            updateChangeIndicator('transactionsChange', totalTransactions - salesData.length, salesData.length);
+        }
+
+        function updateChangeIndicator(elementId, actual, budget) {
+            const element = document.getElementById(elementId);
+            const change = budget !== 0 ? ((actual - budget) / budget * 100) : 0;
+            const span = element.querySelector('span');
+            
+            span.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
+            span.className = change > 0 ? 'positive' : change < 0 ? 'negative' : 'neutral';
+        }
+
+        function createCharts() {
+            createRevenueChart();
+            createProductChart();
+            createMarketChart();
+            createBudgetChart();
+        }
+
+        function createRevenueChart() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            
+            // Group data by month
+            const monthlyData = {};
+            filteredData.forEach(item => {
+                const monthKey = `${item.Date.getFullYear()}-${item.Date.getMonth() + 1}`;
+                if (!monthlyData[monthKey]) {
+                    monthlyData[monthKey] = { revenue: 0, profit: 0, budget: 0 };
+                }
+                monthlyData[monthKey].revenue += item.Sales;
+                monthlyData[monthKey].profit += item.Profit;
+                monthlyData[monthKey].budget += item['Budget Sales'];
+            });
+
+            const labels = Object.keys(monthlyData).sort();
+            const revenueData = labels.map(key => monthlyData[key].revenue);
+            const profitData = labels.map(key => monthlyData[key].profit);
+            const budgetData = labels.map(key => monthlyData[key].budget);
+
+            if (charts.revenueChart) {
+                charts.revenueChart.destroy();
+            }
+
+            charts.revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue',
+                        data: revenueData,
+                        borderColor: '#27ae60',
+                        backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Profit',
+                        data: profitData,
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Budget',
+                        data: budgetData,
+                        borderColor: '#f39c12',
+                        backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                        tension: 0.4,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createProductChart() {
+            const ctx = document.getElementById('productChart').getContext('2d');
+            
+            // Group by product type
+            const productData = {};
+            filteredData.forEach(item => {
+                if (!productData[item['Product Type']]) {
+                    productData[item['Product Type']] = { revenue: 0, profit: 0 };
+                }
+                productData[item['Product Type']].revenue += item.Sales;
+                productData[item['Product Type']].profit += item.Profit;
+            });
+
+            if (charts.productChart) {
+                charts.productChart.destroy();
+            }
+
+            charts.productChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(productData),
+                    datasets: [{
+                        data: Object.values(productData).map(p => p.revenue),
+                        backgroundColor: [
+                            '#3498db',
+                            '#e74c3c',
+                            '#2ecc71',
+                            '#f39c12',
+                            '#9b59b6',
+                            '#1abc9c'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+        }
+
+        function createMarketChart() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            
+            // Group by market
+            const marketData = {};
+            filteredData.forEach(item => {
+                if (!marketData[item.Market]) {
+                    marketData[item.Market] = { revenue: 0, profit: 0, transactions: 0 };
+                }
+                marketData[item.Market].revenue += item.Sales;
+                marketData[item.Market].profit += item.Profit;
+                marketData[item.Market].transactions += 1;
+            });
+
+            if (charts.marketChart) {
+                charts.marketChart.destroy();
+            }
+
+            charts.marketChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(marketData),
+                    datasets: [{
+                        label: 'Revenue',
+                        data: Object.values(marketData).map(m => m.revenue),
+                        backgroundColor: 'rgba(52, 152, 219, 0.8)'
+                    }, {
+                        label: 'Profit',
+                        data: Object.values(marketData).map(m => m.profit),
+                        backgroundColor: 'rgba(231, 76, 60, 0.8)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createBudgetChart() {
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            
+            const totalBudgetProfit = filteredData.reduce((sum, item) => sum + item['Budget Profit'], 0);
+            const totalActualProfit = filteredData.reduce((sum, item) => sum + item.Profit, 0);
+            const totalBudgetSales = filteredData.reduce((sum, item) => sum + item['Budget Sales'], 0);
+            const totalActualSales = filteredData.reduce((sum, item) => sum + item.Sales, 0);
+
+            if (charts.budgetChart) {
+                charts.budgetChart.destroy();
+            }
+
+            charts.budgetChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Profit', 'Sales'],
+                    datasets: [{
+                        label: 'Budget',
+                        data: [totalBudgetProfit, totalBudgetSales],
+                        backgroundColor: 'rgba(52, 152, 219, 0.8)'
+                    }, {
+                        label: 'Actual',
+                        data: [totalActualProfit, totalActualSales],
+                        backgroundColor: 'rgba(231, 76, 60, 0.8)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            createRevenueChart();
+            createProductChart();
+            createMarketChart();
+            createBudgetChart();
+        }
+
+        function updateInsights() {
+            updateTopProducts();
+            updateMarketInsights();
+            updateFinancialHealth();
+        }
+
+        function updateTopProducts() {
+            const productPerformance = {};
+            filteredData.forEach(item => {
+                const key = `${item.Product} (${item['Product Type']})`;
+                if (!productPerformance[key]) {
+                    productPerformance[key] = { revenue: 0, profit: 0, margin: 0, type: item['Product Type'] };
+                }
+                productPerformance[key].revenue += item.Sales;
+                productPerformance[key].profit += item.Profit;
+            });
+
+            // Calculate margins
+            Object.values(productPerformance).forEach(product => {
+                product.margin = product.revenue > 0 ? (product.profit / product.revenue * 100) : 0;
+            });
+
+            const topProducts = Object.entries(productPerformance)
+                .sort((a, b) => b[1].revenue - a[1].revenue)
+                .slice(0, 5);
+
+            document.getElementById('topProducts').innerHTML = 
+                topProducts.map(([product, stats]) => 
+                    `<div style="margin-bottom: 15px;">
+                        <strong>${product}</strong>
+                        <div class="metric-highlight">Revenue: $${stats.revenue.toLocaleString()}</div>
+                        <div class="metric-highlight">Profit: $${stats.profit.toLocaleString()}</div>
+                        <div class="metric-highlight">Margin: ${stats.margin.toFixed(1)}%</div>
+                    </div>`
+                ).join('');
+        }
+
+        function updateMarketInsights() {
+            const marketPerformance = {};
+            filteredData.forEach(item => {
+                if (!marketPerformance[item.Market]) {
+                    marketPerformance[item.Market] = { revenue: 0, profit: 0, transactions: 0, size: item['Market Size'] };
+                }
+                marketPerformance[item.Market].revenue += item.Sales;
+                marketPerformance[item.Market].profit += item.Profit;
+                marketPerformance[item.Market].transactions += 1;
+            });
+
+            const bestMarket = Object.entries(marketPerformance)
+                .sort((a, b) => b[1].revenue - a[1].revenue)[0];
+
+            const totalRevenue = Object.values(marketPerformance).reduce((sum, m) => sum + m.revenue, 0);
+
+            document.getElementById('marketInsights').innerHTML = 
+                `<div style="margin-bottom: 20px;">
+                    <strong>🏆 Best Performing Market:</strong> ${bestMarket[0]}
+                    <div class="metric-highlight">Revenue: $${bestMarket[1].revenue.toLocaleString()}</div>
+                    <div class="metric-highlight">Profit: $${bestMarket[1].profit.toLocaleString()}</div>
+                    <div class="metric-highlight">Transactions: ${bestMarket[1].transactions}</div>
+                </div>
+                <div>
+                    <strong>📊 Market Distribution:</strong><br>
+                    ${Object.entries(marketPerformance).map(([market, stats]) => 
+                        `${market}: ${((stats.revenue / totalRevenue) * 100).toFixed(1)}%`
+                    ).join('<br>')}
+                </div>`;
+        }
+
+        function updateFinancialHealth() {
+            const totalRevenue = filteredData.reduce((sum, item) => sum + item.Sales, 0);
+            const totalProfit = filteredData.reduce((sum, item) => sum + item.Profit, 0);
+            const totalExpenses = filteredData.reduce((sum, item) => sum + item['Total Expenses'], 0);
+            const totalMarketing = filteredData.reduce((sum, item) => sum + item.Marketing, 0);
+            const profitMargin = totalRevenue > 0 ? (totalProfit / totalRevenue * 100) : 0;
+            const budgetVariance = totalProfit - filteredData.reduce((sum, item) => sum + item['Budget Profit'], 0);
+
+            const healthStatus = budgetVariance >= 0 ? 'success' : 'alert';
+            const statusText = budgetVariance >= 0 ? '✅ On Track' : '⚠️ Below Budget';
+
+            document.getElementById('financialHealth').innerHTML = 
+                `<div class="${healthStatus}" style="margin-bottom: 15px;">
+                    <strong>${statusText}</strong><br>
+                    Budget Variance: $${budgetVariance.toLocaleString()}
+                </div>
+                <div>
+                    <div class="metric-highlight">Profit Margin: ${profitMargin.toFixed(1)}%</div>
+                    <div class="metric-highlight">Revenue: $${totalRevenue.toLocaleString()}</div>
+                    <div class="metric-highlight">Profit: $${totalProfit.toLocaleString()}</div>
+                    <div class="metric-highlight">Expenses: $${totalExpenses.toLocaleString()}</div>
+                    <div class="metric-highlight">Marketing: $${totalMarketing.toLocaleString()}</div>
+                </div>`;
+        }
+
+        function updateTables() {
+            const productPerformance = {};
+            filteredData.forEach(item => {
+                const key = `${item.Product} (${item['Product Type']})`;
+                if (!productPerformance[key]) {
+                    productPerformance[key] = { 
+                        revenue: 0, 
+                        profit: 0, 
+                        margin: 0, 
+                        type: item['Product Type'],
+                        market: item.Market,
+                        transactions: 0
+                    };
+                }
+                productPerformance[key].revenue += item.Sales;
+                productPerformance[key].profit += item.Profit;
+                productPerformance[key].transactions += 1;
+            });
+
+            // Calculate margins
+            Object.values(productPerformance).forEach(product => {
+                product.margin = product.revenue > 0 ? (product.profit / product.revenue * 100) : 0;
+            });
+
+            const topProducts = Object.entries(productPerformance)
+                .sort((a, b) => b[1].revenue - a[1].revenue)
+                .slice(0, 15);
+
+            const tbody = document.getElementById('topProductsTableBody');
+            tbody.innerHTML = topProducts.map(([product, stats]) => 
+                `<tr>
+                    <td><strong>${product}</strong></td>
+                    <td>${stats.type}</td>
+                    <td>$${stats.revenue.toLocaleString()}</td>
+                    <td>$${stats.profit.toLocaleString()}</td>
+                    <td>${stats.margin.toFixed(1)}%</td>
+                    <td>${stats.transactions}</td>
+                    <td>${stats.market}</td>
+                </tr>`
+            ).join('');
+        }
+    </script>
+</body>
+</html> 
