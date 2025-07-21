@@ -807,7 +807,11 @@ if __name__ == "__main__":
 
 ### Method Overloading Alternative
 
-Python doesn't have traditional method overloading, but we can simulate it:
+
+🔄 Method Overloading – Simple Concept
+Method overloading means defining multiple methods with the same name but different parameters (different number or types of arguments), so the correct method is chosen based on how it's called. It's a form of compile-time polymorphism commonly found in languages like Java or C++. However, in Python, method overloading in the traditional sense is not supported — if you define multiple methods with the same name, the last one will overwrite the previous ones. Instead, in Python, we typically use default arguments or *args/**kwargs to mimic overloading behavior, allowing a single method to handle different types or numbers of inputs.
+
+
 
 ```python
 class Calculator:
