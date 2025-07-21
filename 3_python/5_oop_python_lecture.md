@@ -435,7 +435,7 @@ print(account.get_balance())
 # account.__calculate_interest(5)     # AttributeError!
 ```
 
-# Practical: Organizing Your Code into Files
+### Practical: Organizing Your Code into Files
 
 When working on these examples, it's a good practice to create separate Python files for each class or main program. This keeps your code organized and easier to manage. Here’s how you can do it:
 
@@ -478,7 +478,7 @@ if __name__ == "__main__":
 
 ---
 
-# Using @property for Attribute Control
+### Using @property for Attribute Control
 
 Another way to control access to class attributes is by using the `@property` decorator. This allows you to define methods that act like attributes, providing a clean way to get (read) and set (write) values while still keeping control over how the data is accessed or changed.
 
@@ -518,7 +518,7 @@ account.balance = -100  # This will show error message
 
 ---
 
-# Mortgage Calculation Example
+### Mortgage Calculation Example
 
 A **mortgage** is a type of loan used to buy expensive items like a house or a car. For example, if you want to buy a car that costs $20,000 but you only have $5,000, you might take a loan (mortgage) for the remaining $15,000 and pay it back in monthly installments, with interest, over several years. The monthly payment is calculated so that you pay off both the loan and the interest over the agreed period.
 
@@ -607,7 +607,7 @@ print(f"Monthly payment: ${payment:.2f}")
 
 ## 5. Inheritance - Reusing Code Smartly
 
-# Inheritance in Python
+### Inheritance in Python
 
 **Inheritance** lets you create a new class (child) that automatically gets the features (attributes and methods) of another class (parent). This helps you reuse code and model real-world relationships (e.g., a Car is a type of Vehicle).
 
