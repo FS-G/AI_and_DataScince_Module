@@ -435,83 +435,18 @@ print(account.get_balance())
 # account.__calculate_interest(5)     # AttributeError!
 ```
 
-### Why Encapsulate Methods Too?
+# Practical: Organizing Your Code into Files
 
-**Private methods** help us:
+When working on these examples, it's a good practice to create separate Python files for each class or main program. This keeps your code organized and easier to manage. Here’s how you can do it:
 
-1. **Hide Complex Logic** - Users don't need to know how interest is calculated
-2. **Prevent Misuse** - Can't accidentally call internal validation functions
-3. **Keep Code Clean** - Only show methods that users actually need
-4. **Easy to Change** - Can modify private methods without breaking user code
+- **bank_account.py**: Put your `BankAccount` class in this file.
+- **banking_demo.py**: Put your main program (the code that creates accounts and simulates operations) in this file.
 
-```python
-class Calculator:
-    def __init__(self):
-        self.history = []
-    
-    # PUBLIC METHOD - users can call this
-    def calculate_mortgage(self, principal, rate, years):
-        """Calculate monthly mortgage payment"""
-        monthly_rate = self.__annual_to_monthly_rate(rate)  # Private method
-        num_payments = self.__years_to_payments(years)      # Private method
-        
-        if monthly_rate == 0:
-            return principal / num_payments
-        
-        payment = self.__mortgage_formula(principal, monthly_rate, num_payments)  # Private
-        self.__add_to_history(f"Mortgage calculation: ${payment:.2f}/month")     # Private
-        return payment
-    
-    # PRIVATE METHODS - internal calculations only
-    def __annual_to_monthly_rate(self, annual_rate):
-        """Convert annual rate to monthly - internal use only"""
-        return annual_rate / 100 / 12
-    
-    def __years_to_payments(self, years):
-        """Convert years to number of payments - internal use only"""
-        return years * 12
-    
-    def __mortgage_formula(self, principal, rate, payments):
-        """Complex mortgage formula - internal use only"""
-        return principal * (rate * (1 + rate)**payments) / ((1 + rate)**payments - 1)
-    
-    def __add_to_history(self, entry):
-        """Add entry to calculation history - internal use only"""
-        self.history.append(entry)
-
-# User only needs to know about the public method
-calc = Calculator()
-payment = calc.calculate_mortgage(200000, 5.5, 30)
-print(f"Monthly payment: ${payment:.2f}")
-
-# All the complex internal stuff is hidden and protected!
-```
-
-```python
-class BankAccount:
-    def __init__(self, owner, initial_balance):
-        self.owner = owner
-        self.__balance = initial_balance
-    
-    @property
-    def balance(self):
-        return self.__balance
-    
-    @balance.setter
-    def balance(self, amount):
-        if amount >= 0:
-            self.__balance = amount
-        else:
-            print("Balance cannot be negative!")
-
-# Usage
-account = BankAccount("John", 1000)
-print(account.balance)  # 1000 (using getter)
-account.balance = 1500  # Using setter
-account.balance = -100  # This will show error message
-```
-
-### 🎯 Practical Exercise 2
+To try the example below:
+1. Copy the `BankAccount` class code into a file named `bank_account.py`.
+2. Copy the demo code into a file named `banking_demo.py` (as shown below).
+3. Make sure both files are in the same folder so the import works.
+4. Run `banking_demo.py` to see the output.
 
 ```python
 # banking_demo.py
@@ -531,13 +466,152 @@ if __name__ == "__main__":
     main()
 ```
 
+### Why Encapsulate Methods Too?
+
+**Private methods** help us:
+
+1. **Hide Complex Logic** - Users don't need to know how interest is calculated
+2. **Prevent Misuse** - Can't accidentally call internal validation functions
+3. **Keep Code Clean** - Only show methods that users actually need
+4. **Easy to Change** - Can modify private methods without breaking user code
+
+
+---
+
+# Using @property for Attribute Control
+
+Another way to control access to class attributes is by using the `@property` decorator. This allows you to define methods that act like attributes, providing a clean way to get (read) and set (write) values while still keeping control over how the data is accessed or changed.
+
+- The **getter** method lets you read the value (like `account.balance`).
+- The **setter** method lets you set the value (like `account.balance = 1000`).
+
+This is useful for validation or hiding internal details.
+
+```python
+class BankAccount:
+    def __init__(self, owner, initial_balance):
+        self.owner = owner
+        self.__balance = initial_balance  # Private attribute
+    
+    @property  # This is the GETTER
+    def balance(self):
+        """Get the current balance (read-only access)"""
+        return self.__balance
+    
+    @balance.setter  # This is the SETTER
+    def balance(self, amount):
+        """Set the balance (with validation)"""
+        if amount >= 0:
+            self.__balance = amount
+        else:
+            print("Balance cannot be negative!")
+
+# Usage
+account = BankAccount("John", 1000)
+print(account.balance)  # Calls the getter: 1000
+account.balance = 1500  # Calls the setter
+account.balance = -100  # This will show error message
+```
+
+
+
+
+---
+
+# Mortgage Calculation Example
+
+A **mortgage** is a type of loan used to buy expensive items like a house or a car. For example, if you want to buy a car that costs $20,000 but you only have $5,000, you might take a loan (mortgage) for the remaining $15,000 and pay it back in monthly installments, with interest, over several years. The monthly payment is calculated so that you pay off both the loan and the interest over the agreed period.
+
+The formula for a fixed-rate mortgage (used for both houses and cars) is:
+
+    M = P * [r(1 + r)^n] / [(1 + r)^n - 1]
+
+Where:
+- M = monthly payment
+- P = principal (loan amount)
+- r = monthly interest rate (annual rate / 12 / 100)
+- n = total number of payments (years * 12)
+
+---
+
+```python
+class Calculator:
+    def __init__(self):
+        self.history = []
+    
+    # PUBLIC METHOD - users can call this
+    def calculate_mortgage(self, principal, rate, years):
+        """
+        Calculate monthly mortgage payment.
+        
+        principal: The amount borrowed (loan amount)
+        rate: The annual interest rate (e.g., 5.5 for 5.5%)
+        years: The number of years for the loan
+        
+        Formula used (for fixed-rate mortgage):
+            M = P * [r(1 + r)^n] / [(1 + r)^n - 1]
+        Where:
+            M = monthly payment
+            P = principal (loan amount)
+            r = monthly interest rate (annual rate / 12 / 100)
+            n = total number of payments (years * 12)
+        """
+        monthly_rate = self.__annual_to_monthly_rate(rate)  # Private method
+        n = self.__years_to_payments(years)      # Private method
+        
+        if monthly_rate == 0:
+            # No interest case
+            return principal / n
+        
+        # Mortgage payment formula:
+        # payment = principal * (rate * (1 + rate)**n) / ((1 + rate)**n - 1)
+        payment = self.__mortgage_formula(principal, monthly_rate, n)  # Private
+        self.__add_to_history(f"Mortgage calculation: ${payment:.2f}/month")     # Private
+        return payment
+    
+    # PRIVATE METHODS - internal calculations only
+    def __annual_to_monthly_rate(self, annual_rate):
+        """Convert annual rate to monthly - internal use only"""
+        return annual_rate / 100 / 12
+    
+    def __years_to_payments(self, years):
+        """Convert years to number of payments (n) - internal use only"""
+        return years * 12
+    
+    def __mortgage_formula(self, principal, rate, n):
+        """
+        Complex mortgage formula - internal use only
+        Implements: M = P * [r(1 + r)^n] / [(1 + r)^n - 1]
+        """
+        return principal * (rate * (1 + rate)**n) / ((1 + rate)**n - 1)
+    
+    def __add_to_history(self, entry):
+        """Add entry to calculation history - internal use only"""
+        self.history.append(entry)
+
+# --- Example: Mortgage Calculation ---
+# A mortgage is a loan used to buy a house or a car. You pay it back monthly, with interest.
+# This example shows how to calculate the monthly payment for a fixed-rate mortgage.
+calc = Calculator()
+payment = calc.calculate_mortgage(200000, 5.5, 30)
+print(f"Monthly payment: ${payment:.2f}")
+# All the complex internal stuff is hidden and protected!
+```
+
+---
+
+
+
+
 ---
 
 ## 5. Inheritance - Reusing Code Smartly
 
-**Inheritance** lets us create **child classes** that get features from **parent classes**. It's like how children inherit traits from their parents.
+# Inheritance in Python
 
-### Basic Inheritance Example
+**Inheritance** lets you create a new class (child) that automatically gets the features (attributes and methods) of another class (parent). This helps you reuse code and model real-world relationships (e.g., a Car is a type of Vehicle).
+
+## Basic Inheritance Example
 
 ```python
 # vehicles.py
@@ -585,7 +659,7 @@ class Motorcycle(Vehicle):
         return f"{parent_info} - {self.engine_size}cc engine"
 ```
 
-### Using Inherited Classes
+## Using Inherited Classes
 
 ```python
 # vehicle_demo.py
@@ -612,14 +686,9 @@ if __name__ == "__main__":
     main()
 ```
 
-### Types of Inheritance
-
-1. **Single Inheritance** - One parent, one child
-2. **Multiple Inheritance** - One child, multiple parents
-3. **Multilevel Inheritance** - Grandparent → Parent → Child
+## Multilevel Inheritance Example
 
 ```python
-# Example of multilevel inheritance
 class Animal:
     def breathe(self):
         return "Breathing..."
@@ -638,6 +707,20 @@ print(my_dog.breathe())     # From Animal
 print(my_dog.feed_milk())   # From Mammal
 print(my_dog.bark())        # From Dog
 ```
+
+## Types of Inheritance
+
+1. **Single Inheritance** - One parent, one child
+2. **Multiple Inheritance** - One child, multiple parents
+3. **Multilevel Inheritance** - Grandparent → Parent → Child
+
+---
+
+**Summary:**
+- Inheritance helps you reuse code and model real-world relationships.
+- Use `super().__init__()` to call the parent constructor.
+- Child classes can add new methods or override parent methods.
+- Multilevel inheritance lets you build more complex hierarchies.
 
 ---
 
