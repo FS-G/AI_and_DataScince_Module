@@ -88,6 +88,8 @@ if mood == "happy":
 print("This will cause an error!")
 ```
 
+
+
 **Remember:** 4 spaces or 1 tab - be consistent!
 
 ### Live Coding Example: Age Classifier
@@ -106,6 +108,37 @@ elif age < 60:
 else:
     print("You're a wise senior! 👴")
 ```
+
+### Example
+make a program that takes in age and specify age brackets - in case if the participant is a kid (less than 7), offer him a toy. In case if the participant is a wise citizen (over 70), offer him a wheel chair 
+
+```python
+age = 16
+
+if age < 13:
+    print("You're a kid! 🧒")
+elif age < 20:
+    print("You're a teenager! 🧑‍🎓")
+elif age < 60:
+    print("You're an adult! 👩‍💼")
+else:
+    print("You're a wise senior! 👴")
+```
+age = int(input("Enter Age")) # replace with input
+
+if age < 13:
+    print("You're a kid! 🧒")
+    if age < 7:
+        print("Do you want a toy?")
+elif age < 20:
+    print("You're a teenager! 🧑‍🎓")
+elif age < 60:
+    print("You're an adult! 👩‍💼")
+else:
+    print("You're a wise senior! 👴")
+    if age > 70:
+      print("Do you want a wheel chair?")
+
 
 ---
 
