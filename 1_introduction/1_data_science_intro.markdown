@@ -1,3 +1,9 @@
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
 # Introduction to Data Science and AI
 ## A Comprehensive Guide for the Modern Era
 
@@ -498,4 +504,9 @@
 - **Tool Integration:** Development of MCP-compatible systems and platforms
 
 **Related Technologies:** **API gateways**, **authentication systems**, **data connectors**, **middleware**
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
 

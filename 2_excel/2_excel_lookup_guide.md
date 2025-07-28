@@ -1,4 +1,10 @@
-# Excel Lookup Functions - Complete Guide
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Excel Lookup Functions Guide
 
 ## What Are Lookup Functions?
 
@@ -119,3 +125,8 @@ Use lookups to create dynamic dropdown lists and data validation rules that auto
 For large datasets, consider using exact match (FALSE) and ensure your lookup table is sorted if using approximate match (TRUE) for better performance.
 
 Mastering these lookup functions will dramatically improve your Excel efficiency and make you much more productive with data analysis tasks.
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

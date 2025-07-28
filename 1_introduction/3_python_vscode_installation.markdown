@@ -1,4 +1,10 @@
-# Installing Python and VS Code on Windows
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Python and VS Code Installation Guide
 
 This guide will walk you through the installation of Python and Visual Studio Code (VS Code) on a Windows PC.
 
@@ -73,3 +79,8 @@ This guide will walk you through the installation of Python and Visual Studio Co
 - Use `Ctrl + ~` to open the terminal in VS Code.
 - Install other useful extensions like Pylance, Jupyter, and Code Runner for an enhanced experience.
 - Always ensure that Python is added to your PATH during installation.
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

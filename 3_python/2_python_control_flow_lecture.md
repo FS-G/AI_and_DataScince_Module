@@ -1,5 +1,10 @@
-# Python Control Flow
-*A Journey from Simple Commands to Smart Programs*
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Python Control Flow Lecture
 
 ---
 
@@ -644,3 +649,8 @@ except:
 ```
 
 *Happy coding! 🐍✨*
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

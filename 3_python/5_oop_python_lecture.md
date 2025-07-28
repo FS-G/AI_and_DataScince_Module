@@ -1,3 +1,9 @@
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
 # Object-Oriented Programming in Python
 ## From Basics to Building Real Applications
 

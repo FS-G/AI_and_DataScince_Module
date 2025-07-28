@@ -1,4 +1,10 @@
-# Python Data Structures 1 - Lists and Tuples
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Python Data Structures: Lists and Tuples
 *From Single Items to Powerful Collections*
 
 ---
@@ -743,3 +749,8 @@ sequence[start:stop]   # Slice
 ```
 
 *Happy coding with collections! 🐍📦*
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

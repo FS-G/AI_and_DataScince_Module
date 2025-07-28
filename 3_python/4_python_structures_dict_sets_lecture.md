@@ -1,4 +1,10 @@
-# Python Collections: Dictionaries and Sets
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Python Data Structures: Dictionaries and Sets
 
 ---
 
@@ -472,3 +478,7 @@ Remember: the best Python developers don't just know the syntax—they understan
 ---
 
 *Happy coding, and may your dictionaries always have the keys you're looking for! 🐍*
+
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

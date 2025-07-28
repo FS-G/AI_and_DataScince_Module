@@ -229,4 +229,7 @@ Complete all modules and projects to earn a comprehensive certificate demonstrat
 
 **Start your journey today and become a master of data science and AI development!** 🚀
 
-*Last updated: [Current Date]* 
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

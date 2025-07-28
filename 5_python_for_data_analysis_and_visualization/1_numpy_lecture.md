@@ -1,5 +1,10 @@
-# NumPy for Data Analysis and Wrangling
-*A Complete Guide with Practical Examples*
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# NumPy Lecture
 
 ---
 
@@ -522,3 +527,8 @@ After mastering NumPy fundamentals:
 - Practice with real datasets to solidify these concepts
 
 Remember: NumPy is the foundation that everything else builds upon in the Python data science ecosystem!
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

@@ -1,4 +1,10 @@
-# Introduction to Python - Lecture 1
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Python Introduction Lecture
 
 ## Welcome and The "Why" of Python
 
@@ -675,3 +681,8 @@ print(f"{celsius}°C = {fahrenheit}°F")
 - **Google Colab**: colab.research.google.com
 - **VS Code Python Tutorial**: code.visualstudio.com/docs/python
 - **Python.org Documentation**: docs.python.org
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

@@ -1,3 +1,9 @@
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
 # Excel for Data Science - Complete Lecture Notes
 
 ## Module 1: Excel Fundamentals for Data Science 
@@ -1627,5 +1633,10 @@ Date | Region | Product | Category | Sales | Profit | Units | Manager | Channel 
    - Use consistent fonts
    - Add logo/header
    ```
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
 
 ---

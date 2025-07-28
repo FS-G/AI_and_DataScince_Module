@@ -1,4 +1,10 @@
-# Excel Advanced Analytics & Automation - Lecture Notes
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Advanced Excel for Data Science
 
 ## Module 5: Advanced Analytics
 
@@ -743,3 +749,9 @@ File → Info → Protect Workbook:
 - Use version control for collaborative work
 - Integrate with other tools to extend Excel's capabilities
 - Create templates for consistent analysis across teams
+
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---

@@ -1,3 +1,9 @@
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
 # Course Outline: Data Science and AI Mastery Track
 
 ## Core Modules
@@ -94,3 +100,8 @@
 
 - **Web Scraping**  
   Extract structured data from websites using BeautifulSoup and Scrapy.
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

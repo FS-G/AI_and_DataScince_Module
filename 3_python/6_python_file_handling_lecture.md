@@ -1,4 +1,10 @@
-# Python File Handling - Basic Lecture
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Python File Handling Lecture
 
 ## What is File Handling?
 
@@ -215,3 +221,8 @@ File handling lets you:
 - Handle errors with try-except blocks
 
 Remember: files are like doors - open them, use them, and always close them when you're done!
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*

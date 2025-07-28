@@ -1,4 +1,10 @@
-# Web Development Fundamentals - Lecture Notes
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
+# Web Development Lecture Notes
 
 ## Part 1: What is Web Development?
 
@@ -467,3 +473,8 @@ project-folder/
 3. **Run server**: `uvicorn main:app --reload`
 4. **Open browser** to see it working
 5. **Show the flow**: Add message → See it appear → Check database
+
+---
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
