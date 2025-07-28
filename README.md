@@ -1,4 +1,3 @@
----
 **Course Created by: Farhan Siddiqui**  
 *Data Science & AI Development Expert*
 
