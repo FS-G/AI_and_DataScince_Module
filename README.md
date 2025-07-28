@@ -1,3 +1,9 @@
+---
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+---
+
 # Data Science & AI Development Mastery Course
 
 A comprehensive curriculum covering the complete spectrum of data science, artificial intelligence, and full-stack development technologies.
@@ -32,120 +38,39 @@ This intensive course is designed to transform you from a beginner to a proficie
 - **Full-Stack AI Development** - Integrating AI into web applications
 - **DevOps & Deployment** - CI/CD, cloud deployment, monitoring
 
-## 🗂️ Module Details
+## 📚 Course Outline
 
-### Module 1: Introduction & Setup
-- **1_introduction/**
-  - Data science fundamentals and career overview
-  - Python and VS Code installation guide
-  - Development environment setup
-  - Hands-on exercises with sample datasets
+This comprehensive course covers the following key areas:
 
-### Module 2: Advanced Excel for Data Science
-- **2_excel/**
-  - Advanced Excel functions and formulas
-  - Pivot tables and data analysis
-  - VBA programming for automation
-  - Power Query and data transformation
-  - Practice datasets: AdventureWorks, Heart Disease, Store Sales
+### Foundation & Tools
+- Introduction to Data Science and career paths
+- Advanced Excel techniques for data analysis
+- Python programming fundamentals
+- Version control with Git and collaborative development
 
-### Module 3: Python Programming Fundamentals
-- **3_python/**
-  - Python syntax and control flow
-  - Data structures: lists, tuples, dictionaries, sets
-  - Object-oriented programming
-  - File handling and I/O operations
-  - Class activities and projects
+### Data Analysis & Visualization
+- SQL database design and complex querying
+- Python data analysis with NumPy and Pandas
+- Statistical analysis and hypothesis testing
+- Business intelligence with PowerBI and Tableau
 
-### Module 4: Web Development Foundations
-- **4_intro_to_web_development/**
-  - HTML, CSS, and JavaScript fundamentals
-  - Modern web development practices
-  - Responsive design principles
-  - Frontend frameworks introduction
+### Machine Learning & AI
+- Machine learning fundamentals and algorithms
+- Deep learning with neural networks
+- Generative AI and Large Language Models
+- Agentic AI and autonomous systems
 
-### Module 5: Python for Data Analysis
-- **5_python_for_data_analysis_and_visualization/**
-  - NumPy for numerical computing
-  - Pandas for data manipulation
-  - Matplotlib and Seaborn for visualization
-  - Statistical analysis with Python
+### Full-Stack Development
+- Backend development with modern frameworks
+- Frontend development and responsive design
+- Full-stack AI application development
+- DevOps, deployment, and monitoring
 
-## 🚀 Upcoming Modules
-
-### Module 6: SQL & Database Management
-- Database design principles
-- Advanced SQL queries and optimization
-- Data modeling and normalization
-- Database administration basics
-
-### Module 7: Statistical Analysis
-- Descriptive and inferential statistics
-- Hypothesis testing and confidence intervals
-- Regression analysis and correlation
-- Statistical modeling with Python/R
-
-### Module 8: Machine Learning Fundamentals
-- Supervised learning algorithms
-- Unsupervised learning techniques
-- Model evaluation and validation
-- Feature engineering and selection
-
-### Module 9: Deep Learning
-- Neural network architectures
-- Convolutional Neural Networks (CNNs)
-- Recurrent Neural Networks (RNNs)
-- Transformers and attention mechanisms
-
-### Module 10: Generative AI
-- Large Language Models (LLMs)
-- Text generation and natural language processing
-- Image generation with GANs and diffusion models
-- Audio and video generation
-
-### Module 11: Agentic AI
-- Autonomous AI agents
-- Multi-agent systems
-- AI reasoning and decision making
-- Agent-based modeling
-
-### Module 12: Backend Development
-- API development with Flask/Django
-- Database integration and ORM
-- Authentication and authorization
-- Microservices architecture
-
-### Module 13: Frontend Development
-- Modern JavaScript frameworks (React/Vue/Angular)
-- State management and routing
-- UI/UX design principles
-- Progressive Web Apps (PWAs)
-
-### Module 14: Full-Stack AI Development
-- Integrating AI models into web applications
-- Real-time AI inference
-- AI-powered user interfaces
-- End-to-end AI application development
-
-### Module 15: Business Intelligence & Visualization
-- **PowerBI Mastery**
-  - Data modeling and DAX formulas
-  - Advanced visualizations and dashboards
-  - Power Query transformations
-  - Report publishing and sharing
-
-- **Tableau Expertise**
-  - Data connection and preparation
-  - Advanced chart types and calculations
-  - Dashboard design and interactivity
-  - Tableau Server administration
-
-### Module 16: DevOps & Deployment
-- Version control with Git and GitHub
-- CI/CD pipelines and automation
-- Cloud deployment (AWS, Azure, GCP)
-- Application monitoring and logging
-- Performance optimization
+### Advanced Topics
+- Cloud deployment and containerization
+- Real-time AI inference systems
+- Multi-agent AI systems
+- Production-grade AI applications
 
 ## 🛠️ Technologies Covered
 
@@ -274,18 +199,18 @@ This course prepares you for roles such as:
 
 ## 📈 Course Progression
 
-### Beginner Level (Modules 1-5)
+### Beginner Level
 - Foundation skills and tools
 - Basic programming concepts
 - Introduction to data analysis
 
-### Intermediate Level (Modules 6-10)
+### Intermediate Level
 - Advanced data manipulation
 - Statistical analysis
 - Machine learning fundamentals
 - Deep learning basics
 
-### Advanced Level (Modules 11-16)
+### Advanced Level
 - Generative AI and agentic systems
 - Full-stack development
 - Business intelligence tools
