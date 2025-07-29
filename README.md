@@ -180,11 +180,6 @@ This course is designed for collaborative learning. Feel free to:
 - Contribute additional resources
 - Help fellow learners
 
-## 📞 Support
-
-- **Technical Issues**: Check the troubleshooting guides in each module
-- **Concept Questions**: Review the lecture notes and examples
-- **Community Help**: Engage with fellow learners in discussions
 
 ## 🎯 Career Paths
 
@@ -193,7 +188,7 @@ This course prepares you for roles such as:
 - **Machine Learning Engineer** - Develop and deploy AI systems
 - **Full-Stack Developer** - Build complete web applications
 - **Business Intelligence Analyst** - Create data visualizations and reports
-- **AI Research Engineer** - Work on cutting-edge AI technologies
+- **AI Engineer** - Work on cutting-edge AI technologies
 - **Data Engineer** - Build data pipelines and infrastructure
 
 ## 📈 Course Progression
@@ -215,18 +210,7 @@ This course prepares you for roles such as:
 - Business intelligence tools
 - Production deployment
 
-## 🏆 Certification
 
-Complete all modules and projects to earn a comprehensive certificate demonstrating proficiency in:
-- Data Science and Analytics
-- Machine Learning and AI
-- Full-Stack Development
-- Business Intelligence
-- DevOps and Deployment
-
----
-
-**Start your journey today and become a master of data science and AI development!** 🚀
 
 ---
 
