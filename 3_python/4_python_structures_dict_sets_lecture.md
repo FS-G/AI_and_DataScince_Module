@@ -273,33 +273,6 @@ id2 = db.add_user('Bob', 'bob@example.com')
 print(db.get_user(id1))  # {'name': 'Alice', 'email': 'alice@example.com'}
 ```
 
-### Caching with Dictionaries
-
-```python
-# Simple memoization decorator
-def memoize(func):
-    cache = {}
-    
-    def wrapper(*args):
-        if args in cache:
-            return cache[args]
-        
-        result = func(*args)
-        cache[args] = result
-        return result
-    
-    return wrapper
-
-@memoize
-def fibonacci(n):
-    if n < 2:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-# This will be much faster for large numbers!
-print(fibonacci(100))
-```
-
 ### Set-Based Algorithms
 
 ```python
