@@ -788,27 +788,17 @@ class Triangle(Shape):
 # shape_calculator.py
 from shapes import Rectangle, Circle, Triangle
 
-def calculate_shape_info(shape):
-    """This function works with ANY shape!"""
-    print(f"Shape: {shape.__class__.__name__}")
-    print(f"Area: {shape.area():.2f}")
-    print(f"Perimeter: {shape.perimeter():.2f}")
-    print("-" * 30)
+rect = Rectangle(5, 3)
+cir = Circle(4)
+tri =Triangle(6, 4, 5, 5)
 
-def main():
-    # Create different shapes
-    shapes = [
-        Rectangle(5, 3),
-        Circle(4),
-        Triangle(6, 4, 5, 5)
-    ]
-    
-    # Same function works with all shapes!
-    for shape in shapes:
-        calculate_shape_info(shape)
+print(rect.area())
+print(cir.area())
+print(tri.area())
 
-if __name__ == "__main__":
-    main()
+print(rect.perimeter())
+print(cir.perimeter())
+print(tri.perimeter())
 ```
 
 ### Method Overloading Alternative
