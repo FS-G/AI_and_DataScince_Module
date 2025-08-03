@@ -1060,24 +1060,13 @@ library_project/
    - Each class should do **one thing well**
    - Each method should have **one clear purpose**
 
-5. **Use Composition over Inheritance**
-   ```python
-   # Good - Composition
-   class Car:
-       def __init__(self):
-           self.engine = Engine()  # Car HAS an engine
-   
-   # Sometimes better than inheritance
-   class SportsCar(Car):  # SportsCar IS A Car
-       pass
-   ```
+
 
 ### Common Mistakes to Avoid
 
 1. **Making everything public**
 2. **Creating god classes** (classes that do too much)
 3. **Not using inheritance when it makes sense**
-4. **Overusing inheritance when composition is better**
 5. **Forgetting to call `super().__init__()`** in child classes
 
 ### Testing Your Code
@@ -1130,7 +1119,6 @@ if __name__ == "__main__":
 2. **Encapsulation** - Protecting data with private attributes
 3. **Inheritance** - Reusing code through parent-child relationships
 4. **Polymorphism** - Same method names, different behaviors
-5. **Composition** - Building complex objects from simpler ones
 
 ### Real-World Applications
 
