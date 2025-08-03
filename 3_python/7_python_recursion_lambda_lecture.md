@@ -1,3 +1,7 @@
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
+
+
 # Python Recursion & Lambda Functions - Simple Guide
 
 ## What is Recursion? 🔄
@@ -151,3 +155,6 @@ print(celsius_to_fahrenheit(25))  # Output: 77.0
 - **Lambda:** Think "Can I write this function in one line?"
 
 Happy coding! 🐍✨
+
+**Course Created by: Farhan Siddiqui**  
+*Data Science & AI Development Expert*
