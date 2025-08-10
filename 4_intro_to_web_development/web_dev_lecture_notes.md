@@ -260,30 +260,9 @@ def add_message(name: str = Form(...), message: str = Form(...)):
 **Backend runs on:** `http://localhost:8000`
 
 ### Database (SQLite)
-**Option 1: Using SQLite command line**
-1. **Install SQLite** (usually comes with Python)
-2. **Open terminal/command prompt**
-3. **Run**: `sqlite3 guestbook.db`
-4. **Copy and paste the SQL below**
 
-```sql
--- Simple table structure
-CREATE TABLE messages (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    message TEXT NOT NULL
-);
 
--- Example data
-INSERT INTO messages (name, message) VALUES 
-('Alice', 'Hello everyone!'),
-('Bob', 'Great website!');
-
--- Exit SQLite
-.exit
-```
-
-**Option 2: Using Python script (easier for demo)**
+**Using Python script (easier for demo)**
 Create a file called `setup_db.py` and run it:
 
 ```python
