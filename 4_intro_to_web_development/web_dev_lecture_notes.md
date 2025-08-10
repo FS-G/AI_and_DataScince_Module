@@ -207,6 +207,15 @@ fastapi
 uvicorn
 python-multipart
 ```
+
+then create virtual environment and activate it
+
+```txt
+python -m venv ./venv
+./venv/scripts/activate
+```
+
+
 *Note: SQLite comes built-in with Python, no need to install separately*
 
 **Install dependencies:** `pip install -r requirements.txt`
