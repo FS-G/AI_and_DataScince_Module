@@ -347,39 +347,6 @@ MATH201    | Fall2024 | C301 | Dr. Wilson
 
 ---
 
-## Value Constraints: NOT NULL, CHECK, DEFAULT
-
-### NOT NULL Constraint
-• Ensures column cannot be empty
-• Forces user to provide value
-• Applied to critical fields
-• **Example**: Customer name, product price
-
-### CHECK Constraint
-• Validates data meets specific conditions
-• Custom business rules
-• **Examples**: 
-  - Age > 0
-  - Price >= 0
-  - Email contains '@'
-  - Status IN ('Active', 'Inactive')
-
-### DEFAULT Constraint
-• Provides automatic value if none specified
-• Simplifies data entry
-• Ensures consistency
-• **Examples**:
-  - Order Status = 'Pending'
-  - Created Date = Current Date
-  - Is Active = True
-
-### Why Use Constraints?
-• **Data Quality**: Prevent invalid data entry
-• **Business Rules**: Enforce company policies
-• **Consistency**: Same rules applied everywhere
-• **Error Prevention**: Catch problems early
-
----
 
 ## E-Commerce Database Design Class Activity
 
@@ -533,8 +500,93 @@ Working in groups, identify:
 • OrderItem.UnitPrice = price when purchased
 • Protects against price changes affecting historical orders
 
-This ERD provides a solid foundation for our PostgreSQL implementation in the next phase!
+below is the schematic view (mermaid script) for the current design.
 
+--
+erDiagram
+    CUSTOMER {
+        int CustomerID PK
+        string FirstName
+        string LastName
+        string Email UK
+        string Phone
+        string Address
+        string City
+        string State
+        string ZipCode
+        date DateJoined
+        boolean IsActive
+    }
+
+    PRODUCT {
+        int ProductID PK
+        string ProductName
+        string Description
+        decimal Price
+        int CategoryID FK
+        string Brand
+        string Weight
+        string Dimensions
+        boolean IsActive
+    }
+
+    CATEGORY {
+        int CategoryID PK
+        string CategoryName
+        string Description
+        int ParentCategoryID FK
+    }
+
+    ORDER {
+        int OrderID PK
+        int CustomerID FK
+        date OrderDate
+        decimal TotalAmount
+        string Status
+        string ShippingAddress
+        string PaymentMethod
+    }
+
+    ORDERITEM {
+        int OrderItemID PK
+        int OrderID FK
+        int ProductID FK
+        int Quantity
+        decimal UnitPrice
+        decimal Subtotal
+    }
+
+    REVIEW {
+        int ReviewID PK
+        int ProductID FK
+        int CustomerID FK
+        int Rating
+        string ReviewText
+        date ReviewDate
+    }
+
+    INVENTORY {
+        int InventoryID PK
+        int ProductID FK
+        int QuantityInStock
+        int ReorderLevel
+        date LastRestocked
+    }
+
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--o{ ORDERITEM : contains
+    PRODUCT ||--o{ ORDERITEM : appears_in
+    CATEGORY ||--o{ PRODUCT : contains
+    CATEGORY ||--o{ CATEGORY : subcategory_of
+    CUSTOMER ||--o{ REVIEW : writes
+    PRODUCT ||--o{ REVIEW : receives
+    PRODUCT ||--|| INVENTORY : tracked_by
+
+--
+
+---
+## DB Normalization vs De-Normalizatoin
+Database normalization is the process of organizing data in a database so that there is no unnecessary duplication, and related data is stored in separate tables. This makes the database more efficient, easier to maintain, and less prone to errors. For example, instead of storing a customer’s address in every order record, we store it once in a Customer table and link orders to it. Denormalization is the opposite — it’s when we intentionally combine tables or repeat some data to make the database faster to read from, even if it means storing duplicates. For example, saving the customer’s address inside each order record can make reporting quicker, but may require extra work to keep data updated. In short, normalization improves accuracy and organization, while denormalization improves speed and convenience.
 ---
 
 ## Survey of Common Relational Database Systems
