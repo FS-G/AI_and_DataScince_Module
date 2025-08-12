@@ -502,7 +502,7 @@ Working in groups, identify:
 
 below is the schematic view (mermaid script) for the current design.
 
---
+
 erDiagram
     CUSTOMER {
         int CustomerID PK
@@ -582,7 +582,7 @@ erDiagram
     PRODUCT ||--o{ REVIEW : receives
     PRODUCT ||--|| INVENTORY : tracked_by
 
---
+
 
 ---
 ## DB Normalization vs De-Normalizatoin
