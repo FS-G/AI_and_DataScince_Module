@@ -585,9 +585,12 @@ erDiagram
 
 
 ---
-## DB Normalization vs De-Normalizatoin
 
-• Database normalization is the process of organizing data in a database so that there is no unnecessary duplication, and related data is stored in separate tables. This makes the database more efficient, easier to maintain, and less prone to errors. For example, instead of storing a customer’s address in every order record, we store it once in a Customer table and link orders to it. Denormalization is the opposite — it’s when we intentionally combine tables or repeat some data to make the database faster to read from, even if it means storing duplicates. For example, saving the customer’s address inside each order record can make reporting quicker, but may require extra work to keep data updated. In short, normalization improves accuracy and organization, while denormalization improves speed and convenience.
+## DB Normalization vs De-Normalization
+
+Database normalization organizes data to eliminate redundancy and store related data in separate tables, enhancing efficiency, maintainability, and data accuracy. For example, a customer’s address is stored once in a Customer table and linked to orders, reducing duplication. Denormalization, conversely, intentionally combines tables or duplicates data to improve read performance, such as embedding a customer’s address in each order record for faster reporting, though it may require extra effort to maintain consistency. In summary, normalization prioritizes accuracy and structure, while denormalization optimizes for speed and convenience.
+
+
 ---
 
 ## Survey of Common Relational Database Systems
