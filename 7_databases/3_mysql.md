@@ -838,17 +838,6 @@ FROM owners
 CROSS JOIN cars;
 ```
 
-### Self Join
-
-Join a table with itself:
-
-```sql
--- Find students with the same grade (using our students table)
-SELECT s1.name as student1, s2.name as student2, s1.grade
-FROM students s1
-INNER JOIN students s2 ON s1.grade = s2.grade 
-WHERE s1.student_id < s2.student_id;  -- Avoid duplicates
-```
 
 ### Using Table Aliases
 
