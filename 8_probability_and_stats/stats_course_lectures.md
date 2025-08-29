@@ -119,6 +119,17 @@ P(Flu|Fever) = P(Fever|Flu) × P(Flu) / P(Fever)
 • **P(Fever)**: How often do people get fever? (From any cause)
 • **P(Flu|Fever)**: What we want to know!
 
+
+**Another Example:**  
+P(Passed|Studied) = P(Studied|Passed) × P(Passed) / P(Studied)  
+
+**Breaking Down Each Part:**  
+• **P(Studied|Passed)**: Among students who passed, how many actually studied? (Easy to measure)  
+• **P(Passed)**: How common is it to pass in general? (Base rate)  
+• **P(Studied)**: How many students study at all? (Easy to find out)  
+• **P(Passed|Studied)**: What we want to know!
+
+
 ---
 
 **Real-World Example - Email Spam Detection:**
