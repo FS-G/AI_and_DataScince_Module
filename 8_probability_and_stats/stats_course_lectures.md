@@ -121,6 +121,25 @@ P(Flu|Fever) = P(Fever|Flu) × P(Flu) / P(Fever)
 
 ---
 
+**Real-World Example - Email Spam Detection:**
+
+**Setup:**
+• 2% of all emails are actually spam
+• Your spam filter is 95% accurate
+• When an email is flagged as spam, what's the chance it's actually spam?
+
+**Your Gut Feeling:** Probably 95% (filter accuracy)
+
+**Let's Think Through This:**
+• Out of 1000 emails: 20 are spam, 980 are legitimate
+• Filter correctly identifies: 19 spam emails (95% of 20)
+• Filter incorrectly flags: 49 legitimate emails as spam (5% of 980)
+• Total flagged as spam: 19 + 49 = 68 emails
+
+**The Reality:** Only 19 out of 68 flagged emails are actually spam = 28%
+
+**Why This Matters for AI:**
+Even very accurate AI systems can have surprising real-world performance when dealing with rare events!
 
 ---
 
@@ -194,23 +213,31 @@ Bayes' rule is how rational thinking works - start with what you know, update wi
 
 **Probability Mass Function (PMF) - For Discrete Variables**
 • Shows probability of each specific value
-• Example: P(X = 3) = 0.2 means 20% chance of getting exactly 3
+• **Example - Flipping 3 coins, counting heads:**
+  - P(X=0) = 1/8 (TTT)
+  - P(X=1) = 3/8 (HTT, THT, TTH)  
+  - P(X=2) = 3/8 (HHT, HTH, THH)
+  - P(X=3) = 1/8 (HHH)
 
 **Probability Density Function (PDF) - For Continuous Variables**
-• Shows relative likelihood of values
-• Area under curve = probability
+• Shows relative likelihood of values (height of curve)
+• **Example - Height of students:**
+  - Curve is tallest around 5'6" (most common height)
+  - Gets shorter toward 4'0" and 7'0" (rare heights)
+  - Total area under curve = 100%
 
 **Cumulative Distribution Function (CDF)**
 • P(X ≤ x) = probability of getting value x or less
-• Always increases from 0 to 1
-
-**Simple Example - Rolling Dice:**
-- PMF: P(X=1) = P(X=2) = ... = P(X=6) = 1/6
-- CDF: P(X≤3) = 3/6 = 0.5
+• **Example - Test scores (out of 100):**
+  - CDF(70) = 0.60 means 60% of students scored 70 or below
+  - CDF(90) = 0.90 means 90% of students scored 90 or below
+  - Always increases: if you scored higher, more students are below you
 
 ---
 
 ### Lecture 2.3: The Discrete Distribution Family
+
+![Discrete Distributions Overview](https://blogger.googleusercontent.com/img/a/AVvXsEhx17znSE17sn4oPqq3bXvxw7_Df0zGsN9imB7AK6_IDA5nrBq-A1aIG5q03zK_CNLlGRawxBQIWUKPQU4vh3U34YcONBFU75kqfbphhG_WVTcy52vkutvsf5AO8X_f-KCd_6C1uH27PDXMFbXiKWWb2h_mROTgR5KPsiHhOGxG3rd8vrRyWFdyEdMp)
 
 **Bernoulli Distribution - The Yes/No Distribution**
 • Models single trial with two outcomes
@@ -274,25 +301,6 @@ Bayes' rule is how rational thinking works - start with what you know, update wi
 
 ---
 
-### Lecture 2.5: Understanding Expected Value and Variance
-
-**Expected Value (Mean) - The "Center of Mass"**
-• E[X] = average value over many trials
-• For discrete: E[X] = Σ x × P(X=x)
-• For continuous: E[X] = ∫ x × f(x) dx
-
-**Variance - Measuring Spread**
-• Var(X) = E[(X - μ)²]
-• How much values deviate from the mean
-• Units are squared, so we use Standard Deviation = √Var(X)
-
-**Simple Example - Dice Roll:**
-- E[X] = (1+2+3+4+5+6)/6 = 3.5
-- Var(X) = [(1-3.5)² + (2-3.5)² + ... + (6-3.5)²]/6 = 2.92
-- Standard Deviation = √2.92 = 1.71
-
----
-
 ## Module 3: Exploratory Data Analysis (EDA)
 
 ### Lecture 3.1: Why EDA is Critical for AI
@@ -341,13 +349,25 @@ Houses sold: $200K, $250K, $300K, $320K, $2M
 
 **Variance and Standard Deviation**
 • How much data varies around the mean
-• Standard deviation in same units as original data
-• Larger values = more spread out
+• **Variance = Average of squared differences from mean**
+  - Formula: Var = Σ(x - mean)² / n
+• **Standard Deviation = √Variance**
+  - Same units as original data
+• **Simple Example - Test Scores:** [70, 80, 90]
+  - Mean = 80
+  - Variance = [(70-80)² + (80-80)² + (90-80)²] / 3 = [100 + 0 + 100] / 3 = 67
+  - Standard Deviation = √67 = 8.2 points
 
 **Interquartile Range (IQR)**
 • 75th percentile - 25th percentile
 • Robust to outliers
 • Contains middle 50% of data
+• **Example - Daily Coffee Sales:** [12, 15, 18, 20, 22, 25, 28, 30, 35, 100]
+  - Sort data (already sorted)
+  - Q1 (25th percentile) = 18 cups
+  - Q3 (75th percentile) = 30 cups
+  - IQR = 30 - 18 = 12 cups
+  - Notice: The outlier (100 cups) doesn't affect IQR!
 
 **Range**
 • Maximum - Minimum
@@ -381,25 +401,75 @@ Houses sold: $200K, $250K, $300K, $320K, $2M
 
 ### Lecture 3.5: Essential Visualizations
 
-**Histograms - Understanding Single Variables**
-• Shows distribution of a single variable
-• Choose bin width carefully
-• Look for: shape, outliers, multiple peaks
+**Univariate Analysis - Exploring Single Variables**
 
-**Box Plots - Comparing Groups**
-• Shows median, quartiles, and outliers
-• Great for comparing distributions across categories
-• Quickly identifies which group has more variation
+**Histograms:**
+• Shows distribution of one continuous variable
+• Bins group data into ranges
+• Look for: shape (normal, skewed), outliers, multiple peaks
+• **Tip:** Try different bin widths - too few bins hide patterns, too many create noise
 
-**Scatter Plots - Relationships Between Variables**
-• Shows relationship between two continuous variables
-• Look for: linear relationships, outliers, clusters
-• Foundation for correlation analysis
+**Box Plots (Single Variable):**
+• Shows five-number summary: min, Q1, median, Q3, max
+• Outliers appear as individual points beyond "whiskers"
+• Quickly reveals skewness and spread
 
-**QQ Plots - Testing Normality**
-• Compares data to theoretical normal distribution
-• Points on straight line = data is normal
-• Curves indicate skewness or heavy tails
+**Bar Charts:**
+• For categorical variables (colors, brands, regions)
+• Height shows frequency or percentage
+• Easy comparison between categories
+
+**Density Plots:**
+• Smooth version of histogram
+• Better for comparing multiple groups on same plot
+• Shows probability density rather than counts
+
+---
+
+**Bivariate Analysis - Exploring Relationships Between Two Variables**
+
+**Scatter Plots:**
+• Two continuous variables (X vs Y)
+• Each point represents one observation
+• Look for: linear/curved relationships, outliers, clusters
+• Foundation for correlation and regression analysis
+
+**Side-by-Side Box Plots:**
+• One continuous variable across categories
+• Compare distributions between groups
+• Quickly shows which group has higher median, more variation
+
+**Cross-Tabulation Tables:**
+• Two categorical variables
+• Shows frequency counts in each combination
+• Foundation for chi-square tests
+
+**Correlation Heatmaps:**
+• Shows correlation coefficients between multiple variables
+• Color intensity indicates strength of relationship
+• Quick way to spot highly correlated pairs
+
+---
+
+**Multivariate Analysis - Exploring Multiple Variables Together**
+
+**Pair Plots (Scatter Plot Matrix):**
+• Shows scatter plots for every pair of variables
+• Diagonal usually shows histograms of each variable
+• Great for initial exploration of datasets
+
+
+
+---
+
+**Special Purpose Plots**
+
+**QQ Plots - Testing Normality:**
+• Compares your data to theoretical normal distribution
+• Points on straight diagonal line = data is normal
+• S-curves indicate skewness
+• Curved ends indicate heavy/light tails
+• Essential before using methods that assume normality
 
 ---
 
@@ -465,23 +535,6 @@ No matter what the original population looks like, the distribution of sample me
 
 ---
 
-### Lecture 4.4: Applications to AI and Machine Learning
-
-**Model Performance Estimation**
-• Train model on sample data
-• CLT says performance estimate will be normally distributed
-• Can calculate confidence intervals for accuracy
-
-**A/B Testing**
-• Compare conversion rates between two groups
-• CLT enables statistical tests to determine if difference is real
-
-**Sample Size Planning**
-• Use CLT to determine how much data we need
-• Larger samples = more precise estimates
-
----
-
 ## Module 5: Confidence Intervals - How Sure Are We?
 
 ### Lecture 5.1: From Point to Interval Estimates
@@ -491,7 +544,8 @@ No matter what the original population looks like, the distribution of sample me
 • But how precise is this estimate?
 
 **Interval Estimate - A Range of Plausible Values**
-• 95% CI: 82% to 88% accuracy
+• Example: "Average student height is 5'6" ± 2 inches"
+• Instead of just saying 5'6", we say "between 5'4" and 5'8""
 • Acknowledges uncertainty in our estimate
 
 **Why Intervals Matter in AI:**
@@ -521,18 +575,46 @@ Point Estimate ± (Critical Value × Standard Error)
 
 ### Lecture 5.3: Constructing Confidence Intervals
 
-**For a Mean (when σ known):**
-x̄ ± z_(α/2) × (σ/√n)
+**Understanding z vs t Distributions**
 
-**For a Mean (when σ unknown, n>30):**
-x̄ ± z_(α/2) × (s/√n)
+**z Distribution (Standard Normal):**
+• Use when population standard deviation (σ) is **known**
+• Bell-shaped, mean=0, std dev=1
+• Fixed shape, same critical values always
+• Example: z = 1.96 for 95% CI
 
-**For a Proportion:**
+**t Distribution:**
+• Use when population standard deviation (σ) is **unknown** (most real cases!)
+• Similar to z but with "fatter tails" (more uncertainty)
+• Shape depends on degrees of freedom (df = n-1)
+• As sample size increases, t approaches z distribution
+• For n>30: t ≈ z (practically the same)
+
+**When to Use Which:**
+
+| Situation | Distribution | Formula |
+|-----------|-------------|---------|
+| σ known (rare) | z | x̄ ± z_(α/2) × (σ/√n) |
+| σ unknown, n≤30 | t | x̄ ± t_(α/2,df) × (s/√n) |
+| σ unknown, n>30 | z or t | x̄ ± z_(α/2) × (s/√n) |
+
+**For a Proportion (always use z):**
 p̂ ± z_(α/2) × √(p̂(1-p̂)/n)
 
-**Simple Example:**
-Sample of 100 customers, mean satisfaction = 7.2, std dev = 1.5
-95% CI = 7.2 ± 1.96 × (1.5/√100) = 7.2 ± 0.294 = [6.91, 7.49]
+**Worked Example - Customer Satisfaction (Using Mean Formula):**
+• Sample: 100 customers
+• Sample mean satisfaction = 7.2 (out of 10)
+• Sample standard deviation = 1.5
+• Want 95% confidence interval
+
+**Step-by-Step Calculation:**
+• **Formula Used:** x̄ ± z_(α/2) × (s/√n) (unknown σ, large sample)
+• **Critical Value:** z_(0.025) = 1.96 (for 95% CI)
+• **Standard Error:** s/√n = 1.5/√100 = 1.5/10 = 0.15
+• **Margin of Error:** 1.96 × 0.15 = 0.294
+• **Final CI:** 7.2 ± 0.294 = [6.91, 7.49]
+
+**Interpretation:** We're 95% confident the true average customer satisfaction is between 6.91 and 7.49
 
 ---
 
