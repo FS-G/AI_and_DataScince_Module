@@ -250,6 +250,9 @@ Bayes' rule is how rational thinking works - start with what you know, update wi
 
 ![Discrete Distributions Overview](https://blogger.googleusercontent.com/img/a/AVvXsEhx17znSE17sn4oPqq3bXvxw7_Df0zGsN9imB7AK6_IDA5nrBq-A1aIG5q03zK_CNLlGRawxBQIWUKPQU4vh3U34YcONBFU75kqfbphhG_WVTcy52vkutvsf5AO8X_f-KCd_6C1uH27PDXMFbXiKWWb2h_mROTgR5KPsiHhOGxG3rd8vrRyWFdyEdMp)
 
+
+![Exponential Disctibution](https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FExponential_distribution&psig=AOvVaw3WUJdikB9bK00BEjtBK_Az&ust=1756543345589000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCPiq2ovQr48DFQAAAAAdAAAAABAE)
+
 **Bernoulli Distribution - The Yes/No Distribution**
 • Models single trial with two outcomes
 • Examples:
