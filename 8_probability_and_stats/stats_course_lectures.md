@@ -591,6 +591,8 @@ Point Estimate ± (Critical Value × Standard Error)
 
 **Understanding z vs t Distributions**
 
+![z vs t distribution](https://cdn.prod.website-files.com/6634a8f8dd9b2a63c9e6be83/669d64959d5970e08c48ad1c_360214.image0.jpeg)
+
 **z Distribution (Standard Normal):**
 • Use when population standard deviation (σ) is **known**
 • Bell-shaped, mean=0, std dev=1
