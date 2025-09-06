@@ -706,10 +706,7 @@ Conclusion: If the new design really had no effect, we'd only see results this e
 • Missing a real effect
 • Probability = β
 
-**Power of a Test**
-• Power = 1 - β
-• Probability of correctly detecting an effect when it exists
-• Affected by: sample size, effect size, significance level
+
 
 **Balancing Act:**
 • Lower α → Lower Type I error, but higher Type II error
