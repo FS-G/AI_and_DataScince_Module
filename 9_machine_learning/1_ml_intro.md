@@ -1,9 +1,9 @@
 # Introduction to Machine Learning
-## Complete Lecture Series
+## Complete  Series
 
 ---
 
-# **Lecture 1: What is Machine Learning?**
+# ** 1: What is Machine Learning?**
 
 ## **1.1 Definition and Core Concepts**
 
@@ -37,7 +37,7 @@ Think of ML like teaching a child to recognize animals. You show them thousands 
 
 ---
 
-# **Lecture 2: The Three Pillars of Machine Learning**
+# ** 2: The Three Pillars of Machine Learning**
 
 ## **2.1 Overview of ML Types**
 
@@ -60,7 +60,7 @@ Guided learning       Hybrid approach       Pattern discovery
 
 ---
 
-# **Lecture 3: Supervised Learning - Learning with a Teacher**
+# ** 3: Supervised Learning - Learning with a Teacher**
 
 ## **3.1 What is Supervised Learning?**
 
@@ -153,7 +153,7 @@ Guided learning       Hybrid approach       Pattern discovery
 
 ---
 
-# **Lecture 4: Unsupervised Learning - Finding Hidden Patterns**
+# ** 4: Unsupervised Learning - Finding Hidden Patterns**
 
 ## **4.1 What is Unsupervised Learning?**
 
@@ -265,7 +265,7 @@ Guided learning       Hybrid approach       Pattern discovery
 
 ---
 
-# **Lecture 5: Reinforcement Learning - Learning Through Experience**
+# ** 5: Reinforcement Learning - Learning Through Experience**
 
 ## **5.1 What is Reinforcement Learning?**
 
@@ -435,7 +435,7 @@ Guided learning       Hybrid approach       Pattern discovery
 
 ---
 
-# **Lecture 6: Modern AI Paradigms - The Current Revolution**
+# ** 6: Modern AI Paradigms - The Current Revolution**
 
 ## **6.1 The Deep Learning Revolution**
 
@@ -755,7 +755,7 @@ Generative AI: Input Prompt → Create New Content
 
 ---
 
-# **Lecture 7: Choosing the Right Machine Learning Approach**
+# ** 7: Choosing the Right Machine Learning Approach**
 
 ## **7.1 Problem Type Assessment**
 
@@ -771,4 +771,3 @@ Generative AI: Input Prompt → Create New Content
 #### **2. What data do you have?**
 - **Labeled examples** → Supervised Learning
 - **Unlabeled data** → Unsupervised Learning
-- **Feedback/
