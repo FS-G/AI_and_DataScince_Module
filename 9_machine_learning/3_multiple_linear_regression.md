@@ -1,11 +1,6 @@
 # Advanced Regression Techniques - Complete Lecture Guide
 
-## Dataset Overview: Diabetes Dataset
-- **Source**: sklearn.datasets.load_diabetes
-- **Features**: 10 physiological variables (age, sex, BMI, blood pressure, etc.)
-- **Target**: Quantitative measure of disease progression after one year
-- **Samples**: 442 patients
-- **Purpose**: Perfect for regression analysis demonstration
+
 
 ---
 
@@ -60,10 +55,7 @@ X = [1  x₁₁  x₁₂  ...  x₁ₙ]
     [βₙ]
 ```
 
-#### Normal Equation Solution
-```
-β = (XᵀX)⁻¹XᵀY
-```
+
 
 ### Practical Implementation
 
