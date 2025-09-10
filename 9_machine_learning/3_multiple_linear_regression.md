@@ -1,4 +1,4 @@
-# Advanced Regression Techniques - Complete Lecture Guide
+# Advanced Regression Techniques
 
 
 
@@ -318,6 +318,14 @@ adj_r2 = adjusted_r2(r2, X_test.shape[0], X_test.shape[1])
 
 ### Complete Evaluation Function
 ```python
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import numpy as np
+
+def adjusted_r2(r2, n_samples, n_features):
+    return 1 - (1 - r2) * (n_samples - 1) / (n_samples - n_features - 1)
+
 def evaluate_model(model, X_test, y_test, model_name="Model"):
     y_pred = model.predict(X_test)
     
@@ -335,6 +343,21 @@ def evaluate_model(model, X_test, y_test, model_name="Model"):
     print(f"  Adj R²: {adj_r2:.4f}")
     
     return {'MSE': mse, 'RMSE': rmse, 'MAE': mae, 'R²': r2, 'Adj_R²': adj_r2}
+
+# Create and fit models
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Scale features for regularized models
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train_scaled, y_train)
+
+lasso = Lasso(alpha=1.0)
+lasso.fit(X_train_scaled, y_train)
 
 # Evaluate all models
 models = {
