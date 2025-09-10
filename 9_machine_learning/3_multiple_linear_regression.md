@@ -35,6 +35,31 @@ Where:
 Y = Xβ + ε
 ```
 
+Where:
+- **y**: m × 1 vector of observed values (m observations)
+- **X**: m × (n+1) matrix of independent variables (includes column of 1s for intercept)
+- **β**: (n+1) × 1 vector of coefficients
+- **ε**: m × 1 vector of residuals/error terms
+
+For m observations and n features:
+
+**X Matrix Structure:**
+```
+X = [1  x₁₁  x₁₂  ...  x₁ₙ]
+    [1  x₂₁  x₂₂  ...  x₂ₙ]
+    [⋮   ⋮    ⋮   ⋱   ⋮  ]
+    [1  xₘ₁  xₘ₂  ...  xₘₙ]
+```
+
+**β Vector Structure:**
+```
+β = [β₀]
+    [β₁]
+    [β₂]
+    [⋮ ]
+    [βₙ]
+```
+
 #### Normal Equation Solution
 ```
 β = (XᵀX)⁻¹XᵀY
@@ -115,7 +140,29 @@ increases by 938.24 units (highly significant, p < 0.001)"
 
 ---
 
-## 2. Regularized Regression
+## 2. Loss Function
+
+### Sum of Squared Errors (SSE)
+
+To find the optimal values of β, we minimize the Sum of Squared Errors (SSE):
+
+```
+SSE = Σ_{i=1}^{m} (yᵢ - ŷᵢ)² = (y - Xβ)ᵀ(y - Xβ)
+```
+
+Where:
+- **yᵢ**: Actual observed value for the i-th data point
+- **ŷᵢ**: Predicted value for the i-th data point  
+- **y**: Vector of actual values
+- **X**: Design matrix
+- **β**: Vector of coefficients
+- **ᵀ**: Matrix transpose
+
+The squared L2 norm of a vector: `||a||² = aᵀa`
+
+---
+
+## 3. Regularized Regression
 
 ### Why Regularization?
 - **Problem**: Overfitting with many features
@@ -124,52 +171,26 @@ increases by 938.24 units (highly significant, p < 0.001)"
 
 ### Ridge Regression (L2 Regularization)
 
+Ridge Regression, also known as L2 Regularization, modifies the cost function by adding the squared magnitude of the coefficients as a penalty term.
+
 #### Mathematical Foundation
 ```
-Cost Function = MSE + α × Σ(βᵢ²)
-```
-```
-J(β) = ||y - Xβ||² + α||β||₂²
+y = β₀ + β₁x + λ Σ_{i=1}^{n} βᵢ²
 ```
 
 #### Key Characteristics
 - **Shrinks coefficients** toward zero but **never exactly zero**
 - **Handles multicollinearity** well
 - **Good for prediction** when most features are relevant
-- **Alpha (α)**: Controls regularization strength
-
-#### Implementation
-```python
-from sklearn.linear_model import Ridge
-from sklearn.preprocessing import StandardScaler
-
-# Standardize features (important for regularization)
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
-# Ridge Regression
-ridge = Ridge(alpha=1.0)
-ridge.fit(X_train_scaled, y_train)
-
-# Predictions and evaluation
-y_pred_ridge = ridge.predict(X_test_scaled)
-ridge_r2 = r2_score(y_test, y_pred_ridge)
-
-print(f"Ridge R² Score: {ridge_r2:.4f}")
-print("Ridge Coefficients:")
-for i, coef in enumerate(ridge.coef_):
-    print(f"  {feature_names[i]}: {coef:.2f}")
-```
+- **Lambda (λ)**: Controls regularization strength
 
 ### Lasso Regression (L1 Regularization)
 
+Lasso Regression, short for Least Absolute Shrinkage and Selection Operator, uses L1 Regularization. It modifies the cost function by adding the absolute magnitude of the coefficients as a penalty term.
+
 #### Mathematical Foundation
 ```
-Cost Function = MSE + α × Σ|βᵢ|
-```
-```
-J(β) = ||y - Xβ||² + α||β||₁
+y = β₀ + β₁x + λ Σ_{i=1}^{n} |βᵢ|
 ```
 
 #### Key Characteristics
@@ -178,49 +199,9 @@ J(β) = ||y - Xβ||² + α||β||₁
 - **Good for interpretability** when few features are relevant
 - **May struggle** with groups of correlated features
 
-#### Implementation
-```python
-from sklearn.linear_model import Lasso
-
-# Lasso Regression
-lasso = Lasso(alpha=1.0)
-lasso.fit(X_train_scaled, y_train)
-
-# Predictions and evaluation
-y_pred_lasso = lasso.predict(X_test_scaled)
-lasso_r2 = r2_score(y_test, y_pred_lasso)
-
-print(f"Lasso R² Score: {lasso_r2:.4f}")
-print("Lasso Coefficients:")
-for i, coef in enumerate(lasso.coef_):
-    print(f"  {feature_names[i]}: {coef:.2f}")
-
-# Count non-zero coefficients
-non_zero_coefs = np.sum(lasso.coef_ != 0)
-print(f"Number of selected features: {non_zero_coefs}")
-```
-
-### Alpha Selection
-```python
-from sklearn.linear_model import RidgeCV, LassoCV
-
-# Cross-validation for optimal alpha
-alphas = np.logspace(-3, 2, 50)
-
-# Ridge with CV
-ridge_cv = RidgeCV(alphas=alphas, cv=5)
-ridge_cv.fit(X_train_scaled, y_train)
-print(f"Best Ridge Alpha: {ridge_cv.alpha_:.4f}")
-
-# Lasso with CV
-lasso_cv = LassoCV(alphas=alphas, cv=5)
-lasso_cv.fit(X_train_scaled, y_train)
-print(f"Best Lasso Alpha: {lasso_cv.alpha_:.4f}")
-```
-
 ---
 
-## 3. Polynomial Regression
+## 4. Polynomial Regression
 
 ### What is Polynomial Regression?
 - **Extension** of linear regression using **polynomial features**
@@ -292,7 +273,7 @@ print(f"Polynomial Ridge R²: {poly_ridge_r2:.4f}")
 
 ---
 
-## 4. Regression Evaluation Metrics
+## 5. Regression Evaluation Metrics
 
 ### 1. Mean Squared Error (MSE)
 ```python
