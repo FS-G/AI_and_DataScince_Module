@@ -1,15 +1,7 @@
 
 # Random Forest and Ensemble Methods
 
-## Table of Contents
-1. [Introduction to Ensemble Learning](#introduction-to-ensemble-learning)
-2. [Bagging (Bootstrap Aggregating)](#bagging-bootstrap-aggregating)
-3. [Boosting Methods](#boosting-methods)
-4. [Random Forest](#random-forest)
-5. [Model Comparison and Selection](#model-comparison-and-selection)
-6. [Hyperparameter Tuning](#hyperparameter-tuning)
-7. [Practical Applications](#practical-applications)
-8. [Hands-on Exercises](#hands-on-exercises)
+
 
 ---
 
