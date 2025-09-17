@@ -29,7 +29,6 @@ Think of ensemble learning like asking multiple experts for advice:
 |--------|------------------|-------------------|----------|
 | **Bagging** | Parallel | Reduces variance | Stable base learners |
 | **Boosting** | Sequential | Reduces bias | Weak learners |
-| **Stacking** | Meta-learning | Learns optimal combination | Complex relationships |
 
 ### Why Ensembles Work
 
