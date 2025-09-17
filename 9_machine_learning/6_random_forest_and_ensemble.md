@@ -1,4 +1,157 @@
 
+
+## What is Ensembling?
+
+**Problem**: Single model can make mistakes
+
+**Solution**: Combine multiple models!
+
+**Think of it like:**
+- Asking multiple experts for advice
+- Taking their average opinion
+- Usually better than any single expert
+
+**Types of Ensembles:**
+- **Bagging**: Train models in parallel
+- **Boosting**: Train models sequentially 
+- **Stacking**: Use one model to combine others
+
+## Bagging (Bootstrap Aggregating)
+
+**Concept**: 
+- Create multiple datasets by sampling with replacement
+- Train separate models on each dataset
+- Combine predictions by voting/averaging
+
+**Bootstrap Sampling Example:**
+```
+Original: [1, 2, 3, 4, 5]
+
+Sample 1: [1, 1, 3, 4, 5] (1 appears twice)
+Sample 2: [2, 3, 3, 4, 4] (some numbers repeat)
+Sample 3: [1, 2, 2, 5, 5] (some numbers missing)
+```
+
+## Bagging Step-by-Step
+
+**Our Original Dataset:**
+| Row | Feature A | Feature B | Target |
+|-----|-----------|-----------|---------|
+| 1   | 2         | 3         | 1       |
+| 2   | 5         | 4         | 0       |
+| 3   | 3         | 7         | 1       |
+| 4   | 6         | 8         | 0       |
+| 5   | 9         | 1         | 1       |
+
+**Step 1**: Create bootstrap samples (sample with replacement)
+
+**Bootstrap Sample 1**: Rows [2, 3, 2, 4, 5]
+**Bootstrap Sample 2**: Rows [1, 5, 4, 1, 3] 
+**Bootstrap Sample 3**: Rows [5, 3, 4, 5, 2]
+
+**Step 2**: Train one model on each sample
+
+**Step 3**: For prediction, combine all models:
+- **Classification**: Majority vote
+- **Regression**: Average
+
+## Bagging Code Example
+
+```python
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
+import numpy as np
+
+# Create sample data
+X = np.array([[2, 3], [5, 4], [3, 7], [6, 8], [9, 1]])
+y = np.array([1, 0, 1, 0, 1])
+
+# Bagging with decision trees
+bagging = BaggingClassifier(
+    base_estimator=DecisionTreeClassifier(),
+    n_estimators=10,  # 10 different models
+    random_state=42
+)
+
+# Train the ensemble
+bagging.fit(X, y)
+
+# Make predictions
+predictions = bagging.predict(X)
+print("Bagging Predictions:", predictions)
+
+# Get prediction probabilities
+probabilities = bagging.predict_proba(X)
+print("Prediction Probabilities:", probabilities)
+```
+
+## Boosting - Learning from Mistakes
+
+**Concept**: Train models one after another
+- Each new model focuses on previous mistakes
+- Give more weight to wrongly predicted samples
+- Final prediction = weighted combination
+
+**Process:**
+1. Train Model 1 on original data
+2. Find samples Model 1 got wrong
+3. Train Model 2, focusing more on those mistakes
+4. Repeat...
+5. Combine all models with weights
+
+## Boosting Example
+
+**Round 1:**
+- Model 1 correctly predicts: [✓, ✗, ✓, ✓, ✗]
+- Mistakes on samples 2 and 5
+
+**Round 2:**
+- Give higher weight to samples 2 and 5
+- Model 2 focuses more on these difficult cases
+- Model 2 predictions: [✗, ✓, ✗, ✓, ✓]
+
+**Final Prediction:**
+- Combine Model 1 + Model 2 with weights
+- Usually more accurate than either alone
+
+## Boosting Code Example
+
+```python
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+
+# AdaBoost Example
+ada_boost = AdaBoostClassifier(
+    base_estimator=DecisionTreeClassifier(max_depth=1),
+    n_estimators=50,
+    learning_rate=1.0,
+    random_state=42
+)
+
+ada_boost.fit(X, y)
+ada_predictions = ada_boost.predict(X)
+
+# Gradient Boosting Example  
+gb_boost = GradientBoostingClassifier(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=3,
+    random_state=42
+)
+
+gb_boost.fit(X, y)
+gb_predictions = gb_boost.predict(X)
+
+print("AdaBoost Predictions:", ada_predictions)
+print("Gradient Boosting Predictions:", gb_predictions)
+```
+
+
+
+
+
+
+
 ## Random Forest - The Star!
 
 **What is Random Forest?**
