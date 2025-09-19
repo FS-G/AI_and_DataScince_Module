@@ -1952,7 +1952,8 @@ CSS positioning controls where elements are placed on the page. There are 5 main
 }
 ```
 - Element is removed from normal flow
-- Positioned relative to nearest positioned parent (or viewport)
+- **Looks for the nearest parent with positioning** (`relative`, `absolute`, `fixed`, or `sticky`)
+- If no positioned parent exists, positions relative to viewport
 - Other elements act like it doesn't exist
 
 ### 4. Fixed
@@ -2007,8 +2008,15 @@ CSS positioning controls where elements are placed on the page. There are 5 main
         
         <div class="demo-section">
             <h2>3. Absolute</h2>
+            <h3>With Positioned Parent (relative):</h3>
             <div class="absolute-container">
                 <div class="box absolute-box">Absolute Box</div>
+                <div class="box static-box">Normal Box</div>
+            </div>
+            
+            <h3>Without Positioned Parent:</h3>
+            <div class="no-position-container">
+                <div class="box absolute-no-parent">Absolute Box (no positioned parent)</div>
                 <div class="box static-box">Normal Box</div>
             </div>
         </div>
@@ -2099,7 +2107,7 @@ h1 {
 
 /* 3. Absolute positioning */
 .absolute-container {
-    position: relative;
+    position: relative;  /* This makes it a positioned parent */
     height: 200px;
     background: #E3F2FD;
     border: 2px dashed #2196F3;
@@ -2111,6 +2119,21 @@ h1 {
     top: 50px;
     right: 50px;
     background: #9C27B0;
+}
+
+.no-position-container {
+    height: 200px;
+    background: #FFF3E0;
+    border: 2px dashed #FF9800;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.absolute-no-parent {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    background: #E91E63;
 }
 
 /* 4. Fixed positioning */
