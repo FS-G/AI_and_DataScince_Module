@@ -2187,26 +2187,60 @@ h1 {
 }
 ```
 
-### Common Flex Properties
-```css
-.flex-examples {
-    /* Container properties */
-    display: flex;
-    flex-direction: row;        /* row, column, row-reverse, column-reverse */
-    flex-wrap: wrap;           /* wrap, nowrap */
-    justify-content: center;    /* flex-start, flex-end, center, space-between, space-around */
-    align-items: stretch;      /* flex-start, flex-end, center, stretch */
-}
+### Complete Flexbox Properties
 
-.flex-item {
-    /* Item properties */
-    flex-grow: 1;    /* Grow to fill space */
-    flex-shrink: 0;  /* Don't shrink */
-    flex-basis: 200px; /* Initial size */
+#### Container Properties (Parent)
+```css
+.flex-container {
+    display: flex;                    /* flex, inline-flex */
+    
+    /* Direction */
+    flex-direction: row;             /* row, row-reverse, column, column-reverse */
+    
+    /* Wrapping */
+    flex-wrap: nowrap;              /* nowrap, wrap, wrap-reverse */
+    
+    /* Main axis alignment (horizontal if row, vertical if column) */
+    justify-content: flex-start;    /* flex-start, flex-end, center, space-between, space-around, space-evenly */
+    
+    /* Cross axis alignment (vertical if row, horizontal if column) */
+    align-items: stretch;           /* flex-start, flex-end, center, stretch, baseline */
+    
+    /* Multiple lines alignment */
+    align-content: stretch;         /* flex-start, flex-end, center, stretch, space-between, space-around, space-evenly */
+    
+    /* Gap between items */
+    gap: 10px;                      /* Any length value */
+    row-gap: 10px;                  /* Gap between rows */
+    column-gap: 10px;               /* Gap between columns */
 }
 ```
 
-### 🎪 Complete Example: Flexbox Fun House
+#### Item Properties (Children)
+```css
+.flex-item {
+    /* Growth factor */
+    flex-grow: 0;                   /* Number (0 = don't grow, 1+ = grow proportionally) */
+    
+    /* Shrink factor */
+    flex-shrink: 1;                 /* Number (0 = don't shrink, 1+ = shrink proportionally) */
+    
+    /* Initial size */
+    flex-basis: auto;               /* auto, content, or any length value (px, %, etc.) */
+    
+    /* Shorthand for grow, shrink, basis */
+    flex: 1;                        /* flex: 1 1 0% (grow shrink basis) */
+    flex: 0 1 auto;                /* Default value */
+    
+    /* Individual alignment */
+    align-self: auto;               /* auto, flex-start, flex-end, center, stretch, baseline */
+    
+    /* Order */
+    order: 0;                       /* Number (lower numbers appear first) */
+}
+```
+
+### Complete Example: Simple Flexbox Demo
 
 **HTML (flexbox.html):**
 ```html
@@ -2215,39 +2249,246 @@ h1 {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexbox Fun House</title>
+    <title>Simple Flexbox Demo</title>
     <link rel="stylesheet" href="flexbox.css">
 </head>
 <body>
-    <div class="flexbox-showcase">
-        <h1>🎪 Flexbox Fun House 🎪</h1>
-        <p class="intro">Discover the power of flexible layouts!</p>
+    <div class="container">
+        <h1>Flexbox Basics</h1>
         
-        <section class="basic-flex">
-            <h2>Basic Flex Container</h2>
-            <div class="flex-container basic">
-                <div class="flex-item">Item 1</div>
-                <div class="flex-item">Item 2</div>
-                <div class="flex-item">Item 3</div>
+        <div class="demo-section">
+            <h2>1. Basic Flex Container</h2>
+            <div class="flex-container">
+                <div class="box">Box 1</div>
+                <div class="box">Box 2</div>
+                <div class="box">Box 3</div>
             </div>
-        </section>
+        </div>
         
-        <section class="justify-content-demo">
-            <h2>Justify Content (Horizontal Alignment)</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3>flex-start</h3>
-                    <div class="flex-container justify-start">
-                        <div class="flex-item">1</div>
-                        <div class="flex-item">2</div>
-                        <div class="flex-item">3</div>
-                    </div>
+        <div class="demo-section">
+            <h2>2. Justify Content</h2>
+            <div class="flex-container justify-center">
+                <div class="box">Center</div>
+                <div class="box">Center</div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>3. Align Items</h2>
+            <div class="flex-container align-center">
+                <div class="box">Item</div>
+                <div class="box tall">Tall Item</div>
+                <div class="box">Item</div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>4. Flex Direction</h2>
+            <div class="flex-container direction-column">
+                <div class="box">1</div>
+                <div class="box">2</div>
+                <div class="box">3</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+**CSS (flexbox.css):**
+```css
+/* Simple Flexbox Demo */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.demo-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.demo-section h2 {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Basic flex container */
+.flex-container {
+    display: flex;
+    background: #e3f2fd;
+    padding: 20px;
+    border-radius: 5px;
+    min-height: 100px;
+}
+
+/* Basic box styling */
+.box {
+    width: 80px;
+    height: 60px;
+    background: #2196F3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Justify content examples */
+.justify-center {
+    justify-content: center;
+}
+
+/* Align items examples */
+.align-center {
+    align-items: center;
+}
+
+.tall {
+    height: 100px;
+}
+
+/* Flex direction examples */
+.direction-column {
+    flex-direction: column;
+    height: 200px;
+}
+```
+
+---
+
+## 10. Responsive Design
+
+- Text becomes too small to read on mobile
+- Buttons are too tiny to tap
+- Content overflows off the screen
+- Users have to zoom and scroll horizontally
+
+Responsive design ensures your site adapts to any screen size automatically.
+
+### Media Queries
+```css
+/* Mobile first approach */
+.responsive-container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Tablet styles */
+@media (min-width: 768px) {
+    .responsive-container {
+        width: 80%;
+        padding: 20px;
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+    .responsive-container {
+        width: 1200px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+}
+```
+
+### Common Breakpoints
+```css
+/* Mobile */
+@media (max-width: 767px) { /* styles */ }
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) { /* styles */ }
+
+/* Desktop */
+@media (min-width: 1024px) { /* styles */ }
+```
+
+### 📱 Complete Example: Responsive Gallery
+
+**HTML (responsive.html):**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Gallery</title>
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <div class="responsive-showcase">
+        <h1>📱 Responsive Design Gallery 📱</h1>
+        <p class="intro">Resize your browser to see responsive design in action!</p>
+        
+        <nav class="responsive-nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Gallery</a>
+            <a href="#" class="nav-link">Contact</a>
+        </nav>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200/4CAF50/white?text=Image+1" alt="Gallery Image 1">
+                <h3>Beautiful Landscape</h3>
+                <p>Amazing view of mountains and lakes</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200/2196F3/white?text=Image+2" alt="Gallery Image 2">
+                <h3>City Skyline</h3>
+                <p>Modern architecture at sunset</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200/FF9800/white?text=Image+3" alt="Gallery Image 3">
+                <h3>Ocean Waves</h3>
+                <p>Peaceful beach scene</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x200/9C27B0/white?text=Image+4" alt="Gallery Image 4">
+                <h3>Forest Path</h3>
+                <p>Mysterious woodland trail</p>
+            </div>
+        </div>
+        
+        <div class="responsive-text">
+            <h2>Responsive Design Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>📱 Mobile First</h3>
+                    <p>Designed for mobile devices first, then enhanced for larger screens</p>
                 </div>
-                <div class="demo-item">
-                    <h3>center</h3>
-                    <div class="flex-container justify-center">
-                        <div class="flex-item">1</div>
-                        <div class="flex-item">2</div>
+                <div class="feature-item">
+                    <h3>🔄 Flexible Layout</h3>
+                    <p>Uses flexible grids and images that adapt to any screen size</p>
+                </div>
+                <div class="feature-item">
+                    <h3>⚡ Fast Loading</h3>
+                    <p>Optimized for performance across all devices</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
                         <div class="flex-item">3</div>
                     </div>
                 </div>
