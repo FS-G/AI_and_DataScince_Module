@@ -4,10 +4,10 @@
 
 HTML provides the structure and content of a webpage, but it's like a house with no paint, furniture, or decoration. CSS (Cascading Style Sheets) is what makes your website visually appealing and user-friendly by controlling:
 
-• **Appearance** - Colors, fonts, spacing, and layout
-• **Responsiveness** - How content adapts to different screen sizes
-• **User Experience** - Hover effects, animations, and visual hierarchy
-• **Maintainability** - Separating design from content makes updates easier
+- **Appearance** - Colors, fonts, spacing, and layout
+- **Responsiveness** - How content adapts to different screen sizes
+- **User Experience** - Hover effects, animations, and visual hierarchy
+- **Maintainability** - Separating design from content makes updates easier
 
 ---
 
@@ -164,11 +164,11 @@ h1 {
 }
 ```
 
-• **Selector** - Targets HTML elements
-• **Property** - What you want to change
-• **Value** - How you want to change it
-• **Declaration** - Property + value pair
-• **Rule** - Complete selector + declarations
+- **Selector** - Targets HTML elements
+- **Property** - What you want to change
+- **Value** - How you want to change it
+- **Declaration** - Property + value pair
+- **Rule** - Complete selector + declarations
 
 ### 🎯 Complete Example: Syntax Playground
 
@@ -4019,16 +4019,16 @@ body {
 ## 13. Best Practices
 
 ### Organization
-• Use external stylesheets for better maintainability
-• Group related styles together
-• Use comments to organize your code
-• Follow a consistent naming convention
+- Use external stylesheets for better maintainability
+- Group related styles together
+- Use comments to organize your code
+- Follow a consistent naming convention
 
 ### Performance
-• Minimize CSS file size
-• Use shorthand properties when possible
-• Avoid overly specific selectors
-• Combine similar selectors
+- Minimize CSS file size
+- Use shorthand properties when possible
+- Avoid overly specific selectors
+- Combine similar selectors
 
 ### Code Quality
 ```css
@@ -4600,22 +4600,22 @@ section h2 {
 ## 14. Next Steps
 
 ### Continue Learning
-• CSS Grid for advanced layouts
-• CSS animations and transitions
-• CSS preprocessors (Sass, Less)
-• CSS frameworks (Bootstrap, Tailwind)
-• Modern CSS features (CSS Variables, Flexbox Grid)
+- CSS Grid for advanced layouts
+- CSS animations and transitions
+- CSS preprocessors (Sass, Less)
+- CSS frameworks (Bootstrap, Tailwind)
+- Modern CSS features (CSS Variables, Flexbox Grid)
 
 ### Practice Projects
-• Build a personal portfolio website
-• Create a responsive navigation menu
-• Design a product card component
-• Make a simple landing page
+- Build a personal portfolio website
+- Create a responsive navigation menu
+- Design a product card component
+- Make a simple landing page
 
 ### Resources
-• MDN Web Docs for CSS reference
-• CSS-Tricks for tutorials and tips
-• CodePen for experimenting with code
-• Can I Use for browser compatibility
+- MDN Web Docs for CSS reference
+- CSS-Tricks for tutorials and tips
+- CodePen for experimenting with code
+- Can I Use for browser compatibility
 
 ---
