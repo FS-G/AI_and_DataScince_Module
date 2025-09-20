@@ -228,6 +228,7 @@ git add .
 git status
 git commit -m "commit message"
 git branch -m main
+# git remote add origin https://github.com/FS-G/test_class.git - this is a one time command - only run when you make a new repo
 git push origin main
 ```
 
