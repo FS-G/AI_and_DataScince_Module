@@ -220,6 +220,16 @@ git branch -d feature/user-authentication
 
 ---
 
+
+**basic path to make a repo**
+```bash
+git init
+git add .
+git status
+git commit -m "commit message"
+git branch -m main
+```
+
 ## 6. GitHub Integration & VS Code Connection
 
 ### 🎯 Connecting VS Code to GitHub
