@@ -228,6 +228,7 @@ git add .
 git status
 git commit -m "commit message"
 git branch -m main
+git push origin main
 ```
 
 ## 6. GitHub Integration & VS Code Connection
