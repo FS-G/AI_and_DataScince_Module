@@ -297,12 +297,26 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
     return None
 ```
 
+### 5)  Dependencies - try to do this on your own
+
+```python
+# requirements.txt
+fastapi
+uvicorn
+SQLAlchemy
+pydantic-settings
+psycopg
+psycopg[binary]
+```
+
 Test locally:
 ```bash
 uvicorn main:app --reload
 curl -X POST http://localhost:8000/products -H "Content-Type: application/json" -d '{"name":"Pen","price":"1.50","in_stock":true}'
 curl http://localhost:8000/products
 ```
+
+
 
 ### 5) Database Migrations with Alembic
 Initialize Alembic and configure it to use your SQLAlchemy `Base` metadata.
