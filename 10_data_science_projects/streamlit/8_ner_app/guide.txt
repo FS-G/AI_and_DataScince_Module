@@ -1,0 +1,5 @@
+To upload this on streamlit, first run the command 
+pip freeze > requirements.txt 
+to make the requirements.txt file
+
+first, do this with the original requiremets.txt file and show error and then do this.
