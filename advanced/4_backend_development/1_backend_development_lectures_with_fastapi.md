@@ -15,10 +15,15 @@ Visual: Client → Internet → Web Server (Uvicorn/Gunicorn) → App (FastAPI) 
 
 ### 2) Communication Protocols Overview
 - **TCP**: Reliable, ordered, connection-oriented. Used under HTTP/HTTPS.
+  - When to use: Most web apps and APIs; anything that must not lose messages (e.g., REST APIs, database connections).
 - **UDP**: Fast, unreliable, used for real-time streaming/gaming.
+  - When to use: Low-latency, loss-tolerant scenarios (live audio/video, gaming telemetry, DNS). Not for typical APIs.
 - **HTTP/HTTPS**: Application protocol of the web; resources, methods, headers.
+  - When to use: Standard request/response APIs, browser interactions, public endpoints; use HTTPS in production, always.
 - **WebSockets**: Full-duplex, persistent connection for realtime apps.
+  - When to use: Real-time updates and bidirectional messaging (chat, live dashboards, notifications) where server can push instantly.
 - **gRPC**: High-performance RPC over HTTP/2 with protobuf schemas.
+  - When to use: Service-to-service communication, strongly typed contracts, streaming RPCs, and high throughput microservices.
 
 ### 3) Deep Dive into HTTP/HTTPS
 - **Methods**: GET (read), POST (create), PUT/PATCH (update), DELETE (remove)
