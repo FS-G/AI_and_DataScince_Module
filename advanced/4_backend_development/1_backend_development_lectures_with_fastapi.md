@@ -155,19 +155,9 @@ Returning a `dict` automatically becomes JSON.
 @app.get("/health")
 def health():
     return {"ok": True}
-```
 
-### 5) Deploying This Minimal App to Railway
-Add a start command. Railway detects Python; you can set a start command in the service settings or add a `Procfile`.
 
-```bash
-echo "web: uvicorn main:app --host 0.0.0.0 --port $PORT" > Procfile
-```
 
-Push to GitHub, then in Railway:
-- Create a new service from your GitHub repo.
-- Set the start command or use `Procfile`.
-- Deploy. Visit the provided URL.
 
 ---
 
