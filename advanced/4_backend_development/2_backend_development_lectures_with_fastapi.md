@@ -221,12 +221,22 @@ async def list_notes(email: str = Depends(get_current_user_email), db: AsyncSess
 ```python
 # main_async.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from core.db import engine, Base
 from core.errors import install_error_handlers
 from routers import auth, notes
 
 app = FastAPI(title="Async Notes API")
+
+# CORS: allow browser clients (preflight OPTIONS will return 200)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],          # in prod, set your exact frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],          # includes OPTIONS for preflight
+    allow_headers=["*"],          # includes Content-Type, Authorization
+)
 install_error_handlers(app)
 
 @app.on_event("startup")
@@ -249,6 +259,201 @@ uvicorn main_async:app --reload
 ```
 
 This complete minimal app demonstrates validation, secrets management, JWT auth, error handling, and async DB access — all in a compact, real-world structure.
+
+### Minimal Frontend (index.html) for the Async Notes App
+
+Use this single HTML file to sign up, log in, create notes, and list notes. Update `API_BASE_URL` to your local or deployed URL.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Async Notes App</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; background:#f7f7fb; margin:0; padding:24px; }
+    .card { background:#fff; border:1px solid #e6e6ef; border-radius:8px; padding:16px; margin:0 auto 16px; max-width:720px; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+    h1 { text-align:center; margin:0 0 16px; color:#2e2e43; }
+    h2 { margin:0 0 12px; color:#3b3b58; font-size:1.1rem; }
+    label { display:block; margin:8px 0 4px; color:#4b4b6a; }
+    input, textarea { width:100%; padding:10px; border:1px solid #d0d0e0; border-radius:6px; font-size:14px; }
+    textarea { resize:vertical; min-height:80px; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .btn { background:#4f46e5; color:white; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; margin-top:10px; }
+    .btn.secondary { background:#64748b; }
+    .muted { color:#6b7280; font-size:13px; margin-top:6px; }
+    .list { display:grid; gap:10px; margin-top:10px; }
+    .note { border:1px solid #e6e6ef; padding:10px; border-radius:6px; background:#fafafe; }
+    .status { color:#10b981; font-weight:600; font-size:13px; }
+    .error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; padding:10px; border-radius:6px; margin-top:10px; }
+    .success { background:#dcfce7; color:#14532d; border-left:4px solid #22c55e; padding:10px; border-radius:6px; margin-top:10px; }
+  </style>
+}</head>
+<body>
+  <h1>Async Notes</h1>
+
+  <div class="card" id="auth-card">
+    <h2>Authentication</h2>
+    <div id="auth-msg"></div>
+    <div class="row">
+      <div>
+        <label for="reg-email">Register Email</label>
+        <input id="reg-email" type="email" placeholder="user@example.com" />
+      </div>
+      <div>
+        <label for="reg-password">Password</label>
+        <input id="reg-password" type="password" />
+      </div>
+    </div>
+    <button class="btn" id="register-btn">Register</button>
+    <div class="row" style="margin-top:12px;">
+      <div>
+        <label for="login-email">Login Email</label>
+        <input id="login-email" type="email" placeholder="user@example.com" />
+      </div>
+      <div>
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" />
+      </div>
+    </div>
+    <button class="btn" id="login-btn">Login</button>
+    <button class="btn secondary" id="logout-btn">Logout</button>
+    <div class="muted" id="auth-status">Not authenticated</div>
+  </div>
+
+  <div class="card">
+    <h2>Create Note</h2>
+    <div id="note-msg"></div>
+    <label for="note-title">Title</label>
+    <input id="note-title" type="text" placeholder="Note title" />
+    <label for="note-content">Content</label>
+    <textarea id="note-content" placeholder="Write something..."></textarea>
+    <button class="btn" id="create-note-btn">Create Note</button>
+  </div>
+
+  <div class="card">
+    <h2>Your Notes</h2>
+    <button class="btn secondary" id="refresh-notes-btn">Refresh</button>
+    <div class="list" id="notes-list"></div>
+  </div>
+
+  <script>
+    // Change this for your environment
+    const API_BASE_URL = 'http://localhost:8000';
+
+    function setStatus(elId, msg, kind='success') {
+      const el = document.getElementById(elId);
+      el.innerHTML = msg ? `<div class="${kind}">${msg}</div>` : '';
+      if (msg) setTimeout(() => el.innerHTML = '', 4000);
+    }
+
+    function authHeaders() {
+      const token = localStorage.getItem('token');
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+      return headers;
+    }
+
+    function updateAuthStatus() {
+      const token = localStorage.getItem('token');
+      document.getElementById('auth-status').textContent = token ? 'Authenticated' : 'Not authenticated';
+    }
+
+    async function register() {
+      try {
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-password').value;
+        const resp = await fetch(`${API_BASE_URL}/auth/register`, {
+          method: 'POST', headers: authHeaders(), body: JSON.stringify({ email, password })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.detail || 'Register failed');
+        localStorage.setItem('token', data.access_token);
+        setStatus('auth-msg', 'Registered and logged in', 'success');
+        updateAuthStatus();
+      } catch (e) {
+        setStatus('auth-msg', e.message, 'error');
+      }
+    }
+
+    async function login() {
+      try {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const form = new URLSearchParams();
+        form.append('username', email);
+        form.append('password', password);
+        const resp = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: form
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.detail || 'Login failed');
+        localStorage.setItem('token', data.access_token);
+        setStatus('auth-msg', 'Logged in', 'success');
+        updateAuthStatus();
+      } catch (e) {
+        setStatus('auth-msg', e.message, 'error');
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      updateAuthStatus();
+      setStatus('auth-msg', 'Logged out', 'success');
+    }
+
+    async function createNote() {
+      try {
+        const title = document.getElementById('note-title').value;
+        const content = document.getElementById('note-content').value;
+        const resp = await fetch(`${API_BASE_URL}/notes`, {
+          method: 'POST', headers: authHeaders(), body: JSON.stringify({ title, content })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.detail || 'Create failed');
+        setStatus('note-msg', 'Note created', 'success');
+        document.getElementById('note-title').value = '';
+        document.getElementById('note-content').value = '';
+        await listNotes();
+      } catch (e) {
+        setStatus('note-msg', e.message, 'error');
+      }
+    }
+
+    async function listNotes() {
+      try {
+        const resp = await fetch(`${API_BASE_URL}/notes`, { headers: authHeaders() });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.detail || 'Fetch failed');
+        const container = document.getElementById('notes-list');
+        container.innerHTML = data.length ? '' : '<div class="muted">No notes yet</div>';
+        for (const n of data) {
+          const div = document.createElement('div');
+          div.className = 'note';
+          div.innerHTML = `<strong>${n.title}</strong><div class="muted">${n.content}</div>`;
+          container.appendChild(div);
+        }
+      } catch (e) {
+        const container = document.getElementById('notes-list');
+        container.innerHTML = `<div class="error">${e.message}</div>`;
+      }
+    }
+
+    // Wire events
+    document.getElementById('register-btn').addEventListener('click', register);
+    document.getElementById('login-btn').addEventListener('click', login);
+    document.getElementById('logout-btn').addEventListener('click', logout);
+    document.getElementById('create-note-btn').addEventListener('click', createNote);
+    document.getElementById('refresh-notes-btn').addEventListener('click', listNotes);
+
+    // On load
+    updateAuthStatus();
+    listNotes();
+  </script>
+</body>
+</html>
+```
 
 ---
 
