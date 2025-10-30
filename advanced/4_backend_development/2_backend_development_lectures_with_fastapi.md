@@ -1,68 +1,86 @@
 ---
 
-## Module 4: Crafting Robust & Secure APIs
+## Module 4: Crafting Robust, Secure, and Async APIs (Complete Minimal App)
 
-### 1) Data Validation (Never trust input)
-Use Pydantic models to validate and document payloads. Validation happens before your handler runs.
+In this module we build a minimal, production-style, fully async FastAPI app that includes:
+- Input validation with Pydantic
+- Config and secrets via environment variables
+- JWT authentication (stateless) with OAuth2 password flow
+- Consistent error handling
+- Async SQLAlchemy with PostgreSQL
+- A tiny protected resource to tie it all together
 
-```python
-# validation_example.py
-from fastapi import FastAPI
-from pydantic import BaseModel, condecimal, constr
+We’ll implement a “Notes” API: users can register/login and manage their own notes.
 
-app = FastAPI(title="Validation Demo")
-
-class ProductIn(BaseModel):
-    name: constr(min_length=2, max_length=200)
-    price: condecimal(max_digits=10, decimal_places=2)
-    quantity: int = 0
-
-@app.post("/validate")
-def validate_product(p: ProductIn):
-    return {"ok": True, "product": p}
+### 1) Dependencies
+```bash
+pip install fastapi "uvicorn[standard]" "sqlalchemy>=2.0" asyncpg pydantic pydantic-settings bcrypt PyJWT python-multipart
 ```
 
-### 2) Configuration & Secrets Management
-Store secrets in environment variables; never commit them. Railway exposes env vars in the UI.
-
+### 2) Settings and Config
 ```python
-# security_config.py
-from pydantic_settings import BaseSettings
+# core/settings.py
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    database_url: str
+    database_url: str  # e.g. postgresql+asyncpg://USER:PASS@HOST:5432/DB
     jwt_secret: str
     jwt_algorithm: str = "HS256"
     jwt_expires_minutes: int = 60
 
-settings = Settings()  # reads from env (and .env in dev if configured)
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
+settings = Settings()
 ```
 
-### 3) Authentication vs Authorization
-- **Authentication**: Who are you?
-- **Authorization**: What can you do?
+```
+# .env (local only, set vars in Railway for prod)
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/notesdb
+JWT_SECRET=supersecret
+```
 
-We’ll implement stateless auth with JWT.
+### 3) Async Database and Models
+```python
+# core/db.py
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from core.settings import settings
 
-### 4) Token-Based Authentication (JWT)
-We’ll create a `users` table, register and login endpoints, and protected routes.
+engine = create_async_engine(settings.database_url, pool_pre_ping=True)
+AsyncSessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
+Base = declarative_base()
+
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session
+```
 
 ```python
-# auth_models.py
-from sqlalchemy import Integer, String, Boolean
-from sqlalchemy.orm import Mapped, mapped_column
-from database import Base
+# models.py
+from sqlalchemy import String, Integer, Boolean, ForeignKey, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from core.db import Base
 
 class User(Base):
     __tablename__ = "users"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    email: Mapped[str] = mapped_column(String(320), unique=True, nullable=False, index=True)
-    hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
+    hashed_password: Mapped[str] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    notes: Mapped[list["Note"]] = relationship(back_populates="owner", cascade="all, delete-orphan")
+
+class Note(Base):
+    __tablename__ = "notes"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(200))
+    content: Mapped[str] = mapped_column(Text)
+    owner_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    owner: Mapped[User] = relationship(back_populates="notes")
 ```
 
+### 4) Schemas (Validation)
 ```python
-# auth_schemas.py
+# schemas.py
 from pydantic import BaseModel, EmailStr
 
 class UserCreate(BaseModel):
@@ -72,18 +90,26 @@ class UserCreate(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+class NoteCreate(BaseModel):
+    title: str
+    content: str
+
+class NoteRead(BaseModel):
+    id: int
+    title: str
+    content: str
+    class Config:
+        from_attributes = True
 ```
 
+### 5) Auth Utilities (JWT + Passwords)
 ```python
-# auth_service.py
+# core/auth.py
 from datetime import datetime, timedelta
-from typing import Optional
 import bcrypt
 import jwt
-from sqlalchemy.orm import Session
-from auth_models import User
-from auth_schemas import UserCreate
-from security_config import settings
+from core.settings import settings
 
 def hash_password(plain: str) -> str:
     return bcrypt.hashpw(plain.encode(), bcrypt.gensalt()).decode()
@@ -91,92 +117,19 @@ def hash_password(plain: str) -> str:
 def verify_password(plain: str, hashed: str) -> bool:
     return bcrypt.checkpw(plain.encode(), hashed.encode())
 
-def create_access_token(subject: str, expires_minutes: int | None = None) -> str:
-    expire = datetime.utcnow() + timedelta(minutes=expires_minutes or settings.jwt_expires_minutes)
+def create_access_token(subject: str) -> str:
+    expire = datetime.utcnow() + timedelta(minutes=settings.jwt_expires_minutes)
     payload = {"sub": subject, "exp": expire}
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 
-def register_user(db: Session, data: UserCreate) -> User:
-    if db.query(User).filter(User.email == data.email).first():
-        raise ValueError("Email already registered")
-    user = User(email=data.email, hashed_password=hash_password(data.password))
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
-
-def authenticate(db: Session, email: str, password: str) -> Optional[User]:
-    user = db.query(User).filter(User.email == email).first()
-    if user and verify_password(password, user.hashed_password):
-        return user
-    return None
+def decode_access_token(token: str) -> str:
+    payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+    return payload.get("sub")
 ```
 
+### 6) Error Handling
 ```python
-# auth_routes.py
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
-from database import get_db
-from auth_schemas import UserCreate, Token
-from auth_service import register_user, authenticate, create_access_token
-import jwt
-from security_config import settings
-
-router = APIRouter(prefix="/auth", tags=["auth"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
-
-@router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-def register(payload: UserCreate, db: Session = Depends(get_db)):
-    try:
-        user = register_user(db, payload)
-    except ValueError as e:
-        raise HTTPException(400, detail=str(e))
-    token = create_access_token(subject=user.email)
-    return {"access_token": token, "token_type": "bearer"}
-
-@router.post("/login", response_model=Token)
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = authenticate(db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(status_code=400, detail="Invalid credentials")
-    token = create_access_token(subject=user.email)
-    return {"access_token": token, "token_type": "bearer"}
-
-def get_current_user_email(token: str = Depends(oauth2_scheme)) -> str:
-    try:
-        payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
-        return payload.get("sub")
-    except jwt.PyJWTError:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
-```
-
-Protect a route:
-```python
-# main_secure.py
-from fastapi import FastAPI, Depends
-from database import Base, engine
-from auth_routes import router as auth_router, get_current_user_email
-
-app = FastAPI(title="Secure API")
-Base.metadata.create_all(bind=engine)
-app.include_router(auth_router)
-
-@app.get("/me")
-def me(email: str = Depends(get_current_user_email)):
-    return {"email": email}
-```
-
-Packages needed (add if missing):
-```bash
-pip install bcrypt PyJWT python-multipart
-```
-
-### 5) Error Handling
-Create custom exceptions and handlers to return consistent error shapes.
-
-```python
-# errors.py
+# core/errors.py
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
@@ -191,17 +144,111 @@ def install_error_handlers(app: FastAPI):
         return JSONResponse(status_code=exc.status_code, content={"error": exc.message})
 ```
 
-Use it in your app:
+### 7) Routers (Async) — Auth and Notes
 ```python
-# main_secure.py (excerpt)
-from errors import install_error_handlers, DomainError
+# routers/auth.py
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from core.db import get_db
+from core.auth import create_access_token, hash_password, verify_password, decode_access_token
+from models import User
+from schemas import UserCreate, Token
 
+router = APIRouter(prefix="/auth", tags=["auth"])
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+
+@router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
+async def register(payload: UserCreate, db: AsyncSession = Depends(get_db)):
+    existing = await db.execute(select(User).where(User.email == payload.email))
+    if existing.scalar_one_or_none():
+        raise HTTPException(400, detail="Email already registered")
+    user = User(email=payload.email, hashed_password=hash_password(payload.password))
+    db.add(user)
+    await db.commit()
+    token = create_access_token(subject=user.email)
+    return {"access_token": token, "token_type": "bearer"}
+
+@router.post("/login", response_model=Token)
+async def login(form: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)):
+    res = await db.execute(select(User).where(User.email == form.username))
+    user = res.scalar_one_or_none()
+    if not user or not verify_password(form.password, user.hashed_password):
+        raise HTTPException(400, detail="Invalid credentials")
+    token = create_access_token(subject=user.email)
+    return {"access_token": token, "token_type": "bearer"}
+
+async def get_current_user_email(token: str = Depends(oauth2_scheme)) -> str:
+    try:
+        return decode_access_token(token)
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+```
+
+```python
+# routers/notes.py
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from core.db import get_db
+from models import User, Note
+from schemas import NoteCreate, NoteRead
+from .auth import get_current_user_email
+
+router = APIRouter(prefix="/notes", tags=["notes"])
+
+@router.post("", response_model=NoteRead)
+async def create_note(payload: NoteCreate, email: str = Depends(get_current_user_email), db: AsyncSession = Depends(get_db)):
+    res = await db.execute(select(User).where(User.email == email))
+    user = res.scalar_one()
+    note = Note(title=payload.title, content=payload.content, owner_id=user.id)
+    db.add(note)
+    await db.commit()
+    await db.refresh(note)
+    return note
+
+@router.get("", response_model=list[NoteRead])
+async def list_notes(email: str = Depends(get_current_user_email), db: AsyncSession = Depends(get_db)):
+    res = await db.execute(select(User).where(User.email == email))
+    user = res.scalar_one()
+    res2 = await db.execute(select(Note).where(Note.owner_id == user.id))
+    notes = res2.scalars().all()
+    return notes
+```
+
+### 8) Main Application (Async)
+```python
+# main_async.py
+from fastapi import FastAPI
+from sqlalchemy import text
+from core.db import engine, Base
+from core.errors import install_error_handlers
+from routers import auth, notes
+
+app = FastAPI(title="Async Notes API")
 install_error_handlers(app)
 
-@app.get("/boom")
-def boom():
-    raise DomainError("Something went wrong in business logic", 422)
+@app.on_event("startup")
+async def on_startup():
+    # Create tables on startup (use Alembic in real projects)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+app.include_router(auth.router)
+app.include_router(notes.router)
+
+@app.get("/health")
+async def health():
+    return {"ok": True}
 ```
+
+Run locally:
+```bash
+uvicorn main_async:app --reload
+```
+
+This complete minimal app demonstrates validation, secrets management, JWT auth, error handling, and async DB access — all in a compact, real-world structure.
 
 ---
 
@@ -278,29 +325,7 @@ Run tests:
 pytest -q
 ```
 
-### 3) Asynchronous & Background Tasks
-Use background tasks for non-blocking work inside a request.
-
-```python
-# background_tasks_example.py
-from fastapi import FastAPI, BackgroundTasks
-
-app = FastAPI()
-
-def send_welcome_email(email: str):
-    # call email provider API here
-    print(f"Sent welcome email to {email}")
-
-@app.post("/register")
-def register_user(email: str, background: BackgroundTasks):
-    # create user in DB here
-    background.add_task(send_welcome_email, email)
-    return {"ok": True}
-```
-
-When work grows, consider a worker (Celery + Redis) for reliability and retries.
-
-### 4) Real-Time Communication with WebSockets
+### 3) Real-Time Communication with WebSockets
 Use WebSockets for push-style, bidirectional communication.
 
 ```python
