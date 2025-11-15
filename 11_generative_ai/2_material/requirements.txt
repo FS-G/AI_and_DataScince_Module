@@ -1,0 +1,15 @@
+# google-generativeai
+google-genai
+streamlit
+langchain-pinecone
+langchain-text-splitters
+langchain
+langchain-community
+langchain-huggingface
+langchain-google-genai
+pypdf 
+python-dotenv
+python-docx
+# pinecone-client[grpc]
+pinecone
+sentence-transformers

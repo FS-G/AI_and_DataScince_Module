@@ -602,8 +602,6 @@ Practical:
 
 This final capstone consolidates all modules into a continuously deployed, monitored API on Railway, ready for real use and extension.
 
-### Backend Development Lectures with FastAPI (Modules 1–3 + Capstone 1)
 
-This curriculum is hands-on and cloud-first. Each module includes short theory, practical steps, and copy-pasteable code you can run locally and deploy to the cloud (Railway + PostgreSQL).
 
 ---
