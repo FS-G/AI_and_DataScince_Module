@@ -202,7 +202,7 @@ result
 result['messages'][-1].content
 ```
 
-## Structured Output
+# Structured Output
 
 `ToolStrategy` uses artificial tool calling to generate structured output. This works with any model that supports tool calling.
 
@@ -1170,7 +1170,7 @@ except Exception as e:
     print(graph.get_graph().print_ascii())
 ```
 
-## SQL Agent
+# SQL Agent (Database)
 
 In this tutorial, you will learn how to build an agent that can answer questions about a SQL database using LangChain agents.
 
