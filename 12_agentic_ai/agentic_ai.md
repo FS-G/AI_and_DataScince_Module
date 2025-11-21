@@ -1,26 +1,35 @@
-
-
 # BASICS - ReAct agents, Tools, System Prompt
 
-for detailed overview of langchain - visit their official documentation: https://docs.langchain.com/oss/python/langchain/overview
-"""
+For detailed overview of langchain - visit their official documentation: https://docs.langchain.com/oss/python/langchain/overview
 
-!pip install -U langchain
-!pip install -U langchain-google-genai # this package is to use gemini from ai studio - since it is free to use
+## Installation
 
-"""get the api key from the AI studio and put it in here"""
+```bash
+pip install -U langchain
+pip install -U langchain-google-genai
+```
 
+> **Note**: The `langchain-google-genai` package is to use gemini from AI studio - since it is free to use
+
+## Setup
+
+Get the API key from the AI studio and put it in here:
+
+```python
 import getpass
 import os
 
 if "GOOGLE_API_KEY" not in os.environ:
     os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google AI API key: ")
+```
 
-"""make an instance of the LLM: https://docs.langchain.com/oss/python/integrations/chat/google_generative_ai
+## Creating an LLM Instance
 
-- NOTE - We are using ChatGoogleGenerativeAI (LLM) as its provider is Google AI studio that gives free quota - In case if you want to change the provider or LLM, do refer to this: https://docs.langchain.com/oss/python/integrations/chat
-"""
+Make an instance of the LLM: https://docs.langchain.com/oss/python/integrations/chat/google_generative_ai
 
+> **NOTE**: We are using ChatGoogleGenerativeAI (LLM) as its provider is Google AI studio that gives free quota - In case if you want to change the provider or LLM, do refer to this: https://docs.langchain.com/oss/python/integrations/chat
+
+```python
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 llm = ChatGoogleGenerativeAI(
@@ -31,33 +40,40 @@ llm = ChatGoogleGenerativeAI(
     max_retries=2,
     # other params...
 )
+```
 
-"""Agents combine language models with tools to create systems that can reason about tasks, decide which tools to use, and iteratively work towards solutions.
-create_agent provides a production-ready agent implementation.
-An LLM Agent runs tools in a loop to achieve a goal. An agent runs until a stop condition is met - i.e., when the model emits a final output or an iteration limit is reached.
+## Agents
 
-"""
+Agents combine language models with tools to create systems that can reason about tasks, decide which tools to use, and iteratively work towards solutions.
 
-# create an agent
+`create_agent` provides a production-ready agent implementation. An LLM Agent runs tools in a loop to achieve a goal. An agent runs until a stop condition is met - i.e., when the model emits a final output or an iteration limit is reached.
+
+### Creating an Agent
+
+```python
 from langchain.agents import create_agent
+```
 
-"""Tools give agents the ability to take actions. Agents go beyond simple model-only tool binding by facilitating:
-Multiple tool calls in sequence (triggered by a single prompt)
-Parallel tool calls when appropriate
-Dynamic tool selection based on previous results
-Tool retry logic and error handling
-State persistence across tool calls
+## Tools
 
-The simplest way to create a tool is with the @tool decorator. By default, the function’s docstring becomes the tool’s description that helps the model understand when to use it
+Tools give agents the ability to take actions. Agents go beyond simple model-only tool binding by facilitating:
 
-Tool use in the ReAct loop
-- Agents follow the ReAct (“Reasoning + Acting”) pattern, alternating between brief reasoning steps with targeted tool calls and feeding the resulting observations into subsequent decisions until they can deliver a final answer.
+- Multiple tool calls in sequence (triggered by a single prompt)
+- Parallel tool calls when appropriate
+- Dynamic tool selection based on previous results
+- Tool retry logic and error handling
+- State persistence across tool calls
 
+The simplest way to create a tool is with the `@tool` decorator. By default, the function's docstring becomes the tool's description that helps the model understand when to use it.
 
-"""
+**Tool use in the ReAct loop**: Agents follow the ReAct ("Reasoning + Acting") pattern, alternating between brief reasoning steps with targeted tool calls and feeding the resulting observations into subsequent decisions until they can deliver a final answer.
+
+### Defining Tools
+
+```python
+from langchain.tools import tool
 
 # define a tool - this is a mock tool just to test
-from langchain.tools import tool
 @tool
 def search(query: str) -> str:
     """Search for information."""
@@ -67,15 +83,21 @@ def search(query: str) -> str:
 def get_weather(location: str) -> str:
     """Get weather information for a location."""
     return f"Weather in {location}: Sunny, 72°F"
+```
 
+### Creating an Agent with Tools
 
-
+```python
 agent = create_agent(
     model=llm,
     tools=[get_weather, search],
     system_prompt="You are a helpful assistant",
 )
+```
 
+### Running the Agent
+
+```python
 # Run the agent - that can call the available tools
 agent.invoke(
     {"messages": [{"role": "user", "content": "What is the weather in Karachi?"}]}
@@ -86,14 +108,15 @@ response = agent.invoke(
     {"messages": [{"role": "user", "content": "What is the weather in Karachi?"}]}
 )
 response['messages'][-1].content
+```
 
-"""Tool error handling
-- To customize how tool errors are handled, use the @wrap_tool_call decorator to create middleware:
-"""
+## Tool Error Handling
 
+To customize how tool errors are handled, use the `@wrap_tool_call` decorator to create middleware:
+
+```python
 from langchain.agents.middleware import wrap_tool_call
 from langchain.messages import ToolMessage
-
 
 @wrap_tool_call
 def handle_tool_errors(request, handler):
@@ -118,19 +141,20 @@ agent = create_agent(
 agent.invoke(
     {"messages": [{"role": "user", "content": "What is the weather in Karachi?"}]}
 )
+```
 
-"""one key concept, the llms can be used directly too outside of the agent. For more details: https://docs.langchain.com/oss/python/langchain/models
-however, our main focus will be on agents
-"""
+> **Note**: The LLMs can be used directly too outside of the agent. For more details: https://docs.langchain.com/oss/python/langchain/models. However, our main focus will be on agents.
 
+```python
 llm.invoke("What is the weather in karachi?")
+```
 
-"""Some advanced tool usage ie getting context"""
+## Advanced Tool Usage: Getting Context
 
+```python
 from dataclasses import dataclass
 from langchain.agents import create_agent
 from langchain.tools import tool, ToolRuntime
-
 
 # this is a mock DB which can be replaced by a real DB having millions of records
 USER_DATABASE = {
@@ -162,7 +186,6 @@ def get_account_info(runtime: ToolRuntime[UserContext]) -> str:
         return f"Account holder: {user['name']}\nType: {user['account_type']}\nBalance: ${user['balance']}"
     return "User not found"
 
-
 agent = create_agent(
     llm,
     tools=[get_account_info],
@@ -176,18 +199,17 @@ result = agent.invoke(
 )
 
 result
-
 result['messages'][-1].content
+```
 
-"""# Structured Output
+## Structured Output
 
-ToolStrategy uses artificial tool calling to generate structured output. This works with any model that supports tool calling
-"""
+`ToolStrategy` uses artificial tool calling to generate structured output. This works with any model that supports tool calling.
 
+```python
 from pydantic import BaseModel
 from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy
-
 
 class ContactInfo(BaseModel):
     name: str
@@ -206,8 +228,9 @@ result = agent.invoke({
 
 result["structured_response"]
 # ContactInfo(name='John Doe', email='john@example.com', phone='(555) 123-4567')
+```
 
-"""# Memory
+# Memory
 
 LangGraph implements memory systems for AI agents, distinguishing between two main types based on their scope.
 
@@ -215,20 +238,19 @@ LangGraph implements memory systems for AI agents, distinguishing between two ma
 
 - **Long-term memory** stores information across sessions and threads in custom namespaces using LangGraph's store system. The framework categorizes long-term memory into three types inspired by human memory research: semantic memory (facts about users or concepts), episodic memory (past experiences and actions used for few-shot learning), and procedural memory (instructions and rules, typically stored in system prompts). Semantic memories can be managed either as a single continuously-updated profile or as a collection of documents. There are two approaches for writing memories: "in the hot path" during runtime for immediate availability but with added latency, or "in the background" as separate tasks that avoid impacting application performance but require careful timing considerations.
 
-## short term memory
+## Short Term Memory
 
 To add short-term memory (thread-level persistence) to an agent, you need to specify a checkpointer when creating an agent.
 
 For detailed information related to short term memory, refer to this page: https://docs.langchain.com/oss/python/langchain/short-term-memory
-"""
 
+```python
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
 
-
 agent = create_agent(
     model=llm,
-    tools = [search],
+    tools=[search],
     checkpointer=InMemorySaver(),
 )
 
@@ -236,32 +258,37 @@ agent.invoke(
     {"messages": [{"role": "user", "content": "Hi! My name is Bob."}]},
     {"configurable": {"thread_id": "1"}},
 )
+```
 
-"""check the agent again with same thread"""
+Check the agent again with same thread:
 
+```python
 agent.invoke(
     {"messages": [{"role": "user", "content": "what was my name?"}]},
     {"configurable": {"thread_id": "1"}},
 )
+```
 
-"""now change the thread - the agent will not have the information of the name"""
+Now change the thread - the agent will not have the information of the name:
 
+```python
 agent.invoke(
     {"messages": [{"role": "user", "content": "what was my name?"}]},
     {"configurable": {"thread_id": "2"}},
 )
+```
 
-"""### For production
+### For Production
 
-we know - for production, we need some persistant memory and we CAN NEVER RELY ON SYSTEM'S STATE - for that, we need to integrate a separately managed DB. Here, we are doing that with Postgres.
-"""
+We know - for production, we need some persistent memory and we CAN NEVER RELY ON SYSTEM'S STATE - for that, we need to integrate a separately managed DB. Here, we are doing that with Postgres.
 
-!pip install langgraph-checkpoint-postgres
+```bash
+pip install langgraph-checkpoint-postgres
+```
 
+```python
 from langchain.agents import create_agent
-
 from langgraph.checkpoint.postgres import PostgresSaver
-
 
 # note: do replace this URL with an actual postgres URL
 DB_URI = "postgresql://postgres:cNXwBkYtelZXvyFReGdIdjlUxWcwpbwD@caboose.proxy.rlwy.net:51520/railway"
@@ -274,24 +301,26 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
     )
 
     response = agent.invoke(
-    {"messages": [{"role": "user", "content": "Hello my name is Bob"}]},
-    {"configurable": {"thread_id": "1"}},
+        {"messages": [{"role": "user", "content": "Hello my name is Bob"}]},
+        {"configurable": {"thread_id": "1"}},
     )
 
     print(response)
 
     response2 = agent.invoke(
-    {"messages": [{"role": "user", "content": "what was my name?"}]},
-    {"configurable": {"thread_id": "1"}},
+        {"messages": [{"role": "user", "content": "what was my name?"}]},
+        {"configurable": {"thread_id": "1"}},
     )
 
     print("\n\n\n\n")
     print(response2)
+```
 
+Another example with a different thread:
+
+```python
 from langchain.agents import create_agent
-
 from langgraph.checkpoint.postgres import PostgresSaver
-
 
 # note: do replace this URL with an actual postgres URL
 DB_URI = "postgresql://postgres:cNXwBkYtelZXvyFReGdIdjlUxWcwpbwD@caboose.proxy.rlwy.net:51520/railway"
@@ -304,29 +333,28 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
     )
 
     response = agent.invoke(
-    {"messages": [{"role": "user", "content": "Hello my name is Alice"}]},
-    {"configurable": {"thread_id": "2"}},
+        {"messages": [{"role": "user", "content": "Hello my name is Alice"}]},
+        {"configurable": {"thread_id": "2"}},
     )
 
     print(response)
 
     response2 = agent.invoke(
-    {"messages": [{"role": "user", "content": "what was my name?"}]},
-    {"configurable": {"thread_id": "2"}},
+        {"messages": [{"role": "user", "content": "what was my name?"}]},
+        {"configurable": {"thread_id": "2"}},
     )
 
     print("\n\n\n\n")
     print(response2)
+```
 
-"""### customizing memory
+### Customizing Memory
 
-By default, agents use AgentState to manage short term memory, specifically the conversation history via a messages key.
-You can extend AgentState to add additional fields. Custom state schemas are passed to create_agent using the state_schema parameter.
-"""
+By default, agents use `AgentState` to manage short term memory, specifically the conversation history via a messages key. You can extend `AgentState` to add additional fields. Custom state schemas are passed to `create_agent` using the `state_schema` parameter.
 
+```python
 from langchain.agents import create_agent, AgentState
 from langgraph.checkpoint.memory import InMemorySaver
-
 
 class CustomAgentState(AgentState):
     user_id: str
@@ -346,15 +374,17 @@ result = agent.invoke(
         "user_id": "user_123",
         "preferences": {"theme": "dark"}
     },
-    {"configurable": {"thread_id": "1"}})
+    {"configurable": {"thread_id": "1"}}
+)
 
 result
+```
 
-# custom message state saved to production DB
+Custom message state saved to production DB:
+
+```python
 from langchain.agents import create_agent
-
 from langgraph.checkpoint.postgres import PostgresSaver
-
 
 # note: do replace this URL with an actual postgres URL
 DB_URI = "postgresql://postgres:cNXwBkYtelZXvyFReGdIdjlUxWcwpbwD@caboose.proxy.rlwy.net:51520/railway"
@@ -368,29 +398,30 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
     )
 
     response = agent.invoke(
-    {"messages": [{"role": "user", "content": "Hello my name is Alice"}]},
-    {"configurable": {"thread_id": "2"}},
+        {"messages": [{"role": "user", "content": "Hello my name is Alice"}]},
+        {"configurable": {"thread_id": "2"}},
     )
 
     print(response)
 
     response2 = agent.invoke(
-    {"messages": [{"role": "user", "content": "what was my name?"}]},
-    {"configurable": {"thread_id": "2"}},
+        {"messages": [{"role": "user", "content": "what was my name?"}]},
+        {"configurable": {"thread_id": "2"}},
     )
 
     print("\n\n\n\n")
     print(response2)
+```
 
-"""### Short Term Memory Management
+### Short Term Memory Management
 
 #### Trimming
 
-Most LLMs have a maximum supported context window (denominated in tokens).
-One way to decide when to truncate messages is to count the tokens in the message history and truncate whenever it approaches that limit. If you’re using LangChain, you can use the trim messages utility and specify the number of tokens to keep from the list, as well as the strategy (e.g., keep the last max_tokens) to use for handling the boundary.
-To trim message history in an agent, use the @before_model middleware decorator:
-"""
+Most LLMs have a maximum supported context window (denominated in tokens). One way to decide when to truncate messages is to count the tokens in the message history and truncate whenever it approaches that limit. If you're using LangChain, you can use the trim messages utility and specify the number of tokens to keep from the list, as well as the strategy (e.g., keep the last max_tokens) to use for handling the boundary.
 
+To trim message history in an agent, use the `@before_model` middleware decorator:
+
+```python
 from langchain.messages import RemoveMessage
 from langgraph.graph.message import REMOVE_ALL_MESSAGES
 from langgraph.checkpoint.memory import InMemorySaver
@@ -420,9 +451,6 @@ def trim_messages(state: AgentState, runtime: Runtime) -> dict[str, Any] | None:
         ]
     }
 
-
-
-
 agent = create_agent(
     llm,
     [search],
@@ -439,22 +467,21 @@ agent.invoke({"messages": "now do the same but for dogs"}, config)
 final_response = agent.invoke({"messages": "what's my name?"}, config)
 
 final_response["messages"][-1].pretty_print()
-"""
+```
+
+Output:
+```
 ================================== Ai Message ==================================
 
 Your name is Bob. You told me that earlier.
 If you'd like me to call you a nickname or use a different name, just say the word.
-"""
+```
 
-"""#### Delete Message
+#### Delete Message
 
-You can delete messages from the graph state to manage the message history.
+You can delete messages from the graph state to manage the message history. This is useful when you want to remove specific messages or clear the entire message history. To delete messages from the graph state, you can use the `RemoveMessage`.
 
-This is useful when you want to remove specific messages or clear the entire message history.
-
-To delete messages from the graph state, you can use the RemoveMessage.
-"""
-
+```python
 from langchain.messages import RemoveMessage
 from langchain.agents import create_agent, AgentState
 from langchain.agents.middleware import after_model
@@ -495,21 +522,19 @@ for event in agent.stream(
     stream_mode="values",
 ):
     print([(message.type, message.content) for message in event["messages"]])
+```
 
-"""#### Summarize Message
+#### Summarize Message
 
 The problem with trimming or removing messages, as shown above, is that you may lose information from culling of the message queue. Because of this, some applications benefit from a more sophisticated approach of summarizing the message history using a chat model.
-"""
 
+```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain_core.runnables import RunnableConfig
 
-
 checkpointer = InMemorySaver()
-
-
 
 agent = create_agent(
     llm,
@@ -525,9 +550,6 @@ agent = create_agent(
     checkpointer=InMemorySaver(),
 )
 
-
-
-
 config: RunnableConfig = {"configurable": {"thread_id": "1"}}
 agent.invoke({"messages": "hi, my name is bob"}, config)
 agent.invoke({"messages": "write a short poem about cats"}, config)
@@ -535,46 +557,42 @@ agent.invoke({"messages": "now do the same but for dogs"}, config)
 final_response = agent.invoke({"messages": "what's my name?"}, config)
 
 final_response["messages"][-1].pretty_print()
-"""
+```
+
+Output:
+```
 ================================== Ai Message ==================================
 
 Your name is Bob!
-"""
+```
 
-"""# Middlewares
+# Middlewares
 
 For details related to middleware, visit this page: https://docs.langchain.com/oss/python/langchain/middleware/overview
 
 Middleware provides a way to more tightly control what happens inside the agent. Middleware is useful for the following:
 
 - Tracking agent behavior with logging, analytics, and debugging.
-
 - Transforming prompts, tool selection, and output formatting.
-
 - Adding retries, fallbacks, and early termination logic.
-
 - Applying rate limits, guardrails, and PII detection.
 
 One of the common use case:
 
-The core agent loop involves calling a model, letting it choose tools to execute, and then finishing when it calls no more tools:
-Core agent loop diagram
+The core agent loop involves calling a model, letting it choose tools to execute, and then finishing when it calls no more tools. Middleware exposes hooks before and after each of those steps.
 
-Middleware exposes hooks before and after each of those steps:
-Middleware flow diagram
+We can use the builtin middlewares and can also make custom middleware:
 
-we can use the builtin middlewares and can also make custom middleware
+- For builtin middleware - refer to this: https://docs.langchain.com/oss/python/langchain/middleware/built-in
+- For custom middleware - refer to this: https://docs.langchain.com/oss/python/langchain/middleware/custom
 
-- For builtin middleware - referer to this: https://docs.langchain.com/oss/python/langchain/middleware/built-in
-- For custom middleware - refet to this: https://docs.langchain.com/oss/python/langchain/middleware/custom
+## Summarization
 
-### Summarization
+We already used this middleware above when summarizing the short term memory.
 
-we already used this middleware above when summarizing the short term memory
+## Human in the Loop
 
-### Human in the Loop
-"""
-
+```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
@@ -589,7 +607,6 @@ def send_email_tool(to: str, subject: str, body: str) -> str:
     """Send an email to a recipient."""
     print("\n\n\n\nsend email tool executed\n'\n\n\n")
     return f"Mock email sent to {to} with subject '{subject}'."
-
 
 agent = create_agent(
     model=llm,
@@ -609,11 +626,12 @@ agent = create_agent(
 
 config: RunnableConfig = {"configurable": {"thread_id": "2"}}
 agent.invoke({"messages": "send email to farhan.sid to join from tomorrow"}, config)
-
 agent.invoke({"messages": "offer letter related"}, config)
+```
 
-"""Now lets consider a minimal workable agentic example where we put in humman in the loop to save a file with custom content"""
+Now let's consider a minimal workable agentic example where we put in human in the loop to save a file with custom content:
 
+```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
@@ -644,7 +662,6 @@ def write_file_tool(filename: str, content: str) -> str:
     except Exception as e:
         return f"Error writing file: {str(e)}"
 
-
 agent = create_agent(
     model=llm,
     tools=[read_email_tool, write_file_tool],
@@ -673,11 +690,13 @@ agent.invoke(
     ),
     config=config # Same thread ID to resume the paused conversation
 )
+```
 
-"""### Guardrails
+## Guardrails
+
 For detailed info - refer to this: https://docs.langchain.com/oss/python/langchain/guardrails
 
-Guardrails help you build safe, compliant AI applications by validating and filtering content at key points in your agent’s execution. They can detect sensitive information, enforce content policies, validate outputs, and prevent unsafe behaviors before they cause problems.
+Guardrails help you build safe, compliant AI applications by validating and filtering content at key points in your agent's execution. They can detect sensitive information, enforce content policies, validate outputs, and prevent unsafe behaviors before they cause problems.
 
 Common use cases include:
 - Preventing PII leakage
@@ -690,19 +709,18 @@ You can implement guardrails using middleware to intercept execution at strategi
 
 Important thing to consider - the guard rails come in action before agent and then before model and then after agent and after model too.
 
-format as table
-Strategy	Description	Example
-redact	Replace with [REDACTED_TYPE]	[REDACTED_EMAIL]
-mask	Partially obscure (e.g., last 4 digits)	****-****-****-1234
-hash	Replace with deterministic hash	a8f5f167...
-block	Raise exception when detected	Error thrown
+| Strategy | Description | Example |
+|----------|-------------|---------|
+| redact | Replace with [REDACTED_TYPE] | [REDACTED_EMAIL] |
+| mask | Partially obscure (e.g., last 4 digits) | ****-****-****-1234 |
+| hash | Replace with deterministic hash | a8f5f167... |
+| block | Raise exception when detected | Error thrown |
 
-The **human in the loop** that we learnt in the previous section is also a guard rail that requires human approval. Also, we can make custom grard rails too.
-"""
+The **human in the loop** that we learnt in the previous section is also a guard rail that requires human approval. Also, we can make custom guard rails too.
 
+```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import PIIMiddleware
-
 
 agent = create_agent(
     model=llm,
@@ -736,10 +754,11 @@ result = agent.invoke({
 })
 
 result
+```
 
-"""# RAG and Langraph
+# RAG and LangGraph
 
-### 🔍 **Brief Summary of Retrieval & RAG (with the 3 types included)**
+## 🔍 Brief Summary of Retrieval & RAG (with the 3 types included)
 
 Retrieval helps LLMs overcome their limited context and static knowledge by fetching relevant information from external sources at query time. This enables **Retrieval-Augmented Generation (RAG)** — where an LLM uses retrieved context to produce accurate, grounded answers.
 
@@ -749,18 +768,21 @@ Once retrieval is added to generation, three main **RAG architectures** can be u
 
 ---
 
-### **Types of RAG**
+## Types of RAG
 
-#### **1. 2-Step RAG**
+### 1. 2-Step RAG
+
 A fixed pipeline:  
 **Retrieve first → then generate.**  
 Simple, predictable, and fast. Best for FAQs, documentation bots, and straightforward question-answering.
 
-#### **2. Agentic RAG**
+### 2. Agentic RAG
+
 An agent (LLM) reasons step-by-step and decides **when** and **how** to retrieve using tools.  
 More flexible but less predictable latency. Ideal for research assistants or multi-tool systems.
 
-#### **3. Hybrid RAG**
+### 3. Hybrid RAG
+
 Mixes both approaches with extra steps like query rewriting, retrieval validation, and answer checking.  
 Good for ambiguous queries or domains requiring high accuracy.
 
@@ -769,14 +791,14 @@ Good for ambiguous queries or domains requiring high accuracy.
 Overall, RAG enhances LLM capabilities by dynamically grounding answers in relevant, up-to-date context—making applications more reliable and domain-aware.
 
 ## 2-Step RAG
-"""
 
-!pip install pinecone langchain-huggingface
+```bash
+pip install pinecone langchain-huggingface
+pip install langchain-pinecone
+pip install langchain-community
+```
 
-!pip install langchain-pinecone
-
-!pip install langchain-community
-
+```python
 import os
 import bs4
 from pinecone import Pinecone
@@ -794,10 +816,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 # os.environ["PINECONE_API_KEY"] = "pc-..."
 
 INDEX_NAME = "testnew"
-
 model = llm
-
-
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 
@@ -860,9 +879,11 @@ for step in agent.stream(
     stream_mode="values",
 ):
     step["messages"][-1].pretty_print()
+```
 
-"""## Agentic RAG"""
+## Agentic RAG
 
+```python
 import os
 import bs4
 from pinecone import Pinecone
@@ -945,11 +966,15 @@ for step in agent.stream(
     stream_mode="values",
 ):
     step["messages"][-1].pretty_print()
+```
 
-"""## Hybric RAG"""
+## Hybrid RAG
 
-!pip install langchain-classic
+```bash
+pip install langchain-classic
+```
 
+```python
 import os
 from typing import Literal
 from pinecone import Pinecone
@@ -1143,36 +1168,24 @@ except Exception as e:
     print(f"Could not plot graph: {e}")
     # Fallback: print text representation
     print(graph.get_graph().print_ascii())
+```
 
-"""## SQL Agent
+## SQL Agent
 
 In this tutorial, you will learn how to build an agent that can answer questions about a SQL database using LangChain agents.
+
 At a high level, the agent will:
-1
-Fetch the available tables and schemas from the database
 
-2
-Decide which tables are relevant to the question
+1. Fetch the available tables and schemas from the database
+2. Decide which tables are relevant to the question
+3. Fetch the schemas for the relevant tables
+4. Generate a query based on the question and information from the schemas
+5. Double-check the query for common mistakes using an LLM
+6. Execute the query and return the results
+7. Correct mistakes surfaced by the database engine until the query is successful
+8. Formulate a response based on the results
 
-3
-Fetch the schemas for the relevant tables
-
-4
-Generate a query based on the question and information from the schemas
-
-5
-Double-check the query for common mistakes using an LLM
-
-6
-Execute the query and return the results
-
-7
-Correct mistakes surfaced by the database engine until the query is successful
-
-8
-Formulate a response based on the results
-"""
-
+```python
 import os
 import requests
 import pathlib
@@ -1290,14 +1303,16 @@ if last_interrupt:
     ):
         if "messages" in step:
             step["messages"][-1].pretty_print()
+```
 
-"""# Multi Agent
+# Multi Agent
 
-# Multi-agent Overview
+## Multi-agent Overview
 
 Multi-agent systems break a complex application into multiple specialized agents that work together. Instead of one agent handling everything, multiple focused agents collaborate to improve accuracy, memory handling, and specialization.
 
-## When multi-agent systems help
+### When multi-agent systems help
+
 - When one agent has too many tools.
 - When context or memory becomes too large.
 - When tasks need specialists (planner, researcher, math expert).
@@ -1305,12 +1320,14 @@ Multi-agent systems break a complex application into multiple specialized agents
 ## Multi-agent patterns
 
 ### 1. Tool Calling
+
 A main **controller** agent invokes other agents as tools.  
 - Centralized decision-making.  
-- Subagents don’t talk to the user directly.  
+- Subagents don't talk to the user directly.  
 - Best for structured workflows and orchestration.
 
 ### 2. Handoffs
+
 Agents pass control to each other.  
 - Decentralized.  
 - The active agent interacts directly with the user.  
@@ -1327,6 +1344,7 @@ Agents pass control to each other.
 Tip: You can combine both patterns—handoffs for switching, tool calls inside each agent.
 
 ## Context engineering
+
 Success depends on giving each agent the right context, including:
 - Relevant parts of the conversation.
 - Specialized prompts.
@@ -1334,6 +1352,7 @@ Success depends on giving each agent the right context, including:
 - What state each agent sees.
 
 ## Tool Calling (Flow)
+
 1. Controller receives input.  
 2. Chooses a subagent tool.  
 3. Subagent processes the task.  
@@ -1345,13 +1364,16 @@ You can customize:
 - Output returned to the main agent.
 
 ## Handoffs (Flow)
+
 1. Current agent decides another agent should take over.  
 2. Passes control and state.  
 3. New agent interacts with the user until another handoff or completion.
 
 More implementation details coming soon.
-"""
 
+## Implementation Example
+
+```python
 import os
 from langchain.tools import tool
 from langchain.agents import create_agent
@@ -1428,4 +1450,4 @@ for step in supervisor_agent.stream(
 ):
     # print the final message of the step
     step["messages"][-1].pretty_print()
-
+```
